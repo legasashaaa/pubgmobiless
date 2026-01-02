@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG Mobile - Рулетка с призами</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #0c1a2d, #152642);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #f0b232;
+            text-shadow: 0 0 10px rgba(240, 178, 50, 0.5);
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            color: #8da1b5;
+            font-size: 16px;
+        }
+        
+        .roulette-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-image: url('phon.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+            width: 90%;
+            height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+        }
+        
+        .prize-item {
+            background-color: rgba(12, 26, 45, 0.7);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .prize-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+        
+        .prize-item span {
+            font-size: 12px;
+            text-align: center;
+            color: #e6e6e6;
+        }
+        
+        .center-item {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        
+        .selection-frame {
+            position: absolute;
+            border: 3px solid #f0b232;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #f0b232;
+            transition: all 0.5s ease;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        .selection-frame.active {
+            opacity: 1;
+        }
+        
+        .play-btn {
+            background: linear-gradient(to right, #f0b232, #e69c1e);
+            color: #0c1a2d;
+            border: none;
+            border-radius: 50px;
+            padding: 18px 40px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(240, 178, 50, 0.4);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+            width: 80%;
+            max-width: 300px;
+        }
+        
+        .play-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(240, 178, 50, 0.6);
+        }
+        
+        .play-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .play-btn:disabled {
+            background: linear-gradient(to right, #666, #888);
+            color: #aaa;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-section {
+            background-color: rgba(12, 26, 45, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 500px;
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .login-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .login-section h2 {
+            color: #f0b232;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .login-section p {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #8da1b5;
+            line-height: 1.5;
+        }
+        
+        .prize-won {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            background-color: rgba(240, 178, 50, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(240, 178, 50, 0.3);
+        }
+        
+        .prize-won img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .prize-won span {
+            font-size: 18px;
+            color: #f0b232;
+            font-weight: bold;
+        }
+        
+        .login-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .google-btn {
+            background-color: #4285F4;
+            color: white;
+        }
+        
+        .facebook-btn {
+            background-color: #3b5998;
+            color: white;
+        }
+        
+        .vk-btn {
+            background-color: #4a76a8;
+            color: white;
+        }
+        
+        .twitter-btn {
+            background-color: #1da1f2;
+            color: white;
+        }
+        
+        .login-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .note {
+            font-size: 12px;
+            color: #8da1b5;
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.4;
+        }
+        
+        .spinning {
+            animation: spin 0.1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(5deg); }
+        }
+        
+        @media (max-width: 500px) {
+            .prizes-grid {
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .prize-item img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .prize-item span {
+                font-size: 10px;
+            }
+            
+            .login-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PUBG MOBILE - РУЛЕТКА</h1>
+            <p>Крути рулетку и выигрывай эксклюзивные награды!</p>
+        </div>
+        
+        <div class="roulette-container">
+            <div class="prizes-grid">
+                <div class="prize-item" data-id="1">
+                    <img src="https://cdn-icons-png.flaticon.com/512/802/802870.png" alt="Приз 1">
+                    <span>100 UC</span>
+                </div>
+                <div class="prize-item" data-id="2">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2972/2972543.png" alt="Приз 2">
+                    <span>Скин оружия</span>
+                </div>
+                <div class="prize-item" data-id="3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Приз 3">
+                    <span>500 UC</span>
+                </div>
+                <div class="prize-item" data-id="4">
+                    <img src="https://cdn-icons-png.flaticon.com/512/864/864685.png" alt="Приз 4">
+                    <span>Скин персонажа</span>
+                </div>
+                <div class="prize-item center-item" data-id="5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2331/2331966.png" alt="Приз 5">
+                    <span>Джекпот: 1000 UC</span>
+                </div>
+                <div class="prize-item" data-id="6">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2331/2331966.png" alt="Приз 6">
+                    <span>50 UC</span>
+                </div>
+                <div class="prize-item" data-id="7">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Приз 7">
+                    <span>200 UC</span>
+                </div>
+                <div class="prize-item" data-id="8">
+                    <img src="https://cdn-icons-png.flaticon.com/512/802/802870.png" alt="Приз 8">
+                    <span>Скин транспорта</span>
+                </div>
+            </div>
+            
+            <div class="selection-frame" id="selectionFrame"></div>
+        </div>
+        
+        <button class="play-btn" id="playBtn">
+            <i class="fas fa-play-circle"></i> ИГРАТЬ
+        </button>
+        
+        <div class="login-section" id="loginSection">
+            <h2>ПОЗДРАВЛЯЕМ!</h2>
+            
+            <div class="prize-won" id="prizeWon">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Выигранный приз" id="wonPrizeImage">
+                <span id="wonPrizeText">100 UC</span>
+            </div>
+            
+            <p>Войдите через социальную сеть, чтобы получить выигрыш</p>
+            
+            <div class="login-buttons">
+                <button class="login-btn google-btn" id="googleBtn">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="login-btn facebook-btn" id="facebookBtn">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </button>
+                <button class="login-btn vk-btn" id="vkBtn">
+                    <i class="fab fa-vk"></i> ВКонтакте
+                </button>
+                <button class="login-btn twitter-btn" id="twitterBtn">
+                    <i class="fab fa-twitter"></i> Twitter
+                </button>
+            </div>
+            
+            <p class="note">
+                * Приз будет зачислен на ваш аккаунт PUBG Mobile в течение 24 часов после входа.<br>
+                * Одна попытка рулетки в день на один аккаунт.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const playBtn = document.getElementById('playBtn');
+            const selectionFrame = document.getElementById('selectionFrame');
+            const loginSection = document.getElementById('loginSection');
+            const prizeWon = document.getElementById('prizeWon');
+            const wonPrizeImage = document.getElementById('wonPrizeImage');
+            const wonPrizeText = document.getElementById('wonPrizeText');
+            const prizeItems = document.querySelectorAll('.prize-item');
+            
+            // Призы с их описаниями и картинками
+            const prizes = [
+                { id: 1, name: "100 UC", image: "https://cdn-icons-png.flaticon.com/512/802/802870.png" },
+                { id: 2, name: "Скин оружия", image: "https://cdn-icons-png.flaticon.com/512/2972/2972543.png" },
+                { id: 3, name: "500 UC", image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" },
+                { id: 4, name: "Скин персонажа", image: "https://cdn-icons-png.flaticon.com/512/864/864685.png" },
+                { id: 5, name: "Джекпот: 1000 UC", image: "https://cdn-icons-png.flaticon.com/512/2331/2331966.png" },
+                { id: 6, name: "50 UC", image: "https://cdn-icons-png.flaticon.com/512/2331/2331966.png" },
+                { id: 7, name: "200 UC", image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" },
+                { id: 8, name: "Скин транспорта", image: "https://cdn-icons-png.flaticon.com/512/802/802870.png" }
+            ];
+            
+            let isSpinning = false;
+            let currentPrizeIndex = 0;
+            let spinInterval;
+            let spinSpeed = 100; // начальная скорость в мс
+            let spinCount = 0;
+            const totalSpins = 30; // общее количество смен призов перед остановкой
+            
+            // Функция для получения случайного приза
+            function getRandomPrize() {
+                return Math.floor(Math.random() * prizes.length);
+            }
+            
+            // Функция для перемещения рамки к призу
+            function moveFrameToPrize(index) {
+                const prizeItem = prizeItems[index];
+                const rect = prizeItem.getBoundingClientRect();
+                const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
+                
+                selectionFrame.style.width = (rect.width + 10) + 'px';
+                selectionFrame.style.height = (rect.height + 10) + 'px';
+                selectionFrame.style.left = (rect.left - containerRect.left + 5) + 'px';
+                selectionFrame.style.top = (rect.top - containerRect.top + 5) + 'px';
+                selectionFrame.classList.add('active');
+            }
+            
+            // Функция запуска рулетки
+            function startRoulette() {
+                if (isSpinning) return;
+                
+                isSpinning = true;
+                playBtn.disabled = true;
+                loginSection.classList.remove('active');
+                selectionFrame.classList.remove('active');
+                
+                // Случайный конечный приз
+                const finalPrizeIndex = getRandomPrize();
+                
+                // Запускаем анимацию
+                spinCount = 0;
+                spinSpeed = 100;
+                currentPrizeIndex = 0;
+                
+                spinInterval = setInterval(() => {
+                    moveFrameToPrize(currentPrizeIndex);
+                    currentPrizeIndex = (currentPrizeIndex + 1) % prizes.length;
+                    spinCount++;
+                    
+                    // Замедление к концу
+                    if (spinCount > totalSpins * 0.7) {
+                        spinSpeed += 10;
+                        clearInterval(spinInterval);
+                        spinInterval = setInterval(spinStep, spinSpeed);
+                    }
+                    
+                    // Остановка на конечном призе
+                    if (spinCount >= totalSpins) {
+                        clearInterval(spinInterval);
+                        
+                        // Устанавливаем на выигранный приз
+                        setTimeout(() => {
+                            moveFrameToPrize(finalPrizeIndex);
+                            
+                            // Показываем окно входа
+                            setTimeout(() => {
+                                isSpinning = false;
+                                playBtn.disabled = false;
+                                
+                                // Обновляем информацию о выигранном призе
+                                const wonPrize = prizes[finalPrizeIndex];
+                                wonPrizeImage.src = wonPrize.image;
+                                wonPrizeText.textContent = wonPrize.name;
+                                
+                                // Показываем секцию входа
+                                loginSection.classList.add('active');
+                                
+                                // Прокручиваем к секции входа
+                                loginSection.scrollIntoView({ behavior: 'smooth' });
+                            }, 1000);
+                        }, 500);
+                    }
+                }, spinSpeed);
+            }
+            
+            function spinStep() {
+                moveFrameToPrize(currentPrizeIndex);
+                currentPrizeIndex = (currentPrizeIndex + 1) % prizes.length;
+                spinCount++;
+                
+                // Остановка на конечном призе
+                if (spinCount >= totalSpins) {
+                    clearInterval(spinInterval);
+                    
+                    // Случайный конечный приз
+                    const finalPrizeIndex = getRandomPrize();
+                    
+                    setTimeout(() => {
+                        moveFrameToPrize(finalPrizeIndex);
+                        
+                        // Показываем окно входа
+                        setTimeout(() => {
+                            isSpinning = false;
+                            playBtn.disabled = false;
+                            
+                            // Обновляем информацию о выигранном призе
+                            const wonPrize = prizes[finalPrizeIndex];
+                            wonPrizeImage.src = wonPrize.image;
+                            wonPrizeText.textContent = wonPrize.name;
+                            
+                            // Показываем секцию входа
+                            loginSection.classList.add('active');
+                            
+                            // Прокручиваем к секции входа
+                            loginSection.scrollIntoView({ behavior: 'smooth' });
+                        }, 1000);
+                    }, 500);
+                }
+            }
+            
+            // Обработчики кнопок входа
+            document.getElementById('googleBtn').addEventListener('click', function() {
+                alert('Вход через Google. В реальном приложении здесь была бы авторизация.');
+            });
+            
+            document.getElementById('facebookBtn').addEventListener('click', function() {
+                alert('Вход через Facebook. В реальном приложении здесь была бы авторизация.');
+            });
+            
+            document.getElementById('vkBtn').addEventListener('click', function() {
+                alert('Вход через ВКонтакте. В реальном приложении здесь была бы авторизация.');
+            });
+            
+            document.getElementById('twitterBtn').addEventListener('click', function() {
+                alert('Вход через Twitter. В реальном приложении здесь была бы авторизация.');
+            });
+            
+            // Запуск рулетки при нажатии кнопки
+            playBtn.addEventListener('click', startRoulette);
+            
+            // Инициализация рамки на первом призе
+            setTimeout(() => {
+                moveFrameToPrize(0);
+            }, 500);
+        });
+    </script>
+</body>
+</html>
