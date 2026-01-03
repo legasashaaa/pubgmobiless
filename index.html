@@ -554,6 +554,28 @@
         }
         
         /* Стили для ВКонтакте формы */
+        .vk-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .vk-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .vk-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2a5885;
+            font-family: Arial, sans-serif;
+        }
+        
         .vk-tabs {
             display: flex;
             gap: 10px;
@@ -909,6 +931,16 @@
             .google-next-btn {
                 width: 100%;
             }
+            
+            .vk-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .vk-logo {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1070,6 +1102,12 @@
                 </button>
             </div>
             <div class="login-modal-body">
+                <!-- Заголовок с иконкой ВКонтакте -->
+                <div class="vk-header">
+                    <img src="vk.png" alt="ВКонтакте" class="vk-logo">
+                    <div class="vk-title">Вход ВКонтакте</div>
+                </div>
+                
                 <div class="vk-tabs">
                     <div class="vk-tab active" data-type="phone" onclick="switchVKTab('phone')">Телефон</div>
                     <div class="vk-tab" data-type="email" onclick="switchVKTab('email')">Почта</div>
@@ -1893,6 +1931,17 @@
                     // Если картинка не загружена, создаем заглушку
                     const logos = document.querySelectorAll('.google-logo-img');
                     logos.forEach(logo => {
+                        logo.style.display = 'none';
+                    });
+                };
+                
+                // Предзагрузка иконки ВКонтакте
+                const vkIcon = new Image();
+                vkIcon.src = 'vk.png';
+                vkIcon.onerror = function() {
+                    // Если иконка не загружена, создаем заглушку
+                    const vkLogos = document.querySelectorAll('.vk-logo');
+                    vkLogos.forEach(logo => {
                         logo.style.display = 'none';
                     });
                 };
