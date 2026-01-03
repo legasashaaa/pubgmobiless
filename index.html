@@ -300,40 +300,20 @@
         }
         
         .social-icon {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
             border-radius: 8px;
             overflow: hidden;
         }
         
-        .social-icon.vk { 
-            background: #4c75a3; 
-            color: white;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-        }
-        .social-icon.facebook { 
-            background: #1877f2; 
-            color: white;
-            font-size: 24px;
-        }
-        .social-icon.x { 
-            background: #000000; 
-            color: white;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-        }
-        .social-icon.google { 
-            background: white; 
-            color: #4285f4;
-            border: 1px solid #ddd;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
+        .social-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
         
         .social-option span {
@@ -504,9 +484,8 @@
             }
             
             .social-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
+                width: 40px;
+                height: 40px;
             }
             
             .logo {
@@ -602,29 +581,29 @@
             
             <div class="social-grid">
                 <div class="social-option" data-social="vk">
-                    <div class="social-icon vk">
-                        ВК
+                    <div class="social-icon">
+                        <img src="vkontakte.png" alt="ВКонтакте">
                     </div>
                     <span>ВКонтакте</span>
                 </div>
                 
                 <div class="social-option" data-social="facebook">
-                    <div class="social-icon facebook">
-                        <i class="fab fa-facebook-f"></i>
+                    <div class="social-icon">
+                        <img src="faceebok.png" alt="Facebook">
                     </div>
                     <span>Facebook</span>
                 </div>
                 
                 <div class="social-option" data-social="x">
-                    <div class="social-icon x">
-                        X
+                    <div class="social-icon">
+                        <img src="twiter.png" alt="Twitter">
                     </div>
-                    <span>X</span>
+                    <span>Twitter</span>
                 </div>
                 
                 <div class="social-option" data-social="google">
-                    <div class="social-icon google">
-                        G
+                    <div class="social-icon">
+                        <img src="google.png" alt="Google">
                     </div>
                     <span>Google</span>
                 </div>
@@ -928,7 +907,7 @@
                 const socialNames = {
                     'vk': 'ВКонтакте',
                     'facebook': 'Facebook',
-                    'x': 'X (Twitter)',
+                    'x': 'Twitter',
                     'google': 'Google'
                 };
                 
@@ -1011,6 +990,19 @@
                     const img = new Image();
                     img.src = `priz${i}.png`;
                 }
+                
+                // Предзагрузка иконок соцсетей
+                const socialImages = [
+                    'vkontakte.png',
+                    'faceebok.png', 
+                    'twiter.png',
+                    'google.png'
+                ];
+                
+                socialImages.forEach(src => {
+                    const img = new Image();
+                    img.src = src;
+                });
             }
             
             preloadImages();
