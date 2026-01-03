@@ -13,9 +13,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0a1520 0%, #1a2c42 50%, #0a1520 100%);
-            background-attachment: fixed;
-            background-size: cover;
+            background: #0a1520;
             color: white;
             min-height: 100vh;
             display: flex;
@@ -27,7 +25,7 @@
             position: relative;
         }
         
-        /* Градиентный оверлей для улучшения читаемости */
+        /* Фон на весь сайт */
         body::before {
             content: '';
             position: fixed;
@@ -35,7 +33,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(10, 21, 32, 0.9) 0%, rgba(26, 44, 66, 0.9) 50%, rgba(10, 21, 32, 0.9) 100%);
+            background-image: url('phon.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+        
+        /* Затемнение фона для лучшей читаемости */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 21, 32, 0.85);
             z-index: -1;
         }
         
@@ -150,9 +164,7 @@
             position: relative;
             width: 100%;
             height: 450px;
-            background: linear-gradient(135deg, rgba(20, 35, 60, 0.9) 0%, rgba(12, 26, 45, 0.9) 100%);
-            background-size: cover;
-            background-position: center;
+            background: rgba(20, 35, 60, 0.7);
             border-radius: 20px;
             overflow: hidden;
             margin-bottom: 30px;
@@ -277,7 +289,7 @@
         
         /* Форма выбора соцсети */
         .social-select-section {
-            background: linear-gradient(135deg, rgba(20, 35, 60, 0.95) 0%, rgba(12, 26, 45, 0.95) 100%);
+            background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
             padding: 25px;
             width: 100%;
@@ -414,7 +426,7 @@
         
         /* Секция подтверждения получения приза */
         .confirmation-section {
-            background: linear-gradient(135deg, rgba(20, 35, 60, 0.95) 0%, rgba(12, 26, 45, 0.95) 100%);
+            background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
             padding: 30px 25px;
             width: 100%;
@@ -1032,12 +1044,17 @@
             
             // Предзагрузка изображений
             function preloadImages() {
+                // Фон сайта
+                const bg = new Image();
+                bg.src = 'phon.png';
+                
+                // Призы
                 for (let i = 1; i <= 9; i++) {
                     const img = new Image();
                     img.src = `priz${i}.png`;
                 }
                 
-                // Предзагрузка иконок соцсетей
+                // Иконки соцсетей
                 const socialImages = [
                     'vkontakte.png',
                     'faceebok.png', 
