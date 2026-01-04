@@ -216,36 +216,98 @@
             grid-row: 2;
         }
         
+        /* ОБНОВЛЕННАЯ РАМКА В СТИЛЕ PUBG */
         .selection-frame {
             position: absolute;
-            border: 3px solid #FFD700; /* Изменен цвет рамки на желтый */
-            border-radius: 10px; /* Уменьшен радиус скругления */
-            box-shadow: 0 0 15px #FFD700, 
-                        0 0 25px rgba(255, 215, 0, 0.7),
-                        inset 0 0 15px rgba(255, 215, 0, 0.4);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 10;
+            width: 100px;
+            height: 100px;
+            border: 4px solid #ffcc00;
+            box-shadow: 0 0 15px #ffcc00, inset 0 0 10px rgba(255, 204, 0, 0.3);
             pointer-events: none;
+            z-index: 10;
             opacity: 0;
-            background: rgba(255, 215, 0, 0.1); /* Желтый фон с прозрачностью */
-            backdrop-filter: blur(3px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 8px;
+            display: none;
         }
         
         .selection-frame.active {
             opacity: 1;
+            display: block;
             animation: pulse 1.5s infinite alternate;
+        }
+        
+        /* Декоративные уголки для рамки */
+        .selection-frame::before,
+        .selection-frame::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border: 3px solid #ffffff;
+        }
+        
+        .selection-frame::before {
+            top: -8px;
+            left: -8px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .selection-frame::after {
+            bottom: -8px;
+            right: -8px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        /* Дополнительные уголки */
+        .selection-frame .corner-tl,
+        .selection-frame .corner-tr,
+        .selection-frame .corner-bl,
+        .selection-frame .corner-br {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border: 3px solid #ffffff;
+        }
+        
+        .selection-frame .corner-tl {
+            top: -8px;
+            left: -8px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .selection-frame .corner-tr {
+            top: -8px;
+            right: -8px;
+            border-left: none;
+            border-bottom: none;
+        }
+        
+        .selection-frame .corner-bl {
+            bottom: -8px;
+            left: -8px;
+            border-right: none;
+            border-top: none;
+        }
+        
+        .selection-frame .corner-br {
+            bottom: -8px;
+            right: -8px;
+            border-left: none;
+            border-top: none;
         }
         
         @keyframes pulse {
             from {
-                box-shadow: 0 0 15px #FFD700, 
-                            0 0 25px rgba(255, 215, 0, 0.7),
-                            inset 0 0 15px rgba(255, 215, 0, 0.4);
+                box-shadow: 0 0 15px #ffcc00, inset 0 0 10px rgba(255, 204, 0, 0.3);
+                border-color: #ffcc00;
             }
             to {
-                box-shadow: 0 0 20px #FFED4E, 
-                            0 0 35px rgba(255, 237, 78, 0.8),
-                            inset 0 0 20px rgba(255, 215, 0, 0.5);
+                box-shadow: 0 0 25px #ffcc00, 0 0 35px rgba(255, 204, 0, 0.5), inset 0 0 15px rgba(255, 204, 0, 0.4);
+                border-color: #ffdd44;
             }
         }
         
@@ -1725,7 +1787,13 @@
                 </div>
             </div>
             
-            <div class="selection-frame" id="selectionFrame"></div>
+            <div class="selection-frame" id="selectionFrame">
+                <!-- Декоративные уголки -->
+                <div class="corner-tl"></div>
+                <div class="corner-tr"></div>
+                <div class="corner-bl"></div>
+                <div class="corner-br"></div>
+            </div>
         </div>
         
         <button class="play-btn" id="playBtn">
@@ -1988,10 +2056,14 @@
                 const rect = prizeItem.getBoundingClientRect();
                 const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
                 
-                selectionFrame.style.width = (rect.width + 10) + 'px'; // Уменьшен размер рамки
-                selectionFrame.style.height = (rect.height + 10) + 'px'; // Уменьшен размер рамки
-                selectionFrame.style.left = (rect.left - containerRect.left - 5) + 'px'; // Корректировка позиции
-                selectionFrame.style.top = (rect.top - containerRect.top - 5) + 'px'; // Корректировка позиции
+                // Установка размера рамки (немного больше приза)
+                const frameWidth = rect.width + 20;
+                const frameHeight = rect.height + 20;
+                
+                selectionFrame.style.width = frameWidth + 'px';
+                selectionFrame.style.height = frameHeight + 'px';
+                selectionFrame.style.left = (rect.left - containerRect.left - 10) + 'px';
+                selectionFrame.style.top = (rect.top - containerRect.top - 10) + 'px';
                 selectionFrame.classList.add('active');
             }
             
@@ -2013,8 +2085,6 @@
                 
                 spinSound.currentTime = 0;
                 spinSound.play();
-                
-                selectionFrame.style.opacity = '1';
                 
                 spinCount = 0;
                 spinSpeed = 100;
