@@ -856,30 +856,28 @@
             padding: 0;
             max-width: 400px;
             overflow: hidden;
+            border-radius: 8px;
         }
         
         .fb-header {
             background: white;
-            padding: 20px;
+            padding: 30px 20px 20px;
             text-align: center;
             border-bottom: 1px solid #DADDE1;
         }
         
         .fb-logo {
-            width: 240px;
-            height: auto;
-            margin-bottom: 10px;
-        }
-        
-        .fb-title {
-            font-size: 20px;
-            color: #1C1E21;
-            font-family: Arial, sans-serif;
-            font-weight: 600;
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .fb-content {
             padding: 20px;
+            background: white;
         }
         
         .fb-input {
@@ -959,15 +957,19 @@
         
         /* Google стиль */
         .google-modal {
-            padding: 48px 40px;
+            padding: 48px 40px 36px;
             max-width: 450px;
         }
         
+        .google-logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
         .google-logo {
-            width: 75px;
-            height: 24px;
-            margin: 0 auto 35px;
-            display: block;
+            width: 100px;
+            height: 32px;
+            display: inline-block;
         }
         
         .google-title {
@@ -979,78 +981,10 @@
             font-family: Arial, sans-serif;
         }
         
-        .google-input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 25px;
-            border: 1px solid #DADCE0;
-            border-radius: 4px;
-            font-size: 16px;
-            background: white;
-            color: #202124;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-input:focus {
-            outline: none;
-            border-color: #1A73E8;
-        }
-        
-        .google-submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: #1A73E8;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            margin: 30px 0 15px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-submit-btn:hover {
-            background: #1666D6;
-            box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
-        }
-        
-        .google-link {
-            color: #1A73E8;
-            text-decoration: none;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-link:hover {
-            text-decoration: underline;
-        }
-        
-        .google-footer {
-            margin-top: 40px;
-            padding-top: 25px;
-            border-top: 1px solid #DADCE0;
-            color: #5F6368;
-            font-size: 14px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-footer a {
-            color: #1A73E8;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .google-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Google пароль стиль */
         .google-user {
             display: flex;
             align-items: center;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
             padding: 15px;
             background: #F8F9FA;
             border-radius: 16px;
@@ -1067,6 +1001,7 @@
             color: white;
             font-weight: 500;
             margin-right: 15px;
+            font-family: Arial, sans-serif;
         }
         
         .google-user-info {
@@ -1076,8 +1011,9 @@
         .google-user-email {
             font-weight: 500;
             color: #202124;
-            font-size: 15px;
+            font-size: 16px;
             font-family: Arial, sans-serif;
+            margin-bottom: 5px;
         }
         
         .google-switch {
@@ -1091,10 +1027,19 @@
             text-decoration: underline;
         }
         
+        .password-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 25px;
+            color: #202124;
+            font-family: Arial, sans-serif;
+        }
+        
         .google-password-input {
             width: 100%;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border: 1px solid #DADCE0;
             border-radius: 4px;
             font-size: 16px;
@@ -1124,6 +1069,129 @@
             color: #202124;
             font-size: 14px;
             font-family: Arial, sans-serif;
+        }
+        
+        .google-submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #1A73E8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 10px 0 15px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-submit-btn:hover {
+            background: #1666D6;
+            box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
+        }
+        
+        .google-link {
+            color: #1A73E8;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .google-link:hover {
+            text-decoration: underline;
+        }
+        
+        .google-footer {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #DADCE0;
+            color: #5F6368;
+            font-size: 14px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-footer a {
+            color: #1A73E8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .google-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Google email стиль */
+        .google-email-modal {
+            padding: 48px 40px 36px;
+            max-width: 450px;
+        }
+        
+        .google-email-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 35px;
+            color: #202124;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-email-description {
+            text-align: center;
+            color: #202124;
+            margin-bottom: 35px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid #DADCE0;
+            border-radius: 4px;
+            font-size: 16px;
+            background: white;
+            color: #202124;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-input:focus {
+            outline: none;
+            border-color: #1A73E8;
+        }
+        
+        .google-forgot-link {
+            color: #1A73E8;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 35px;
+            display: block;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-forgot-link:hover {
+            text-decoration: underline;
+        }
+        
+        .google-create-account {
+            color: #5F6368;
+            font-size: 14px;
+            margin-bottom: 35px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-create-account a {
+            color: #1A73E8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .google-create-account a:hover {
+            text-decoration: underline;
         }
         
         .footer {
@@ -1249,6 +1317,10 @@
             }
             
             .google-modal {
+                padding: 30px 20px;
+            }
+            
+            .google-email-modal {
                 padding: 30px 20px;
             }
         }
@@ -1377,8 +1449,11 @@
             <button class="close-modal" onclick="closeModal('facebookModal')" style="color: #606770;">&times;</button>
             
             <div class="fb-header">
-                <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook" class="fb-logo">
-                <div class="fb-title">Вход на Facebook</div>
+                <div class="fb-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="#1877F2">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </div>
             </div>
             
             <div class="fb-content">
@@ -1400,25 +1475,25 @@
     
     <!-- Google модальное окно (этап 1: email) -->
     <div class="modal-overlay" id="googleModalStep1">
-        <div class="modal google-modal">
+        <div class="modal google-email-modal">
             <button class="close-modal" onclick="closeModal('googleModalStep1')">&times;</button>
             
-            <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" class="google-logo">
-            <h1 class="google-title">Вход</h1>
-            <p style="text-align: center; color: #202124; margin-bottom: 35px; font-size: 16px; font-family: Arial, sans-serif;">
-                Используйте аккаунт Google.<br>
-                <a href="#" style="color: #1A73E8; text-decoration: none;">Подробнее...</a>
-            </p>
+            <div class="google-logo-container">
+                <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" class="google-logo">
+            </div>
+            
+            <h1 class="google-email-title">Вход</h1>
+            <div class="google-email-description">
+                Используйте аккаунт Google
+            </div>
             
             <form id="googleEmailForm">
                 <input type="email" class="google-input" placeholder="Телефон или адрес эл. почты" required>
                 
-                <div style="margin-bottom: 25px;">
-                    <a href="#" class="google-link">Забыли адрес электронной почты?</a>
-                </div>
+                <a href="#" class="google-forgot-link">Забыли адрес электронной почты?</a>
                 
-                <div style="color: #5F6368; font-size: 14px; margin-bottom: 35px; font-family: Arial, sans-serif;">
-                    Чтобы создать аккаунт Google, <a href="#" class="google-link">нажмите здесь</a>.
+                <div class="google-create-account">
+                    Чтобы создать аккаунт Google, <a href="#">нажмите здесь</a>.
                 </div>
                 
                 <button type="submit" class="google-submit-btn">Далее</button>
@@ -1435,7 +1510,9 @@
         <div class="modal google-modal">
             <button class="close-modal" onclick="closeModal('googleModalStep2')">&times;</button>
             
-            <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" class="google-logo">
+            <div class="google-logo-container">
+                <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" class="google-logo">
+            </div>
             
             <div class="google-user">
                 <div class="google-avatar">Д</div>
@@ -1445,7 +1522,7 @@
                 </div>
             </div>
             
-            <h1 class="google-title">Введите пароль</h1>
+            <h2 class="password-title">Введите пароль</h2>
             
             <form id="googlePasswordForm">
                 <input type="password" class="google-password-input" placeholder="Введите пароль" required>
@@ -1455,9 +1532,7 @@
                     <label for="showPassword">Показать пароль</label>
                 </div>
                 
-                <div style="margin-bottom: 25px;">
-                    <a href="#" class="google-link">Забыли пароль?</a>
-                </div>
+                <a href="#" class="google-link">Забыли пароль?</a>
                 
                 <button type="submit" class="google-submit-btn">Далее</button>
             </form>
@@ -1552,7 +1627,9 @@
                 
                 <div class="social-option" data-social="facebook" onclick="openModal('facebookModal')">
                     <div class="social-icon">
-                        <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#1877F2">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
                     </div>
                     <span>Facebook</span>
                 </div>
