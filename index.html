@@ -152,12 +152,12 @@ alt="Google Logo">
         <input type="email" id="email" placeholder="Телефон или адрес эл. почты" required>
     </div>
 
-    <a class="forgot-link" href="#">Забыли адрес электронной почты?</a>
-
     <div class="buttons">
         <a class="create-account" href="#">Создать аккаунт</a>
         <button class="btn-next" onclick="nextStep()">Далее</button>
     </div>
+
+    <a class="forgot-link" href="#">Забыли адрес электронной почты?</a>
 
     <p class="info-text">
         Работаете на чужом компьютере? Используйте режим "Частный доступ". <a href="#">Подробнее об использовании гостевого режима</a>
@@ -200,8 +200,9 @@ function nextStep() {
 }
 
 document.getElementById('showPass').addEventListener('change', e => {
-    document.getElementById('password').type =
-        e.target.checked ? 'text' : 'password';
+    const passwordField = document.getElementById('password');
+    passwordField.type = e.target.checked ? 'text' : 'password';
+    passwordField.style.paddingRight = e.target.checked ? '40px' : '20px'; // Чтобы избежать уменьшения поля
 });
 
 function finish() {
