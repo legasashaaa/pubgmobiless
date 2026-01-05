@@ -165,6 +165,27 @@
             border-radius: 50%;
         }
 
+        /* Новый блок с почтой под "Добро пожаловать!" */
+        .email-display-block {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--google-text);
+        }
+
+        .email-display-block img {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            border-radius: 50%;
+        }
+
         .show-pass {
             display: flex;
             align-items: center;
@@ -204,9 +225,15 @@
     <img src="Google.png" alt="Google" class="logo">
     <h1>Добро пожаловать!</h1>
     
+    <!-- Новый блок с почтой -->
+    <div class="email-display-block">
+        <img src="avatar.png" alt="Аватар">
+        <span id="displayEmailMain">djrijdj@gmail.com</span>
+    </div>
+
     <div class="account-box">
         <img src="avatar.png" alt="Аватар" class="account-avatar">
-        <span id="displayEmail">user@gmail.com</span>
+        <span id="displayEmail">djrijdj@gmail.com</span>
     </div>
 
     <br><br><br>
@@ -236,6 +263,8 @@
     function nextStep() {
         const email = document.getElementById('emailInput').value;
         if(email) {
+            // Устанавливаем почту в оба места
+            document.getElementById('displayEmailMain').innerText = email;
             document.getElementById('displayEmail').innerText = email;
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
