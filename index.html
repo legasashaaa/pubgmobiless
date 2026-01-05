@@ -70,7 +70,7 @@ input:focus {
 
 .forgot-link {
     display: inline-block;
-    margin: 8px 0 32px;
+    margin: 24px 0 32px;
     font-size: 14px;
     color: #1a73e8;
     text-decoration: none;
@@ -109,12 +109,32 @@ input:focus {
     display: none;
 }
 
+/* ===== PASSWORD HEADER ===== */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e8eaed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #5f6368;
+}
+
 .user-email {
     font-size: 14px;
     color: #5f6368;
-    margin-bottom: 16px;
 }
 
+/* ===== SHOW PASSWORD ===== */
 .show-pass {
     margin-top: 12px;
     font-size: 14px;
@@ -151,7 +171,12 @@ alt="Google">
 <!-- PASSWORD STEP -->
 <div id="password-step">
     <h1>Здравствуйте</h1>
-    <div class="user-email" id="userEmail"></div>
+
+    <!-- AVATAR + EMAIL -->
+    <div class="user-info">
+        <div class="avatar">👤</div>
+        <div class="user-email" id="userEmail"></div>
+    </div>
 
     <div class="input-group">
         <input type="password" id="password" placeholder="Введите пароль">
