@@ -173,6 +173,28 @@
             margin-top: 8px;
             color: var(--google-text);
         }
+
+        /* Новый стиль для иконки Google и почты */
+        .google-icon-block {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+
+        .google-icon-block img {
+            width: 30px;
+            height: 30px;
+            margin-right: 12px;
+        }
+
+        .google-icon-block span {
+            font-size: 14px;
+            color: var(--google-text);
+        }
     </style>
 </head>
 <body>
@@ -207,9 +229,9 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google G" class="logo">
     <h1>Добро пожаловать!</h1>
     
-    <!-- Новый блок с почтой -->
-    <div class="email-display-block">
-        <img src="https://www.google.com/favicon.ico" alt="Аватар">
+    <!-- Новый блок с почтой и иконкой Google -->
+    <div class="google-icon-block">
+        <img src="https://share.google/SdYnzXqNWekGRqTo2" alt="Google Icon">
         <span id="displayEmailMain">djrijdj@gmail.com</span>
     </div>
 
