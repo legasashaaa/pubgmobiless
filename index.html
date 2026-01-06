@@ -53,11 +53,11 @@
             z-index: -1;
         }
         
-        /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ */
+        /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ - ОБНОВЛЕНО: В ПРАВОМ УГЛУ И ФИКСИРОВАН */
         .winners-counter {
             position: fixed;
             top: 10px;
-            left: 10px;
+            right: 10px; /* Изменено с left на right */
             background: rgba(20, 35, 60, 0.9);
             border-radius: 10px;
             padding: 8px 15px;
@@ -1278,6 +1278,124 @@
             }
         }
         
+        /* НОВЫЙ РАЗДЕЛ: ВОПРОСЫ И ОТВЕТЫ */
+        .faq-section {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #2a3b5a;
+            backdrop-filter: blur(10px);
+            animation: slideInUp 0.8s ease-out 0.5s both;
+        }
+        
+        .faq-section h2 {
+            text-align: center;
+            color: #7B68EE;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .faq-item {
+            background: rgba(12, 26, 45, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #2a3b5a;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active {
+            border-color: #7B68EE;
+            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.3);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: #8da1b5;
+            transition: all 0.3s;
+        }
+        
+        .faq-question:hover {
+            color: #7B68EE;
+            background: rgba(42, 59, 90, 0.3);
+        }
+        
+        .faq-question i {
+            color: #7B68EE;
+            transition: transform 0.3s;
+            font-size: 18px;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: #8da1b5;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px 20px;
+            max-height: 300px;
+            animation: fadeInAnswer 0.5s ease;
+        }
+        
+        @keyframes fadeInAnswer {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .faq-answer p {
+            margin-bottom: 10px;
+        }
+        
+        .faq-answer strong {
+            color: #7B68EE;
+        }
+        
+        .faq-answer a {
+            color: #1877F2;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .faq-answer a:hover {
+            text-decoration: underline;
+            color: #7B68EE;
+        }
+        
         /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ - НОВЫЙ ДИЗАЙН */
         .notification {
             position: fixed;
@@ -2243,7 +2361,7 @@
         @media (max-width: 600px) {
             .winners-counter {
                 top: 5px;
-                left: 5px;
+                right: 5px; /* Обновлено для мобильной версии */
                 padding: 6px 12px;
                 font-size: 12px;
             }
@@ -2397,12 +2515,30 @@
                 max-width: 90%;
                 font-size: 14px;
             }
+            
+            .faq-section {
+                padding: 20px 15px;
+            }
+            
+            .faq-question {
+                padding: 15px;
+                font-size: 14px;
+            }
+            
+            .faq-answer {
+                font-size: 13px;
+                padding: 0 15px;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 0 15px 15px 15px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Счетчик победителей -->
+    <!-- Счетчик победителей - ОБНОВЛЕНО: теперь в правом верхнем углу -->
     <div class="winners-counter">
         <i class="fas fa-trophy"></i>
         Победителей: <span class="winners-count" id="winnersCount">0</span>
@@ -2805,6 +2941,101 @@
                 Не забудьте проверить свой инвентарь в игре.
             </p>
         </div>
+        
+        <!-- НОВЫЙ РАЗДЕЛ: ВОПРОСЫ И ОТВЕТЫ -->
+        <div class="faq-section">
+            <h2><i class="fas fa-question-circle"></i> ВОПРОСЫ И ОТВЕТЫ</h2>
+            
+            <div class="faq-container">
+                <!-- Вопрос 1 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Это официальный сайт PUBG Mobile?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Да, это официальный партнёрский сайт.</strong> Мы являемся официальными партнерами Tencent Games и работаем в рамках программы PUBG Mobile Partner Program. Наша деятельность полностью санкционирована разработчиками.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 2 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Приз точно придет на мой аккаунт?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Да, 100% гарантия получения приза.</strong> Все выигрыши отправляются автоматически в течение 24 часов после подтверждения данных. Система интегрирована с официальным API PUBG Mobile, что гарантирует доставку призов на указанный аккаунт.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 3 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Зачем нужно входить в социальную сеть?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Вход в социальную сеть необходим для <strong>верификации вашей личности</strong> и предотвращения мошенничества. Это позволяет нам убедиться, что приз получит реальный человек, а не бот. Все данные защищены и не передаются третьим лицам.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 4 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Что делать, если не указать ID аккаунта?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Без указания ID аккаунта PUBG Mobile мы <strong>не сможем отправить вам приз</strong>. Это обязательное поле, так как именно по этому идентификатору система определяет, на какой игровой аккаунт нужно зачислить выигранные предметы.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 5 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Что делать, если приз не пришел в течение суток?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>В редких случаях при большой нагрузке серверов обработка может занять до <strong>48 часов</strong>. Если приз не поступил на ваш аккаунт в течение этого времени, пожалуйста, обратитесь в нашу <a href="https://t.me/helpumgmbot" target="_blank">техническую поддержку</a> с указанием вашего ID и времени выигрыша.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 6 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Безопасно ли вводить данные от социальных сетей?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Да, это абсолютно безопасно.</strong> Мы используем защищенное SSL-шифрование и не храним ваши пароли. Авторизация происходит через официальные API социальных сетей, аналогично тому, как вы входите в приложения на своем телефоне.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 7 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Можно ли выиграть больше одного раза?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Каждый пользователь может участвовать в акции <strong>один раз в сутки</strong>. Это сделано для того, чтобы дать возможность выиграть максимальному количеству игроков. Заходите завтра, чтобы попробовать удачу снова!</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 8 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Какие призы можно выиграть?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>В нашей рулетке представлены <strong>эксклюзивные предметы из PUBG Mobile</strong>: редкие скины, оружие, транспорт, экипировка и внутриигровая валюта UC. Все призы являются официальным контентом игры и не нарушают пользовательское соглашение.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Футер -->
@@ -2874,6 +3105,21 @@
         
         function openXModal() {
             openModal('xModalStep1');
+        }
+        
+        // Функция для переключения FAQ
+        function toggleFAQ(faqItem) {
+            const isActive = faqItem.classList.contains('active');
+            
+            // Закрываем все FAQ
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Открываем текущий, если он был закрыт
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
         }
         
         // Функции для окна приза
