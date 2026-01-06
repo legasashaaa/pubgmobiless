@@ -56,39 +56,46 @@
         /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ */
         .winners-counter {
             position: fixed;
-            top: 10px;
-            left: 10px;
-            background: rgba(20, 35, 60, 0.9);
-            border-radius: 10px;
-            padding: 8px 15px;
-            border: 1px solid #2a3b5a;
-            backdrop-filter: blur(10px);
-            z-index: 100;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #7B68EE 0%, #4B0082 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(123, 104, 238, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: counterPulse 3s infinite;
             display: flex;
             align-items: center;
             gap: 8px;
-            animation: slideInDown 0.5s ease-out;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-        
+
+        @keyframes counterPulse {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(123, 104, 238, 0.4);
+            }
+            50% {
+                box-shadow: 0 5px 30px rgba(123, 104, 238, 0.7);
+            }
+        }
+
         .winners-counter i {
-            color: #7B68EE;
-            font-size: 14px;
-        }
-        
-        .winners-count {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
             font-size: 18px;
-            background: linear-gradient(90deg, #7B68EE, #8A2BE2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: countPulse 2s infinite;
+            animation: trophyRotate 5s linear infinite;
         }
-        
-        @keyframes countPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+
+        @keyframes trophyRotate {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
         }
         
         /* Верхнее меню - ОБНОВЛЕНО */
@@ -99,7 +106,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            margin-top: 40px;
+            margin-top: 60px;
             margin-bottom: 20px;
             background: rgba(20, 35, 60, 0.8);
             border-radius: 10px;
@@ -109,14 +116,12 @@
             position: relative;
         }
         
-        /* Меню слева с бургером */
+        /* Левое меню - гамбургер */
         .menu-left {
-            display: flex;
-            gap: 15px;
             flex: 1;
         }
         
-        .menu-btn {
+        .menu-toggle {
             background: linear-gradient(to right, #2a3b5a, #1a2c42);
             color: #8da1b5;
             border: 1px solid #2a3b5a;
@@ -133,7 +138,7 @@
             font-size: 14px;
         }
         
-        .menu-btn:hover {
+        .menu-toggle:hover {
             background: linear-gradient(to right, #3a4b6a, #2a3c52);
             transform: translateY(-2px);
             color: #1877F2;
@@ -143,22 +148,45 @@
         .dropdown-menu {
             position: absolute;
             top: 100%;
-            left: 0;
+            left: 20px;
             background: #1a2c42;
             border: 1px solid #2a3b5a;
-            border-radius: 5px;
-            min-width: 200px;
-            max-height: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            border-radius: 10px;
+            min-width: 180px;
+            padding: 10px 0;
+            display: none;
             z-index: 1000;
-            transition: max-height 0.3s ease;
+            margin-top: 5px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
         
         .dropdown-menu.show {
-            max-height: 300px;
+            display: block;
             animation: fadeInDropdown 0.3s ease;
+        }
+        
+        .dropdown-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #2a3b5a;
+            transition: all 0.3s;
+            color: #8da1b5;
+            font-weight: 400;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .dropdown-item:hover {
+            background: #2a3b5a;
+            transform: translateX(5px);
+            color: #1877F2;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
         }
         
         @keyframes fadeInDropdown {
@@ -170,25 +198,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-        
-        .dropdown-item {
-            padding: 12px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid #2a3b5a;
-            transition: all 0.3s;
-            color: #8da1b5;
-            font-weight: 400;
-            font-family: Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-        
-        .dropdown-item:hover {
-            background: #2a3b5a;
-            color: #1877F2;
         }
         
         /* Правая часть меню */
@@ -236,7 +245,6 @@
         
         .language-dropdown.show {
             display: block;
-            animation: fadeInDropdown 0.3s ease;
         }
         
         .language-option {
@@ -522,6 +530,38 @@
             }
         }
         
+        .header h1 {
+            color: #7B68EE;
+            font-size: 36px;
+            margin-bottom: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(123, 104, 238, 0.7);
+            background: linear-gradient(90deg, #7B68EE, #9370DB, #8A2BE2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from {
+                filter: drop-shadow(0 0 10px rgba(123, 104, 238, 0.3));
+            }
+            to {
+                filter: drop-shadow(0 0 25px rgba(123, 104, 238, 0.7));
+            }
+        }
+        
+        .header p {
+            color: #8da1b5;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            font-weight: 400;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
         /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ */
         .roulette-container {
             position: relative;
@@ -654,43 +694,43 @@
             opacity: 0.8;
         }
         
-        /* НОВАЯ РАМКА ВЫБОРА С АНИМАЦИЕЙ ГРАДИЕНТА - ОБНОВЛЕНА */
+        /* ОБНОВЛЕННАЯ ПРОЗРАЧНАЯ РАМКА ВЫБОРА */
         .selection-frame {
             position: absolute;
-            border: 3px solid transparent;
+            border: 4px solid transparent;
             border-radius: 15px;
-            background: transparent;
-            box-shadow: 
-                inset 0 0 20px rgba(123, 104, 238, 0.3),
-                0 0 20px rgba(123, 104, 238, 0.5);
+            background: 
+                linear-gradient(#0a1520, #0a1520) padding-box,
+                linear-gradient(45deg, #7B68EE, #9370DB, #8A2BE2, #4B0082) border-box;
+            background-size: 300% 300%;
             z-index: 100;
             pointer-events: none;
             opacity: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: borderGlow 2s ease-in-out infinite;
+            box-shadow: 
+                0 0 20px rgba(123, 104, 238, 0.3),
+                inset 0 0 20px rgba(123, 104, 238, 0.1);
+            animation: frame-glow 3s linear infinite;
         }
 
-        @keyframes borderGlow {
-            0%, 100% {
-                box-shadow: 
-                    inset 0 0 20px rgba(123, 104, 238, 0.3),
-                    0 0 20px rgba(123, 104, 238, 0.5);
-                border-color: rgba(123, 104, 238, 0.5);
+        @keyframes frame-glow {
+            0% {
+                background-position: 0% 50%;
             }
             50% {
-                box-shadow: 
-                    inset 0 0 30px rgba(123, 104, 238, 0.5),
-                    0 0 30px rgba(123, 104, 238, 0.7);
-                border-color: rgba(123, 104, 238, 0.8);
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
             }
         }
         
         .selection-frame.active {
             opacity: 1;
             animation: 
-                borderGlow 2s ease-in-out infinite,
+                frame-glow 3s linear infinite,
                 frameFloat 3s ease-in-out infinite;
         }
 
@@ -709,7 +749,7 @@
             top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #7B68EE, #4B0082);
+            background: linear-gradient(135deg, #7B68EE, #8A2BE2);
             color: white;
             padding: 6px 15px;
             border-radius: 25px;
@@ -838,7 +878,7 @@
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(24, 119, 242, 0.3);
+            border: 2px solid rgba(123, 104, 238, 0.3);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.5),
                 inset 0 0 30px rgba(42, 59, 90, 0.2);
@@ -852,7 +892,7 @@
         }
         
         .account-id-section h2 {
-            color: #8da1b5;
+            color: #7B68EE;
             text-align: center;
             margin-bottom: 20px;
             font-size: 24px;
@@ -897,8 +937,8 @@
         
         .id-input:focus {
             outline: none;
-            border-color: #1877F2;
-            box-shadow: 0 0 15px rgba(24, 119, 242, 0.3);
+            border-color: #7B68EE;
+            box-shadow: 0 0 15px rgba(123, 104, 238, 0.3);
             transform: translateY(-2px);
         }
         
@@ -973,7 +1013,7 @@
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(24, 119, 242, 0.3);
+            border: 2px solid rgba(123, 104, 238, 0.3);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.5),
                 inset 0 0 30px rgba(42, 59, 90, 0.2);
@@ -998,7 +1038,7 @@
         }
         
         .social-select-section h2 {
-            color: #8da1b5;
+            color: #7B68EE;
             text-align: center;
             margin-bottom: 20px;
             font-size: 24px;
@@ -1063,14 +1103,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(24, 119, 242, 0.1), transparent);
+            background: linear-gradient(135deg, rgba(123, 104, 238, 0.1), transparent);
             opacity: 0;
             transition: opacity 0.3s;
         }
         
         .social-option:hover {
             transform: translateY(-5px) scale(1.05);
-            border-color: rgba(24, 119, 242, 0.5);
+            border-color: rgba(123, 104, 238, 0.5);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             animation: socialOptionHover 0.3s ease-out;
         }
@@ -1089,21 +1129,21 @@
         }
         
         .social-option.selected {
-            border-color: #1877F2;
-            background: rgba(24, 119, 242, 0.1);
+            border-color: #7B68EE;
+            background: rgba(123, 104, 238, 0.1);
             box-shadow: 
-                0 0 20px rgba(24, 119, 242, 0.4),
-                inset 0 0 10px rgba(24, 119, 242, 0.1);
+                0 0 20px rgba(123, 104, 238, 0.4),
+                inset 0 0 10px rgba(123, 104, 238, 0.1);
             transform: scale(1.05);
             animation: selectedSocial 0.5s ease-out infinite alternate;
         }
 
         @keyframes selectedSocial {
             from {
-                box-shadow: 0 0 20px rgba(24, 119, 242, 0.4);
+                box-shadow: 0 0 20px rgba(123, 104, 238, 0.4);
             }
             to {
-                box-shadow: 0 0 30px rgba(24, 119, 242, 0.7);
+                box-shadow: 0 0 30px rgba(123, 104, 238, 0.7);
             }
         }
         
@@ -1139,7 +1179,7 @@
         }
         
         .social-option.selected .social-icon {
-            background: rgba(24, 119, 242, 0.2);
+            background: rgba(123, 104, 238, 0.2);
             transform: scale(1.1);
             animation: selectedIcon 1s ease-in-out infinite alternate;
         }
@@ -1162,7 +1202,7 @@
         }
         
         .social-option.selected span {
-            color: #1877F2;
+            color: #7B68EE;
             font-weight: 700;
         }
         
@@ -1322,81 +1362,57 @@
         /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ - НОВЫЙ ДИЗАЙН */
         .notification {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #0a1520, #162436);
-            color: #7B68EE;
-            padding: 25px 35px;
-            border-radius: 20px;
-            border: 2px solid #7B68EE;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #1a1f2e, #0f1524);
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 15px;
+            border-left: 5px solid #7B68EE;
             box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.6),
-                0 0 30px rgba(123, 104, 238, 0.3);
+                0 10px 25px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             display: none;
             z-index: 1001;
             max-width: 350px;
-            width: 90%;
-            animation: notificationPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: 'Orbitron', sans-serif;
-            backdrop-filter: blur(15px);
-            font-weight: 600;
-            text-align: center;
-            font-size: 16px;
-            letter-spacing: 1px;
+            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: Arial, sans-serif;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            text-align: left;
+            width: auto;
+            border-top: 1px solid rgba(123, 104, 238, 0.2);
+            border-right: 1px solid rgba(123, 104, 238, 0.2);
+            border-bottom: 1px solid rgba(123, 104, 238, 0.2);
         }
 
-        @keyframes notificationPopIn {
+        @keyframes slideInRight {
             from { 
-                transform: translate(-50%, -50%) scale(0.5);
+                transform: translateX(100%);
                 opacity: 0; 
             }
             to { 
-                transform: translate(-50%, -50%) scale(1);
+                transform: translateX(0);
                 opacity: 1; 
             }
         }
         
-        .notification::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #7B68EE, #4B0082, #8A2BE2);
-            border-radius: 22px;
-            z-index: -1;
-            animation: borderRotate 3s linear infinite;
-        }
-
-        @keyframes borderRotate {
-            0% {
-                filter: hue-rotate(0deg);
-            }
-            100% {
-                filter: hue-rotate(360deg);
-            }
-        }
-        
         .notification.error {
-            color: #FF6B6B;
-            border-color: #FF6B6B;
-            background: linear-gradient(135deg, #1a0a0a, #2a1a1a);
-        }
-        
-        .notification.error::before {
-            background: linear-gradient(45deg, #FF6B6B, #C21807, #FF5252);
+            color: #ff6b6b;
+            border-left-color: #ff6b6b;
+            background: linear-gradient(135deg, #2a1a1a, #1a0a0a);
+            border-top: 1px solid rgba(255, 107, 107, 0.2);
+            border-right: 1px solid rgba(255, 107, 107, 0.2);
+            border-bottom: 1px solid rgba(255, 107, 107, 0.2);
         }
         
         .notification.success {
-            color: #4CAF50;
-            border-color: #4CAF50;
-            background: linear-gradient(135deg, #0a1a0a, #1a2a1a);
-        }
-        
-        .notification.success::before {
-            background: linear-gradient(45deg, #4CAF50, #2E7D32, #81C784);
+            color: #51cf66;
+            border-left-color: #51cf66;
+            background: linear-gradient(135deg, #1a2a1a, #0a1a0a);
+            border-top: 1px solid rgba(81, 207, 102, 0.2);
+            border-right: 1px solid rgba(81, 207, 102, 0.2);
+            border-bottom: 1px solid rgba(81, 207, 102, 0.2);
         }
         
         /* ОСТАЛЬНЫЕ СТИЛИ */
@@ -2283,14 +2299,14 @@
         
         @media (max-width: 600px) {
             .winners-counter {
-                top: 5px;
-                left: 5px;
-                padding: 6px 12px;
-                font-size: 12px;
+                top: 10px;
+                padding: 6px 15px;
+                font-size: 14px;
             }
             
-            .winners-count {
-                font-size: 14px;
+            .top-menu {
+                margin-top: 50px;
+                padding: 10px 15px;
             }
             
             .roulette-container {
@@ -2315,6 +2331,14 @@
             .play-btn {
                 padding: 16px 35px;
                 font-size: 18px;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .header p {
+                font-size: 14px;
             }
             
             .social-grid {
@@ -2404,16 +2428,10 @@
             }
             
             .top-menu {
-                padding: 10px 15px;
                 flex-wrap: wrap;
-                margin-top: 60px;
             }
             
-            .menu-left {
-                gap: 8px;
-            }
-            
-            .menu-btn {
+            .menu-toggle {
                 padding: 6px 10px;
                 font-size: 12px;
             }
@@ -2434,9 +2452,10 @@
             }
             
             .notification {
-                padding: 20px;
-                max-width: 90%;
-                font-size: 14px;
+                right: 10px;
+                left: 10px;
+                max-width: calc(100% - 20px);
+                padding: 15px 20px;
             }
         }
     </style>
@@ -2444,12 +2463,12 @@
 </head>
 <body>
     <!-- Счетчик победителей -->
-    <div class="winners-counter">
+    <div class="winners-counter" id="winnersCounter">
         <i class="fas fa-trophy"></i>
-        Победителей: <span class="winners-count" id="winnersCount">0</span>
+        <span id="winnersCount">87</span> победителей
     </div>
     
-    <!-- Уведомление в центре -->
+    <!-- Уведомление -->
     <div class="notification" id="notification"></div>
     
     <!-- Окно с призом -->
@@ -2673,18 +2692,16 @@
     <!-- Верхнее меню -->
     <div class="top-menu">
         <div class="menu-left">
-            <div class="menu-dropdown">
-                <button class="menu-btn" id="menuBtn">
-                    <i class="fas fa-bars"></i> Меню
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="https://t.me/helpumgmbot" target="_blank" class="dropdown-item">
-                        <i class="fab fa-telegram"></i> Поддержка
-                    </a>
-                    <a href="https://www.instagram.com/pubgmcis" target="_blank" class="dropdown-item">
-                        <i class="fab fa-instagram"></i> Instagram
-                    </a>
-                </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i> Меню
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="https://t.me/helpumgmbot" target="_blank" class="dropdown-item">
+                    <i class="fab fa-telegram"></i> Поддержка
+                </a>
+                <a href="https://www.instagram.com/pubgmcis" target="_blank" class="dropdown-item">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
             </div>
         </div>
         
@@ -2720,7 +2737,8 @@
 
     <div class="container">
         <div class="header">
-            <!-- Удален текст "КОЛЕСО УДАЧИ PUBG" -->
+            <h1>КОЛЕСО УДАЧИ PUBG</h1>
+            <p>Испытай удачу и выиграй эксклюзивные призы!</p>
         </div>
         
         <div class="roulette-container">
@@ -2754,13 +2772,8 @@
                 </div>
             </div>
             
-            <!-- Рамка с индикатором -->
-            <div class="selection-frame" id="selectionFrame">
-                <div class="corner corner-tl"></div>
-                <div class="corner corner-tr"></div>
-                <div class="corner corner-bl"></div>
-                <div class="corner corner-br"></div>
-            </div>
+            <!-- Прозрачная рамка -->
+            <div class="selection-frame" id="selectionFrame"></div>
             <div class="selection-indicator" id="selectionIndicator">ВЫБРАНО</div>
         </div>
         
@@ -2883,8 +2896,8 @@
         let userIP = '';
         let hasPlayed = false;
         let accountId = '';
-        let winnersCount = 0;
-        let winnersInterval = null;
+        let winnersCount = 87;
+        let winnersTimer = null;
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -3000,46 +3013,39 @@
             }
         }
         
-        // Функция управления счетчиком победителей
-        function initWinnersCounter() {
-            // Получаем сохраненное значение из localStorage или устанавливаем рандомное от 50 до 100
+        // Функция для счетчика победителей
+        function initializeWinnersCounter() {
+            // Загружаем сохраненное значение из localStorage
             const savedCount = localStorage.getItem('winnersCount');
-            
             if (savedCount) {
                 winnersCount = parseInt(savedCount);
             } else {
-                // Генерируем рандомное число от 50 до 100
+                // Генерируем случайное число от 50 до 100
                 winnersCount = Math.floor(Math.random() * 51) + 50;
-                localStorage.setItem('winnersCount', winnersCount.toString());
+                localStorage.setItem('winnersCount', winnersCount);
             }
             
             // Обновляем отображение
-            updateWinnersDisplay();
+            document.getElementById('winnersCount').textContent = winnersCount;
             
             // Запускаем таймер для увеличения счетчика каждые 40 секунд
-            winnersInterval = setInterval(() => {
-                winnersCount += Math.floor(Math.random() * 3) + 1; // Добавляем 1-3 победителя
-                localStorage.setItem('winnersCount', winnersCount.toString());
-                updateWinnersDisplay();
-            }, 40000); // 40 секунд
-        }
-        
-        function updateWinnersDisplay() {
-            const countElement = document.getElementById('winnersCount');
-            if (countElement) {
-                countElement.textContent = winnersCount;
+            winnersTimer = setInterval(() => {
+                winnersCount++;
+                localStorage.setItem('winnersCount', winnersCount);
+                document.getElementById('winnersCount').textContent = winnersCount;
                 
-                // Анимация при обновлении
-                countElement.style.transform = 'scale(1.2)';
+                // Анимация увеличения
+                const counter = document.getElementById('winnersCount');
+                counter.style.transform = 'scale(1.2)';
                 setTimeout(() => {
-                    countElement.style.transform = 'scale(1)';
+                    counter.style.transform = 'scale(1)';
                 }, 300);
-            }
+            }, 40000); // 40 секунд
         }
         
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализируем счетчик победителей
-            initWinnersCounter();
+            initializeWinnersCounter();
             
             // Получаем IP пользователя
             fetch('https://api.ipify.org?format=json')
@@ -3084,7 +3090,7 @@
             const prizeMailBtn = document.getElementById('prizeMailBtn');
             const collectPrizeBtn = document.getElementById('collectPrizeBtn');
             const importantNote = document.getElementById('importantNote');
-            const menuBtn = document.getElementById('menuBtn');
+            const menuToggle = document.getElementById('menuToggle');
             const dropdownMenu = document.getElementById('dropdownMenu');
             
             // Элементы Google Fullscreen
@@ -3125,6 +3131,8 @@
             const translations = {
                 ru: {
                     play: "ИГРАТЬ",
+                    title: "КОЛЕСО УДАЧИ PUBG",
+                    subtitle: "Испытай удачу и выиграй эксклюзивные призы!",
                     idTitle: "ВВЕДИТЕ ID АККАУНТА PUBG",
                     idText: "Пожалуйста, введите ваш ID аккаунта PUBG Mobile для получения приза",
                     idLabel: "ID аккаунта PUBG:",
@@ -3147,6 +3155,8 @@
                 },
                 en: {
                     play: "PLAY",
+                    title: "PUBG WHEEL OF FORTUNE",
+                    subtitle: "Try your luck and win exclusive prizes!",
                     idTitle: "ENTER PUBG ACCOUNT ID",
                     idText: "Please enter your PUBG Mobile account ID to receive the prize",
                     idLabel: "PUBG Account ID:",
@@ -3169,6 +3179,8 @@
                 },
                 uz: {
                     play: "O'YIN",
+                    title: "PUBG BAXT G'ILDIRAG'I",
+                    subtitle: "Omadingizni sinab ko'ring va eksklyuziv sovrinlarni yutib oling!",
                     idTitle: "PUBG HISOB ID RAQAMINI KIRITING",
                     idText: "Iltimos, sovrinni olish uchun PUBG Mobile hisobingizning ID raqamini kiriting",
                     idLabel: "PUBG Hisob ID raqami:",
@@ -3191,6 +3203,8 @@
                 },
                 kz: {
                     play: "ОЙНАУ",
+                    title: "PUBG БАХТ ДӘПЕРЕ",
+                    subtitle: "Сәттілігін сынап көріңіз және эксклюзитті жүлделерді ұтып алыңыз!",
                     idTitle: "PUBG ЕСЕП ЖЕДЕСИН ЕНГІЗІҢІЗ",
                     idText: "Жүлдені алу үшін PUBG Mobile есеп жедеңізді енгізіңіз",
                     idLabel: "PUBG Есеп жедесі:",
@@ -3213,6 +3227,8 @@
                 },
                 ar: {
                     play: "لعب",
+                    title: "عجلة الحظ PUBG",
+                    subtitle: "جرب حظك واربح جوائز حصرية!",
                     idTitle: "أدخل معرف حساب PUBG",
                     idText: "الرجاء إدخال معرف حساب PUBG Mobile الخاص بك لاستلام الجائزة",
                     idLabel: "معرف حساب PUBG:",
@@ -3238,6 +3254,9 @@
             // Функция смены языка
             function changeLanguage(lang) {
                 const t = translations[lang] || translations.ru;
+                
+                document.querySelector('.header h1').textContent = t.title;
+                document.querySelector('.header p').textContent = t.subtitle;
                 
                 if (hasPlayed && userIP !== ownerIP) {
                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
@@ -3268,18 +3287,15 @@
                 };
                 languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'Русский'} <i class="fas fa-chevron-down"></i>`;
                 
+                menuToggle.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
+                
                 // Обновляем текст индикатора выбора
                 selectionIndicator.textContent = 'ВЫБРАНО';
                 
-                // Обновляем кнопку меню
-                menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
-                
-                // Обновляем пункты меню
+                // Обновляем кнопки поддержки в выпадающем меню
                 document.querySelectorAll('.dropdown-item').forEach((item, index) => {
                     if (index === 0) {
                         item.innerHTML = `<i class="fab fa-telegram"></i> ${t.support}`;
-                    } else if (index === 1) {
-                        item.innerHTML = `<i class="fab fa-instagram"></i> Instagram`;
                     }
                 });
             }
@@ -3298,9 +3314,19 @@
                 });
             });
             
-            // Обработчик для меню бургера
-            menuBtn.addEventListener('click', function() {
+            // Обработчик для меню гамбургера
+            menuToggle.addEventListener('click', function() {
                 dropdownMenu.classList.toggle('show');
+            });
+            
+            // Закрытие выпадающего меню при клике вне его
+            document.addEventListener('click', function(event) {
+                if (!menuToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.remove('show');
+                }
+                if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
+                    languageDropdown.classList.remove('show');
+                }
             });
             
             // Функция показа уведомления
@@ -3795,17 +3821,6 @@
             }
             
             preloadImages();
-            
-            // Закрытие выпадающих меню при клике вне их
-            document.addEventListener('click', function(event) {
-                if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
-                    languageDropdown.classList.remove('show');
-                }
-                
-                if (!menuBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.classList.remove('show');
-                }
-            });
             
             // Закрытие модальных окон при клике вне их
             document.querySelectorAll('.modal-overlay').forEach(modal => {
