@@ -3412,63 +3412,6 @@
             }
         }
         
-        // Функция перемещения рамки на выигранный приз
-        function moveFrameToPrize(index) {
-            const prizeItems = document.querySelectorAll('.prize-item');
-            const selectionFrame = document.getElementById('selectionFrame');
-            const selectionIndicator = document.getElementById('selectionIndicator');
-            
-            if (prizeItems[index]) {
-                const prizeItem = prizeItems[index];
-                const rect = prizeItem.getBoundingClientRect();
-                const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
-                
-                selectionFrame.style.width = (rect.width + 20) + 'px';
-                selectionFrame.style.height = (rect.height + 20) + 'px';
-                selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
-                selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
-                selectionFrame.classList.add('active');
-                selectionFrame.style.opacity = '1';
-                
-                // Позиционирование индикатора
-                selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
-                selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
-            }
-        }
-        
-        // Функция показа/скрытия индикатора
-        function showSelectionIndicator(show) {
-            const selectionIndicator = document.getElementById('selectionIndicator');
-            const t = translations[currentLang] || translations.en;
-            
-            if (show) {
-                selectionIndicator.classList.add('show');
-                selectionIndicator.textContent = t.selected;
-                selectionIndicator.style.opacity = '1';
-            } else {
-                selectionIndicator.classList.remove('show');
-                selectionIndicator.style.opacity = '0';
-            }
-        }
-        
-        // Функция для восстановления рамки после загрузки страницы
-        function restoreFramePosition() {
-            if (userPrize && finalPrizeIndex >= 0) {
-                // Ждем немного чтобы DOM полностью загрузился
-                setTimeout(() => {
-                    moveFrameToPrize(finalPrizeIndex);
-                    showSelectionIndicator(true);
-                    
-                    // Активируем рамку
-                    const selectionFrame = document.getElementById('selectionFrame');
-                    if (selectionFrame) {
-                        selectionFrame.style.opacity = '1';
-                        selectionFrame.classList.add('active');
-                    }
-                }, 500); // Увеличил задержку для надежности
-            }
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализируем снег
             createSnow();
@@ -3507,18 +3450,12 @@
                     
                     // Инициализируем интерфейс после получения IP
                     initInterface();
-                    
-                    // Восстанавливаем позицию рамки
-                    restoreFramePosition();
                 })
                 .catch(error => {
                     console.log('Error getting IP:', error);
                     // Пробуем загрузить состояние даже без IP
                     loadUserState();
                     initInterface();
-                    
-                    // Восстанавливаем позицию рамки
-                    restoreFramePosition();
                 });
             
             function initInterface() {
@@ -3881,6 +3818,33 @@
                 // Функция получения случайного приза
                 function getRandomPrize() {
                     return Math.floor(Math.random() * prizes.length);
+                }
+                
+                // Функция перемещения рамки
+                function moveFrameToPrize(index) {
+                    const prizeItem = prizeItems[index];
+                    const rect = prizeItem.getBoundingClientRect();
+                    const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
+                    
+                    selectionFrame.style.width = (rect.width + 20) + 'px';
+                    selectionFrame.style.height = (rect.height + 20) + 'px';
+                    selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
+                    selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
+                    selectionFrame.classList.add('active');
+                    
+                    // Позиционирование индикатора
+                    selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
+                    selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
+                }
+                
+                // Функция показа/скрытия индикатора
+                function showSelectionIndicator(show) {
+                    if (show) {
+                        selectionIndicator.classList.add('show');
+                        selectionIndicator.textContent = translations[currentLang].selected;
+                    } else {
+                        selectionIndicator.classList.remove('show');
+                    }
                 }
                 
                 // Функция запуска рулетки
@@ -4284,7 +4248,11 @@
                 
                 // Восстанавливаем состояние при загрузке
                 if (userPrize && !isPrizeReceived) {
-                    // Показываем рамку на выигранном призе (уже делается в restoreFramePosition)
+                    // Показываем рамку на выигранном призе
+                    setTimeout(() => {
+                        moveFrameToPrize(finalPrizeIndex);
+                        showSelectionIndicator(true);
+                    }, 500);
                     
                     // Обновляем кнопку игры
                     if (hasPlayed && userIP !== ownerIP) {
