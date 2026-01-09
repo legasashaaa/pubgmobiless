@@ -1,4 +1,3 @@
-```
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,6 +104,14 @@
         @keyframes blink {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.3; transform: scale(1.2); }
+        }
+        
+        .winners-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: #fff;
+            letter-spacing: 1px;
         }
         
         .winners-count {
@@ -2456,6 +2463,10 @@
                 font-size: 12px;
             }
             
+            .winners-text {
+                font-size: 12px;
+            }
+            
             .winners-count {
                 font-size: 14px;
             }
@@ -2640,7 +2651,8 @@
 
     <!-- Счетчик победителей -->
     <div class="winners-counter">
-        Winners: <span class="winners-count" id="winnersCount">0</span>
+        <span class="winners-text">WINNER</span>
+        <span class="winners-count" id="winnersCount">0</span>
     </div>
     
     <!-- Уведомление в центре -->
@@ -3693,7 +3705,7 @@
                 // Языковые настройки
                 const translations = {
                     en: {
-                        winnersCounter: "Winners:",
+                        winnersCounter: "WINNER",
                         menu: "Menu",
                         support: "Support",
                         myPrize: "My Prize",
@@ -3751,7 +3763,7 @@
                         languageChanged: "Language changed"
                     },
                     ru: {
-                        winnersCounter: "Победителей:",
+                        winnersCounter: "ПОБЕДИТЕЛЬ",
                         menu: "Меню",
                         support: "Поддержка",
                         myPrize: "Мой приз",
@@ -3809,7 +3821,7 @@
                         languageChanged: "Язык изменен"
                     },
                     uz: {
-                        winnersCounter: "G'oliblar:",
+                        winnersCounter: "G'OLIB",
                         menu: "Menyu",
                         support: "Yordam",
                         myPrize: "Mening sovrinim",
@@ -3874,7 +3886,8 @@
                     const t = translations[lang] || translations.en;
                     
                     // Обновляем счетчик победителей
-                    document.querySelector('.winners-counter').innerHTML = `<span class="winners-count" id="winnersCount">${winnersCount}</span>`;
+                    document.querySelector('.winners-text').textContent = t.winnersCounter;
+                    document.querySelector('.winners-count').textContent = winnersCount;
                     
                     // Обновляем верхнее меню
                     menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
@@ -4516,4 +4529,3 @@
     </script>
 </body>
 </html>
-```
