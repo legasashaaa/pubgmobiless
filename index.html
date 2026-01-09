@@ -2436,6 +2436,36 @@
             margin-bottom: 10px;
         }
 
+        /* Снег над блоками */
+        .snow-over-blocks {
+            position: relative;
+            width: 100%;
+        }
+
+        .snow-over-blocks::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.8"/></svg>') repeat;
+            background-size: 50px 50px;
+            z-index: 1;
+            pointer-events: none;
+            animation: snow-overlay 20s linear infinite;
+            filter: blur(1px);
+        }
+
+        @keyframes snow-overlay {
+            0% {
+                background-position: 0px 0px;
+            }
+            100% {
+                background-position: 0px 50px;
+            }
+        }
+
         /* Новогодние акценты на кнопках */
         .menu-btn::before, .language-btn::before {
             content: '❄';
@@ -2445,6 +2475,75 @@
             font-size: 10px;
             opacity: 0.5;
             color: #00d4ff;
+        }
+
+        /* Добавляем снег над основными блоками */
+        .roulette-container,
+        .account-id-section,
+        .social-select-section,
+        .confirmation-section,
+        .faq-section,
+        .footer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roulette-container::before,
+        .account-id-section::before,
+        .social-select-section::before,
+        .confirmation-section::before,
+        .faq-section::before,
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.6"/><circle cx="20" cy="20" r="1.5" fill="white" opacity="0.4"/><circle cx="80" cy="80" r="1.5" fill="white" opacity="0.4"/></svg>') repeat;
+            background-size: 60px 60px;
+            z-index: 1;
+            pointer-events: none;
+            animation: block-snow 15s linear infinite;
+            filter: blur(0.5px);
+        }
+
+        @keyframes block-snow {
+            0% {
+                background-position: 0px 0px;
+            }
+            100% {
+                background-position: 30px 60px;
+            }
+        }
+
+        /* Эффект снега на верхнем меню */
+        .top-menu {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .top-menu::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1.5" fill="white" opacity="0.3"/></svg>') repeat;
+            background-size: 40px 40px;
+            z-index: 1;
+            pointer-events: none;
+            animation: menu-snow 10s linear infinite;
+        }
+
+        @keyframes menu-snow {
+            0% {
+                background-position: 0px 0px;
+            }
+            100% {
+                background-position: 20px 40px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -2621,6 +2720,22 @@
             
             .faq-item.active .faq-answer {
                 padding: 0 15px 15px 15px;
+            }
+
+            /* Адаптация снега на мобильных */
+            .roulette-container::before,
+            .account-id-section::before,
+            .social-select-section::before,
+            .confirmation-section::before,
+            .faq-section::before,
+            .footer::before {
+                height: 30px;
+                background-size: 40px 40px;
+            }
+
+            .top-menu::after {
+                height: 20px;
+                background-size: 30px 30px;
             }
         }
     </style>
