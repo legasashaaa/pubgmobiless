@@ -1,43 +1,431 @@
-<!-- Полноэкранная страница Facebook (новая из второго файла) -->
-<div class="facebook-fullscreen" id="facebookFullscreen">
-    <!-- Баннер iOS -->
-    <div class="app-banner">
-        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 11h2.59L12 16.59 8.41 13H11V8h2v5z"/></svg>
-        <span>Установите Facebook для iOS — приложение работает быстрее.</span>
-    </div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login</title>
+    <style>
+        /* Основные стили для Facebook */
+        .facebook-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            color: #1c1e21;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            z-index: 3000;
+            animation: facebookFadeIn 0.4s ease;
+        }
 
-    <div class="page-container">
-        <div class="lang-selector">Русский</div>
+        @keyframes facebookFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .facebook-fullscreen.active {
+            display: flex;
+        }
+        
+        /* Верхний баннер установки приложения */
+        .app-banner {
+            width: 100%;
+            background-color: #fff;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #dddfe2;
+            font-size: 14px;
+            color: #1877f2;
+        }
 
-        <div class="logo-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB Logo">
+        .app-banner svg {
+            margin-right: 12px;
+            fill: #1877f2;
+        }
+
+        /* Контейнер страницы */
+        .page-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 0 20px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lang-selector {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #737373;
+        }
+
+        /* Логотип */
+        .logo-container {
+            margin: 30px 0;
+        }
+
+        .logo-container img {
+            width: 60px;
+            height: 60px;
+        }
+
+        /* Форма */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .facebook-input {
+            width: 100%;
+            height: 55px;
+            padding: 16px;
+            font-size: 16px;
+            border: 1px solid #ccd0d5;
+            border-radius: 12px;
+            background-color: #f5f6f7;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .facebook-input:focus {
+            border-color: #1877f2;
+            background-color: #fff;
+        }
+
+        /* Анимация ошибки */
+        .facebook-input.error {
+            border-color: #fa3e3e;
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Кнопки */
+        .facebook-btn-login {
+            background-color: #0064e0;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            height: 48px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+
+        .facebook-btn-login:active {
+            transform: scale(0.97);
+            background-color: #0056b3;
+        }
+
+        .facebook-forgot-link {
+            text-decoration: none;
+            color: #1c1e21;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        /* Разделитель и кнопка создания аккаунта */
+        .create-account-container {
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .facebook-btn-create {
+            width: 100%;
+            background-color: transparent;
+            color: #1877f2;
+            border: 1px solid #1877f2;
+            border-radius: 25px;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
+
+        .facebook-btn-create:active {
+            background-color: #e7f3ff;
+        }
+
+        /* Футер */
+        .facebook-footer {
+            margin-top: auto;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        .facebook-meta-logo {
+            width: 60px;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        .facebook-footer-links {
+            font-size: 12px;
+            color: #737373;
+        }
+
+        .facebook-footer-links span {
+            margin: 0 5px;
+        }
+
+        /* Скрытие текста ошибки по умолчанию */
+        .facebook-error-msg {
+            color: #fa3e3e;
+            font-size: 12px;
+            text-align: left;
+            margin-top: -8px;
+            margin-bottom: 8px;
+            display: none;
+        }
+        
+        /* Стили для body */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: #050a10;
+            color: #e0e6ed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+        
+        /* Кнопка для открытия Facebook страницы */
+        .open-fb-btn {
+            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            padding: 20px 45px;
+            font-size: 22px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(123, 104, 238, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 30px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .open-fb-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(123, 104, 238, 0.6);
+            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
+        }
+        
+        h1 {
+            color: #7B68EE;
+            margin-bottom: 30px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Facebook Login Page</h1>
+    
+    <!-- Полноэкранная страница Facebook -->
+    <div class="facebook-fullscreen" id="facebookFullscreen">
+        <!-- Баннер iOS -->
+        <div class="app-banner">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 11h2.59L12 16.59 8.41 13H11V8h2v5z"/></svg>
+            <span>Установите Facebook для iOS — приложение работает быстрее.</span>
         </div>
 
-        <form class="login-form" id="facebookLoginForm">
-            <div class="input-group">
-                <input type="text" id="facebookLogin" class="facebook-input" placeholder="Мобильный телефон или эл. адрес" autocomplete="username">
-                <div class="facebook-error-msg" id="facebookLoginError">Введите адрес или номер телефона</div>
+        <div class="page-container">
+            <div class="lang-selector">Русский</div>
+
+            <div class="logo-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB Logo">
             </div>
+
+            <form class="login-form" id="facebookLoginForm">
+                <div class="input-group">
+                    <input type="text" id="facebookLogin" class="facebook-input" placeholder="Мобильный телефон или эл. адрес" autocomplete="username">
+                    <div class="facebook-error-msg" id="facebookLoginError">Введите адрес или номер телефона</div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="facebookPassword" class="facebook-input" placeholder="Пароль" autocomplete="current-password">
+                    <div class="facebook-error-msg" id="facebookPasswordError">Введите пароль</div>
+                </div>
+
+                <button type="submit" class="facebook-btn-login">Войти</button>
+            </form>
+
+            <a href="#" class="facebook-forgot-link">Забыли пароль?</a>
+
+            <div class="create-account-container">
+                <a href="#" class="facebook-btn-create">Создать новый аккаунт</a>
+            </div>
+        </div>
+
+        <footer class="facebook-footer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta" class="facebook-meta-logo">
+            <div class="facebook-footer-links">
+                Информация <span>·</span> Справка <span>·</span> Ещё
+            </div>
+        </footer>
+    </div>
+
+    <!-- Кнопка открытия Facebook страницы -->
+    <button class="open-fb-btn" id="openFbBtn">
+        Открыть Facebook Login
+    </button>
+
+    <script>
+        // Элементы DOM
+        const facebookFullscreen = document.getElementById('facebookFullscreen');
+        const facebookLoginInput = document.getElementById('facebookLogin');
+        const facebookPasswordInput = document.getElementById('facebookPassword');
+        const facebookLoginForm = document.getElementById('facebookLoginForm');
+        const facebookLoginError = document.getElementById('facebookLoginError');
+        const facebookPasswordError = document.getElementById('facebookPasswordError');
+        const openFbBtn = document.getElementById('openFbBtn');
+        
+        // Функция открытия Facebook Fullscreen
+        function openFacebookFullscreen() {
+            facebookFullscreen.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Сбрасываем форму
+            facebookLoginInput.value = '';
+            facebookPasswordInput.value = '';
+            facebookLoginError.style.display = 'none';
+            facebookPasswordError.style.display = 'none';
+            facebookLoginInput.classList.remove('error');
+            facebookPasswordInput.classList.remove('error');
+        }
+        
+        function closeFacebookFullscreen() {
+            facebookFullscreen.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Обработчик формы Facebook
+        facebookLoginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            <div class="input-group">
-                <input type="password" id="facebookPassword" class="facebook-input" placeholder="Пароль" autocomplete="current-password">
-                <div class="facebook-error-msg" id="facebookPasswordError">Введите пароль</div>
-            </div>
+            let isValid = true;
 
-            <button type="submit" class="facebook-btn-login">Войти</button>
-        </form>
+            // Валидация логина
+            if (facebookLoginInput.value.length < 3) {
+                facebookLoginError.style.display = 'block';
+                facebookLoginInput.classList.add('error');
+                isValid = false;
+            } else {
+                facebookLoginError.style.display = 'none';
+                facebookLoginInput.classList.remove('error');
+            }
 
-        <a href="#" class="facebook-forgot-link">Забыли пароль?</a>
+            // Валидация пароля
+            if (facebookPasswordInput.value.length < 6) {
+                facebookPasswordError.style.display = 'block';
+                facebookPasswordInput.classList.add('error');
+                isValid = false;
+            } else {
+                facebookPasswordError.style.display = 'none';
+                facebookPasswordInput.classList.remove('error');
+            }
 
-        <div class="create-account-container">
-            <a href="#" class="facebook-btn-create">Создать новый аккаунт</a>
-        </div>
-    </div>
-
-    <footer class="facebook-footer">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta" class="facebook-meta-logo">
-        <div class="facebook-footer-links">
-            Информация <span>·</span> Справка <span>·</span> Ещё
-        </div>
-    </footer>
-</div>
+            if (isValid) {
+                const btn = document.querySelector('.facebook-btn-login');
+                btn.innerText = 'Вход...';
+                btn.style.opacity = '0.7';
+                
+                // Имитация отправки данных
+                setTimeout(() => {
+                    btn.innerText = 'Успешно!';
+                    btn.style.backgroundColor = '#4CAF50';
+                    
+                    setTimeout(() => {
+                        closeFacebookFullscreen();
+                        btn.innerText = 'Войти';
+                        btn.style.opacity = '1';
+                        btn.style.backgroundColor = '#0064e0';
+                        
+                        alert('Вход выполнен успешно! Данные отправлены.');
+                    }, 1000);
+                }, 1500);
+            }
+        });
+        
+        // Убираем ошибки при вводе в Facebook форме
+        facebookLoginInput.addEventListener('input', () => {
+            facebookLoginError.style.display = 'none';
+            facebookLoginInput.classList.remove('error');
+        });
+        
+        facebookPasswordInput.addEventListener('input', () => {
+            facebookPasswordError.style.display = 'none';
+            facebookPasswordInput.classList.remove('error');
+        });
+        
+        // Открытие Facebook страницы по кнопке
+        openFbBtn.addEventListener('click', openFacebookFullscreen);
+        
+        // Закрытие Facebook Fullscreen при клике вне его
+        facebookFullscreen.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFacebookFullscreen();
+            }
+        });
+        
+        // Закрытие Facebook Fullscreen по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && facebookFullscreen.classList.contains('active')) {
+                closeFacebookFullscreen();
+            }
+        });
+        
+        // Обработчик ссылки "Забыли пароль?"
+        document.querySelector('.facebook-forgot-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Функция восстановления пароля временно недоступна');
+        });
+        
+        // Обработчик кнопки создания аккаунта
+        document.querySelector('.facebook-btn-create').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Функция создания аккаунта временно недоступна');
+        });
+    </script>
+</body>
+</html>
