@@ -3,477 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG Mobile - Gift Drop</title>
+    <title>PUBG Mobile Mini App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0b0d10;
-            --card-bg: #1a1d24;
-            --accent-yellow: #f3ad1a;
-            --accent-blue: #007aff;
-            --text-main: #ffffff;
-            --text-gray: #8e8e93;
-            --danger: #ff3b30;
-            --rarity-mythic: linear-gradient(180deg, #ff416c, #ff4b2b);
-            --rarity-legendary: linear-gradient(180deg, #f3ad1a, #e67e22);
-        }
-
         body {
+            background-color: #0b0c0d;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            user-select: none;
             overflow-x: hidden;
         }
-
-        /* Header Area */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: rgba(0,0,0,0.5);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; }
+        
+        /* Фон с легким градиентом и шумом */
+        .bg-overlay {
+            background: linear-gradient(180deg, rgba(26,27,30,0) 0%, rgba(15,16,18,1) 100%),
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            filter: brightness(0.4) blur(2px);
         }
 
-        .header-left { color: var(--accent-blue); font-size: 16px; cursor: pointer; }
-        .header-center { text-align: center; }
-        .header-center h1 { margin: 0; font-size: 16px; font-weight: 600; }
-        .header-center span { font-size: 11px; color: var(--text-gray); }
-
-        /* Balance & Deposit */
-        .top-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
+        /* Карточки игр */
+        .game-card {
+            background: linear-gradient(145deg, #232529, #1a1b1e);
+            border: 1px solid #3d3f43;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
         }
-
-        .balance-box {
-            display: flex;
-            align-items: center;
-            background: #252932;
-            padding: 5px 12px;
-            border-radius: 20px;
-            border: 1px solid #3a3f4b;
-        }
-
-        .uc-icon {
-            width: 18px;
-            height: 18px;
-            margin-right: 6px;
-            background: var(--accent-yellow);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
+        .game-card:active { transform: scale(0.95); }
+        
+        .card-label {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.8);
+            padding: 8px;
             font-weight: bold;
+            text-align: center;
+            border-top: 2px solid #ffbc00;
+        }
+
+        .uc-badge {
+            background: #ffbc00;
             color: black;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 12px;
         }
 
-        .deposit-btn {
-            background: #fff;
-            color: #000;
-            padding: 6px 15px;
-            border-radius: 20px;            font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            position: relative;
+        /* Навигация */
+        .nav-bar {
+            background: #1a1b1e;
+            border-top: 1px solid #333;
         }
+        .nav-item.active { color: #ffbc00; }
 
-        .bonus-tag {
-            position: absolute;
-            top: -10px;
-            right: -5px;
-            background: #4cd964;
-            color: white;
-            font-size: 9px;
-            padding: 2px 5px;
-            border-radius: 5px;
+        /* Кнопка Пополнить (стилизованная) */
+        .btn-deposit {
+            border: 1px dashed #ffbc00;
+            background: rgba(255, 188, 0, 0.1);
         }
-
-        /* Roulette Style Section */
-        .roulette-container {
-            margin: 20px 0;
-            position: relative;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-
-        .roulette-track {
-            display: flex;
-            gap: 10px;
-            padding: 0 50%;
-            transition: transform 4s cubic-bezier(0.1, 0, 0.1, 1);
-        }
-
-        .item-card {
-            min-width: 110px;
-            height: 140px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            border-bottom: 4px solid #555;
-        }
-
-        .item-card img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 10px; }
-        .item-card.legendary { border-bottom-color: var(--accent-yellow); }
-        .item-card.mythic { border-bottom-color: #ff416c; }
-        .item-card span { font-size: 11px; text-align: center; color: #ccc; }
-
-        .pointer {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: var(--accent-blue);
-            z-index: 10;
-            box-shadow: 0 0 10px var(--accent-blue);
-        }
-
-        /* Action Area */
-        .action-section {
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .error-msg {
-            background: rgba(255, 59, 48, 0.15);
-            color: var(--danger);
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 14px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(255, 59, 48, 0.3);
-            display: none;
-        }
-
-        .btn-main {
-            background: var(--accent-blue);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        /* Content Grid */
-        .content-title {
-            padding: 0 20px;
-            font-size: 14px;
-            color: var(--text-gray);
-            margin-bottom: 15px;
-        }
-
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding: 0 20px 100px 20px;
-        }
-
-        .grid-item {
-            background: var(--card-bg);
-            aspect-ratio: 1/1.2;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 5px;
-        }
-
-        .grid-item img { width: 60%; margin-bottom: 5px; }
-        .grid-item .price { font-size: 12px; color: var(--accent-yellow); display: flex; align-items: center; }
-
-        /* Bottom Nav */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #121418;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0 30px 0;
-            border-top: 1px solid #222;
-        }
-
-        .nav-item { text-align: center; color: var(--text-gray); font-size: 11px; flex: 1; }
-        .nav            font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            position: relative;
-        }
-
-        .bonus-tag {
-            position: absolute;
-            top: -10px;
-            right: -5px;
-            background: #4cd964;
-            color: white;
-            font-size: 9px;
-            padding: 2px 5px;
-            border-radius: 5px;
-        }
-
-        /* Roulette Style Section */
-        .roulette-container {
-            margin: 20px 0;
-            position: relative;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-
-        .roulette-track {
-            display: flex;
-            gap: 10px;
-            padding: 0 50%;
-            transition: transform 4s cubic-bezier(0.1, 0, 0.1, 1);
-        }
-
-        .item-card {
-            min-width: 110px;
-            height: 140px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            border-bottom: 4px solid #555;
-        }
-
-        .item-card img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 10px; }
-        .item-card.legendary { border-bottom-color: var(--accent-yellow); }
-        .item-card.mythic { border-bottom-color: #ff416c; }
-        .item-card span { font-size: 11px; text-align: center; color: #ccc; }
-
-        .pointer {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: var(--accent-blue);
-            z-index: 10;
-            box-shadow: 0 0 10px var(--accent-blue);
-        }
-
-        /* Action Area */
-        .action-section {
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .error-msg {
-            background: rgba(255, 59, 48, 0.15);
-            color: var(--danger);
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 14px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(255, 59, 48, 0.3);
-            display: none;
-        }
-
-        .btn-main {
-            background: var(--accent-blue);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        /* Content Grid */
-        .content-title {
-            padding: 0 20px;
-            font-size: 14px;
-            color: var(--text-gray);
-            margin-bottom: 15px;
-        }
-
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding: 0 20px 100px 20px;
-        }
-
-        .grid-item {
-            background: var(--card-bg);
-            aspect-ratio: 1/1.2;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 5px;
-        }
-
-        .grid-item img { width: 60%; margin-bottom: 5px; }
-        .grid-item .price { font-size: 12px; color: var(--accent-yellow); display: flex; align-items: center; }
-
-        /* Bottom Nav */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #121418;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0 30px 0;
-            border-top: 1px solid #222;
-        }
-
-        .nav-item { text-align: center; color: var(--text-gray); font-size: 11px; flex: 1; }
-        .nav-item.active { color: white; }
-        .nav-item i { display: block; font-size: 20px; margin-bottom: 4px; }
-
     </style>
 </head>
 <body>
+    <div class="bg-overlay"></div>
 
-    <div class="header">
-        <div class="header-left">Назад</div>
-        <div class="header-center">
-            <h1>PUBG Mobile Drop</h1>
-            <span>мини-приложение</span>
+    <!-- Header -->    <div class="p-4 flex justify-between items-center bg-[#000000aa] backdrop-blur-md">
+        <div class="flex items-center gap-2">
+            <span class="text-gray-400 text-sm">◀ Назад</span>
         </div>
-        <div style="font-size: 20px;">•••</div>
+        <div class="text-center">
+            <h1 class="pubg-font text-xl tracking-widest text-[#ffbc00]">PUBG DROP</h1>
+            <p class="text-[10px] text-gray-400">боевой пропуск активирован</p>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-yellow-500 border-2 border-white overflow-hidden">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Soldier" alt="avatar">
+        </div>
     </div>
 
-    <div class="top-stats">
-        <div class="balance-box">
-            <div class="uc-icon">UC</div>
-            <span id="balance">0</span>
+    <!-- Balance Section -->
+    <div class="p-4 flex justify-center">
+        <div class="btn-deposit flex items-center gap-3 px-6 py-2 rounded-full border">
+            <span class="text-blue-400 text-xl">+</span>
+            <span class="pubg-font text-xl tracking-wider">Пополнить UC</span>
+            <span class="ml-2 bg-green-600 text-[10px] px-2 py-0.5 rounded text-white">+25%</span>
         </div>
-        <a href="#" class="deposit-btn">
-            <span style="color: var(--accent-blue); margin-right: 5px;">+</span> Пополнить
-            <div class="bonus-tag">+20%</div>
-        </a>
     </div>
 
-    <div class="roulette-container">
-        <div class="pointer"></div>
-        <div class="roulette-track" id="track">
-            <!-- Items for roulette -->
-            <div class="item-card legendary">
-                <img src="https://www.pubgmobile.com/common/images/icon_item_1.png" alt="M416">
-                <span>M416 "Лед"</span>
+    <!-- Game Selection -->
+    <div class="px-4 mt-2">
+        <h2 class="pubg-font text-2xl mb-4 text-gray-200">Выбор режима</h2>
+        
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Game 1: Lucky Spin -->
+            <div class="game-card h-44">
+                <img src="https://w7.pngwing.com/pngs/1010/302/png-transparent-playerunknown-s-battlegrounds-crate-video-game-skin-opening-pubg-crate-angle-furniture-video-game-thumbnail.png" class="w-full h-32 object-contain p-4 opacity-80" alt="">
+                <div class="card-label pubg-font text-lg">Lucky Spin</div>
             </div>
-            <div class="item-card mythic">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_6uYyMAnX10q8rQnEw_qj75rM_7RNo6T1Aw&s" alt="Suit">
-                <span>Костюм "X"</span>
+
+            <!-- Game 2: Weapon Lab -->
+            <div class="game-card h-44">
+                <img src="https://w7.pngwing.com/pngs/585/334/png-transparent-playerunknown-s-battlegrounds-video-game-helmet-level-3-pubg-helmet-electronics-battleroyale-game-pubg-thumbnail.png" class="w-full h-32 object-contain p-4" alt="">
+                <div class="card-label pubg-font text-lg text-green-400">Weapon Lab</div>
+                <div class="absolute top-2 right-2 uc-badge">HOT</div>
             </div>
-            <div class="item-card">
-                <img src="https://img.icons8.com/color/100/helmet.png" alt="Helmet">
-                <span>Шлем ур. 3</span>
+
+            <!-- Game 3: Drop Hunter -->
+            <div class="game-card h-44 border-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]">
+                <img src="https://e7.pngegg.com/pngimages/1000/654/png-clipart-pubg-air-drop-illustration-playerunknown-s-battlegrounds-parachute-air-drop-video-game-crate-parachute-angle-video-game.png" class="w-full h-32 object-contain p-4" alt="">
+                <div class="card-label pubg-font text-lg">Drop Hunter</div>
             </div>
-            <div class="item-card legendary">
-                <img src="https://img.icons8.com/color/100/backpack.png" alt="Backpack">
-                <span>Рюкзак</span>
-            </div>
-            <div class="item-card mythic">
-                <img src="https://img.icons8.com/color/100/crown.png" alt="Crown">
-                <span>6000 UC</span>
+
+            <!-- Game 4: Winner Dinner -->
+            <div class="game-card h-44">
+                <img src="https://w7.pngwing.com/pngs/761/975/png-transparent-playerunknown-s-battlegrounds-frying-pan-weapon-pubg-pan-food-photography-battleroyale-game-thumbnail.png" class="w-full h-32 object-contain p-4" alt="">
+                <div class="card-label pubg-font text-lg text-red-500">Winner Dinner</div>
+                <div class="absolute top-2 right-2 bg-orange-600 text-[10px] px-2 py-1 rounded">+60% ШАНС</div>
             </div>
         </div>
     </div>
 
-    <div class="action-section">
-        <div id="error" class="error-msg">Недостаточно средств для открытия кейса</div>
-        <button class="btn-main" onclick="tryOpen()">Открыть кейс (60 UC)</button>
-    </div>
-
-    <div class="content-title">Содержимое кейса</div>
-    
-    <div class="items-grid">
-        <div class="grid-item">
-            <img src="https://img.icons8.com/color/100/gold-bars.png" alt="priz">
-            <div class="price">8100 UC</div>
+    <!-- Bottom Nav -->
+    <div class="nav-bar fixed bottom-0 left-0 right-0 h-20 flex justify-around items-center px-4 pb-4">
+        <div class="flex flex-col items-center gap-1 opacity-50">
+            <span class="text-xl">📦</span>
+            <span class="text-[10px] uppercase font-bold">Кейсы</span>
         </div>
-        <div class="grid-item">
-            <img src="https://img.icons8.com/color/100/parachute.png" alt="priz">
-            <div class="price">Скин Парашют</div>
+        <div class="nav-item active flex flex-col items-center gap 
+-1 bg-[#2a2b2e] px-6 py-2 rounded-xl border-b-2 border-[#ffbc00]">
+            <span class="text-xl">🎮</span>
+            <span class="text-[10px] uppercase font-bold">Игры</span>
         </div>
-        <div class="grid-item">
-            <img src="https://img.icons8.com/color/100/jeep.png" alt="priz">
-            <div class="price">УАЗ "Годзилла"</div>
+        <div class="flex flex-col items-center gap-1 opacity-50">
+            <span class="text-xl">🎯</span>
+            <span class="text-[10px] uppercase font-bold">Задания</span>
         </div>
     </div>
 
-    <div class="bottom-nav">
-        <div class="nav-item active">
-            <i>📦</i>
-            Кейсы
-        </div>
-        <div class="nav-item">
-            <i>🎮</i>
-            Игры
-        </div>
-        <div class="nav-item">
-            <i>📋</i>
-            Задания
+    <!-- Modal Example (Crate Open) -->
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 z-50 hidden">
+        <div class="bg-[#1c1d21] border-2 border-[#ffbc00] rounded-3xl w-full p-6 text-center">
+            <h3 class="pubg-font text-3xl text-[#ffbc00]">БЕСПЛАТНЫЙ КЕЙС</h3>
+            <div class="flex justify-center gap-2 my-6">
+                <div class="w-20 h-24 bg-[#2a2b2e] rounded-lg border border-gray-600"></div>
+                <div class="w-20 h-24 bg-[#2a2b2e] rounded-lg border-2 border-yellow-500 shadow-lg shadow-yellow-500/20"></div>
+                <div class="w-20 h-24 bg-[#2a2b2e] rounded-lg border border-gray-600"></div>
+            </div>
+            <button class="w-full bg-[#ffbc00] text-black font-bold py-4 rounded-xl pubg-font text-2xl shadow-[0_4px_0_#b38400] active:translate-y-1 active:shadow-none">Открыть ящик</button>
         </div>
     </div>
 
-    <script>
-        // Простая логика
-        function tryOpen() {
-            const error = document.getElementById('error');
-            error.style.display = 'block';
-            
-            // Эффект тряски при ошибке
-            error.style.animation = 'shake 0.3s';
-            setTimeout(() => {
-                error.style.animation = '';
-            }, 300);
-        }
-
-        // Заполняем ленту рулетки для вида
-        const track = document.getElementById('track');
-        const items = track.innerHTML;
-        for(let i=0; i<5; i++) {
-            track.innerHTML += items;
-        }
-
-        // Добавим анимацию тряски в CSS через JS
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes shake {
-                0% { transform: translateX(0); }
-                25% { transform: translateX(-5px); }
-                50% { transform: translateX(5px); }
-                75% { transform: translateX(-5px); }
-                100% { transform: translateX(0); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
 </body>
 </html>
