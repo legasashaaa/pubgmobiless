@@ -143,19 +143,6 @@
         }
         .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
-        
-        /* Анимация выигрыша */
-        @keyframes pulseWin {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .winning-cell {
-            animation: pulseWin 0.5s ease-in-out infinite;
-            border-color: #ffbc00 !important;
-            box-shadow: 0 0 20px rgba(255, 188, 0, 0.8) !important;
-        }
     </style>
 </head>
 <body>
@@ -294,11 +281,10 @@
             
             updateBalanceUI();
             
-            // Сбрасываем анимацию выигрыша при переключении секций
+            // Сбрасываем подсветку выигрышной ячейки при переключении секций
             if (currentWinCellId) {
                 const winCell = document.getElementById(currentWinCellId);
                 if (winCell) {
-                    winCell.classList.remove('winning-cell');
                     winCell.style.borderColor = 'transparent';
                     winCell.style.boxShadow = 'none';
                 }
@@ -362,7 +348,6 @@
                     const cell = document.getElementById(id);
                     cell.style.borderColor = 'transparent';
                     cell.style.boxShadow = 'none';
-                    cell.classList.remove('winning-cell');
                 });
 
                 const currentId = cells[step % cells.length];
@@ -385,7 +370,6 @@
                     const winCell = document.getElementById(winCellId);
                     winCell.style.borderColor = '#ffbc00';
                     winCell.style.boxShadow = '0 0 20px rgba(255, 188, 0, 0.8)';
-                    winCell.classList.add('winning-cell');
                     currentWinCellId = winCellId;
                     
                     setTimeout(() => {
