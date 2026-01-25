@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -61,7 +62,7 @@
             width: 40px;
             height: 40px;
             border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #ffffff;
+            border-top: 4px solid #ffffff; /* Цвет змейки */
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -75,17 +76,7 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        /* Логотип JRCHASE */
-        .jrchase-logo {
-            width: 100px;
-            height: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-        }
-
-        /* ------------------------ */
+        }        /* ------------------------ */
 
         .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
@@ -113,6 +104,15 @@
             position: sticky; top: 0; z-index: 100;
         }
 
+        /* Блок логотипа слева */
+        .brand-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .brand-logo svg { display: block; height: 40px; width: auto; }
+        .brand-logo { cursor: pointer; }
+
         .balance-display {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
@@ -133,7 +133,7 @@
 
         .case-container {
             position: relative;
-            width: 100%; height: 180px;
+            width: 100%;            height: 180px;
             overflow: hidden;
             margin: 20px 0;
         }
@@ -209,15 +209,25 @@
     </div>
 
     <header>
-        <div class="flex items-center gap-2 cursor-pointer" id="backBtn" style="visibility: hidden;" onclick="showSection('hub')">
-            <i class="fas fa-chevron-left text-gray-400"></i>
-            <span class="text-sm font-bold">Назад</span>
-        </div>
-        <!-- Логотип JRCHASE -->
-        <div class="flex items-center gap-2 cursor-pointer" id="logoBtn" onclick="showSection('hub')">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAABACAMAAADl4q6CAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMAUExURQAAAP///wMDAxERESMjI0ZGRmdnZ3d3d4iIiJycnKysrL29vcXFxc7OztbW1t3d3eXl5e7u7vX19ff39////wEBAQMDAwUFBQcHBwgICAkJCQsLCw0NDQ4ODhAQEBERERUVFRcXFxkZGRoaGh4eHiEhISMjIyQkJCUlJSYmJicnJygoKCkpKSsrKy0tLS8vLzAwMDIyMjQ0NDU1NTY2Njc3Nzk5OTs7Ozw8PD09PT4+Pj8/P0BAQEJCQkNDQ0REREVFRUdHR0hISElJSUtLS01NTU5OTlFRUVNTU1RUVFVVVVdXV1hYWFlZWVpaWlxcXF1dXV5eXmFhYWNjY2VlZWdnZ2pqamtra21tbW5ubnBwcHFxcXJycnNzc3R0dHZ2dnd3d3l5eXt7e3x8fH19fX5+foCAgIGBgYKCgoODg4WFhYaGhoeHh4mJiYuLi42NjY6Ojo+Pj5CQkJGRkZOTk5SUlJWVlZaWlpeXl5iYmJmZmZubm5ycnJ2dnZ+fn6CgoKGhoaKioqOjo6SkpKWlpaenp6ioqKmpqaurq6ysrK2tra6urrCwsLGxsbKysrOzs7S0tLW1tba2tre3t7i4uLm5ubq6uru7u7y8vL29vb6+vr+/v8DAwMHBwcLCwsPDw8TExMXFxcbGxsfHx8jIyMnJycrKysvLy8zMzM3Nzc7Ozs/Pz9DQ0NHR0dLS0tPT09TU1NXV1dbW1tfX19jY2NnZ2dra2tvb29zc3N3d3d7e3t/f3+Dg4OHh4eLi4uPj4+Tk5OXl5ebm5ufn5+jo6Onp6erq6uvr6+zs7O3t7e7u7u/v7/Dw8PHx8fLy8vPz8/T09PX19fb29vf39/j4+Pn5+fr6+vv7+/z8/P39/f7+/v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI7tUJcAAAEAdFJOU////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wBT9wclAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH6AQJCCAlp75jfwAAB1xJREFUaEPtWX9wU1Uefk8SAkX5pV9aWqCEtuBHl5AWsbh0LSujK4rgwBZXpms2WR93d9wZ4y7q7nTXmXT0n6KrdF2VkeAuOOq27bg/RnVEAUdBHQet4tAF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" 
-                 class="jrchase-logo" 
-                 alt="JRCHASE Logo">
+        <div class="brand-left">
+            <!-- Встроенная SVG-иконка PUBG Mobile (без внешнего файла) -->
+            <div class="brand-logo" onclick="showSection('hub')" role="img" aria-label="PUBG Mobile logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80">
+                    <!-- Корпус логотипа -->
+                    <rect x="20" y="14" width="200" height="46" rx="4" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+                    <!-- Ушки слева/справа -->
+                    <rect x="8" y="28" width="12" height="18" fill="#FFFFFF"/>
+                    <rect x="220" y="28" width="12" height="18" fill="#FFFFFF"/>
+                    <!-- Текст PUBG -->
+                    <text x="120" y="45" text-anchor="middle" font-family="Teko, Inter, sans-serif" font-size="36" font-weight="700" fill="#FFFFFF">PUBG</text>
+                    <!-- Подпись MOBILE -->
+                    <text x="120" y="74" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" font-weight="900" fill="#FFFFFF">MOBILE</text>
+                </svg>
+            </div>
+            <div class="flex items-center gap-2 cursor-pointer" id="backBtn" style="visibility: hidden;" onclick="showSection('hub')">
+                <i class="fas fa-chevron-left text-gray-400"></i>
+                <span class="text-sm font-bold">Назад</span>
+            </div>
         </div>
         <div class="text-center" style="flex: 1;">
             <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
@@ -232,11 +242,11 @@
     <main id="section-hub" class="p-4">
         <div class="grid grid-cols-2 gap-4 mt-4">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
-                <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
+                <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl" alt="Gift Drop">
                 <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
             </div>
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
-                <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
+                <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl" alt="Lucky Spin">
                 <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
             </div>
         </div>
@@ -260,14 +270,14 @@
         </div>
         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
             <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;"></div><div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 1"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 2"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 3"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 4"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 5"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 6"></div><div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 7"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 8"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 9"></div>
             </div>
         </div>
         <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
@@ -328,19 +338,7 @@
             document.getElementById('section-case').style.display = 'none';
             document.getElementById('section-spin').style.display = 'none';
             document.getElementById('section-' + id).style.display = 'block';
-            
-            // Показываем/скрываем логотип и кнопку "Назад"
-            const backBtn = document.getElementById('backBtn');
-            const logoBtn = document.getElementById('logoBtn');
-            
-            if (id === 'hub') {
-                backBtn.style.visibility = 'hidden';
-                logoBtn.style.display = 'flex';
-            } else {
-                backBtn.style.visibility = 'visible';
-                logoBtn.style.display = 'none';
-            }
-            
+            document.getElementById('backBtn').style.visibility = (id === 'hub') ? 'hidden' : 'visible';
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             if(id === 'hub') document.getElementById('nav-hub').classList.add('active');
             if(id === 'case') document.querySelector('.nav-item:nth-child(1)').classList.add('active');
@@ -363,7 +361,7 @@
                 let idx;
                 do { idx = Math.floor(Math.random() * prizeImages.length); } while (idx === lastIdx);
                 lastIdx = idx;
-                tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}" style="opacity: 1;"></div>`;
+                tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}" style="opacity: 1;" alt="Prize"></div>`;
             }
             tape.style.transform = `translateX(0px)`;
         }
@@ -465,9 +463,10 @@
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
-                }, 500);
+                }, 500); // время на плавное исчезновение
             }, 2000);
         };
     </script>
 </body>
 </html>
+```
